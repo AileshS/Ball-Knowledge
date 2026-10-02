@@ -33,6 +33,8 @@ Ball Knowledge is a Duolingo-style learning app for sports. It walks users throu
 
 **Recommendation: NFL.** It has the deepest "present" use case the app is built around (positions most fans ignore, contracts, trades), a long history with clear eras, and huge US interest. NBA is the strong alternative (fewer players to learn, very highlight-friendly). **Open decision — confirm before content production starts.**
 
+> **Decision (2026-10-02):** The owner confirmed the NFL. See [ADR 0001](decisions/0001-sport-nfl.md).
+
 ## 6. Core user flow
 
 1. **Login / sign-up** (email + Apple/Google sign-in).
@@ -126,8 +128,12 @@ For the **big, hard-to-hold content**, a lesson can show an optional **Memory ti
 ## 13. Risks and open questions
 
 1. **Which sport ships first?** Recommendation: NFL (§5).
+   - **Decided (2026-10-02):** NFL. See [ADR 0001](decisions/0001-sport-nfl.md).
 2. **Clip rights:** can highlights be embedded legally at launch?
+   - **Deferred (2026-10-02):** text-first until licensed. See [ADR 0005](decisions/0005-media-rights.md).
 3. **Data provider and cost** for current stats and contracts.
+   - **Deferred (2026-10-02):** build against a data-reference interface; decide before Present-track stats are authored. See [ADR 0004](decisions/0004-sports-data-provider.md).
 4. **Keeping content fresh:** who updates Present content when trades and contracts happen, and how quickly?
 5. **Factual accuracy:** errors kill credibility with sports fans, so a review step is mandatory.
 6. **Platform:** native mobile vs. cross-platform vs. web-first for the MVP.
+   - **Decided (2026-10-02):** Expo (React Native) + TypeScript for iOS, Android, and web from one codebase ([ADR 0002](decisions/0002-stack-expo-typescript.md)), with Supabase for accounts and sync ([ADR 0003](decisions/0003-backend-supabase.md)).

@@ -65,10 +65,11 @@ Goes deeper than headlines, organized by **position group and team**:
 - 3–5 minutes, 8–15 interactions.
 - Mix of exercise types: multiple choice, identify the player (photo, jersey, or silhouette), match player → team/era/stat, order events on a timeline, higher-or-lower stat comparisons, "who said / who did it," fill-in-the-blank, watch the clip and answer.
 - Every lesson **opens with callbacks** to earlier material and **closes with a recall check** on its own content.
+- Lessons that introduce big ordered or grouped content (e.g., the eras) can include an optional **Memory tip** (§8).
 
 ## 8. Retention system (the core differentiator)
 
-Built on evidence-based memory techniques. *Assumption: "memory OS" in the brief refers to these spaced-repetition and active-recall principles; confirm if a specific system was meant.*
+Built on evidence-based memory techniques, with memorization techniques like the ones in Memory OS used selectively (see **Memory tips** below).
 
 - **Spaced repetition:** every fact the app teaches (a player, stat, era, moment, or rule) is a **knowledge item** with its own memory state, scheduled with an FSRS-style algorithm. A daily **Review** session surfaces whatever is due.
 - **Active recall over recognition:** the app prefers making users *produce* answers (type a name, place someone on a timeline) over picking from options as an item matures.
@@ -77,6 +78,16 @@ Built on evidence-based memory techniques. *Assumption: "memory OS" in the brief
 - **Elaboration hooks:** each item carries a memorable "why it matters" line or story. Facts stick better when attached to a narrative.
 - **Mastery levels per item** (e.g., New → Learning → Familiar → Mastered), visible to the user.
 - **Decay is visible:** items the user is starting to forget are flagged and fed back into review. Units can "fade" and need a refresh.
+
+### Memory tips (used sparingly)
+
+For the **big, hard-to-hold content**, a lesson can show an optional **Memory tip**: a mnemonic inspired by Memory OS that turns a list of names or facts into something easier to remember than raw recall.
+
+- **When to use one:** ordered or grouped content worth the effort, such as the sequence of eras, a dynasty's core players, the members of a famous O-line, or a run of championship winners. A typical lesson won't have one.
+- **Techniques:** an acronym or acrostic, the chain/link method (each item suggests the next), a short story that connects the items in order, and occasionally a memory palace for long lists.
+- **Format:** a small, dismissible tip card in the lesson where the content is introduced. It is never a required step.
+- **Reuse:** if the user misses an item that has a tip, the review shows the tip again before the next attempt. Tips can be saved to a "My tips" list.
+- Tips are written and reviewed like the rest of the content. A tip must not distort the facts it's meant to anchor.
 
 ## 9. Gamification, with incentives aimed at retention
 

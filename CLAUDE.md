@@ -14,13 +14,15 @@ Guidance for Claude Code when working in this repository.
 2. **Gamification rewards recall and mastery.** XP, streaks, and ranks are earned by correct recall and mastered items, never by raw activity.
 3. **Callbacks everywhere.** New lessons should reintroduce previously learned items in new contexts. A name the user has learned should keep coming back.
 4. **Accuracy is non-negotiable.** Sports fans will notice wrong stats. Every fact needs a source and a last-verified date. Never invent stats, contracts, quotes, or results, in code, seed data, or tests that might ship.
-5. **One sport first, multi-sport by design.** v1 ships a single sport (NFL is the recommendation in the PRD, pending confirmation). Don't hard-code sport-specific assumptions into shared models.
+5. **Memory tips are seasoning, not the meal.** Mnemonics inspired by Memory OS (acronyms, the chain method, stories, memory palaces) appear only on big ordered or grouped content, like the list of eras. They're optional and dismissible, never on every lesson.
+6. **One sport first, multi-sport by design.** v1 ships a single sport (NFL is the recommendation in the PRD, pending confirmation). Don't hard-code sport-specific assumptions into shared models.
 
 ## Domain model (target shape)
 
 - **Sport** → **Track** (`foundations` | `past` | `present`) → **Unit** (an era, position group, team…) → **Lesson** → **Exercise**.
 - **KnowledgeItem:** the atomic fact the user learns (a player, stat, moment, rule, or contract). It links to **Entities** (Player, Team, Coach, Era, Moment) and carries `source` and `lastVerifiedAt`.
 - **Exercise:** tests one or more KnowledgeItems through a cue type (name, photo, jersey, stat, timeline, clip).
+- **MemoryTip:** an optional mnemonic (`acronym` | `chain` | `story` | `palace`) attached to a *set* of KnowledgeItems. It is shown when that content is introduced and again in review after a miss.
 - **UserItemState:** per-user memory state for each KnowledgeItem (FSRS-style stability/difficulty, due date, mastery level). It drives the Review queue and lesson callbacks.
 - Present-track stats and contracts are referenced **by ID from a data provider**, not copied into lesson text, so they can be refreshed without rewriting lessons.
 

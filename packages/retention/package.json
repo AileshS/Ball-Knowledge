@@ -1,0 +1,16 @@
+{
+  "name": "@ball-knowledge/retention",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The retention engine: spaced-repetition scheduling, mastery, review queue, and callbacks.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p test"
+  },
+  "dependencies": {
+    "@ball-knowledge/core": "*"
+  }
+}

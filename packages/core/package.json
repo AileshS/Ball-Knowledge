@@ -1,0 +1,13 @@
+{
+  "name": "@ball-knowledge/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Sport-agnostic domain model: schemas and types for sports, content, and user memory state.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p test"
+  }
+}

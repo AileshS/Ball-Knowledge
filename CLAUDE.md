@@ -25,9 +25,13 @@ Requires Node 22.12+ (CI uses the version in `.nvmrc`). Run everything from the 
 | `npm test` | Run all tests once (Vitest; each `packages/*` is a test project) |
 | `npm run test:watch` | Tests in watch mode |
 | `npx vitest run packages/retention` | Run one package's tests |
-| `npm run coverage` | Tests with a coverage report (`coverage/index.html`). CI fails if `packages/retention/src` drops below 90% lines. |
+| `npm run coverage` | Tests with a coverage report (`coverage/index.html`). CI fails if `packages/retention/src`, `packages/content-tools/src`, or `apps/mobile/src` drops below 90% lines. |
 | `npm run content:check` | Validate everything in `content/` (also part of `npm run check`) |
 | `npm run content:build` | Validate and write `dist/content/content.json`; add `-- --ship` for a release (approved content only) |
+| `npm run web -w @ball-knowledge/mobile` | Build content, then run the app in a browser (http://localhost:8081) |
+| `npm run start -w @ball-knowledge/mobile` | Build content, then start Expo for a phone (scan the QR code with Expo Go) |
+| `npm run export:web -w @ball-knowledge/mobile` | Release web bundle; refuses unless all content is approved (`--ship`) |
+| `npm run export:web:preview -w @ball-knowledge/mobile` | Preview web bundle with unreviewed content (CI runs this to prove the app still bundles) |
 | `npm run sim -w @ball-knowledge/retention` | Print a 365-day simulation of the scheduler (review load, north-star recall) |
 | `npm run lint` | ESLint (type-aware) |
 | `npm run typecheck` | `tsc --noEmit` in every workspace |
@@ -38,6 +42,11 @@ Requires Node 22.12+ (CI uses the version in `.nvmrc`). Run everything from the 
 - `packages/core`: `@ball-knowledge/core`, the sport-agnostic domain model.
 - `packages/content-tools`: `@ball-knowledge/content-tools`, which loads, validates, and bundles `content/` YAML. Authoring rules are in [`docs/content-authoring.md`](docs/content-authoring.md).
 - `content/`: authored lessons, facts, and exercises as YAML (Phase 4).
+- `apps/mobile`: `@ball-knowledge/mobile`, the Expo app (Expo Router; screens in `app/`).
+  - Logic that doesn't depend on React Native lives in `src/` and is tested with Vitest: content loading (`src/content`), the path model (`src/model`), and saved progress (`src/progress`).
+  - The content bundle is generated into `src/generated/` (gitignored) by `npm run content -w @ball-knowledge/mobile`; app scripts do this automatically.
+  - Progress is stored through a small key-value interface: expo-sqlite's store on iOS/Android (`create-store.ts`), localStorage on web (`create-store.web.ts`).
+- **Windows note:** run commands from the correctly cased path (`C:\Users\…\Downloads\…`). Workspace links created from a differently cased path make Metro report "Unable to resolve module @ball-knowledge/…".
 - `packages/retention`: `@ball-knowledge/retention`, the retention engine. See its [README](packages/retention/README.md) for modules, defaults, and simulation results. Tunables live in `src/config.ts`.
 - Workspace packages export TypeScript source directly (`"exports": "./src/index.ts"`); there is no build step.
 - ESLint enforces purity in `packages/core/src` and `packages/retention/src`:

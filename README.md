@@ -10,6 +10,13 @@ npm ci           # install dependencies from the lockfile
 npm run check    # format check, lint, typecheck, and tests (what CI runs)
 ```
 
+### Run the app
+
+```sh
+npm run web -w @ball-knowledge/mobile     # in a browser at http://localhost:8081
+npm run start -w @ball-knowledge/mobile   # on your phone: scan the QR code with Expo Go
+```
+
 ## Where things are
 
 - [`docs/PRD.md`](docs/PRD.md): the product spec
@@ -20,3 +27,4 @@ npm run check    # format check, lint, typecheck, and tests (what CI runs)
 - `content/`: lessons, facts, and exercises (YAML)
 - `packages/content-tools`: content validator and bundler (`npm run content:check`)
 - `packages/retention`: the retention engine
+- `apps/mobile`: the Expo app (iOS, Android, web)

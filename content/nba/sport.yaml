@@ -1,0 +1,5 @@
+# Shown on the sport picker as "coming soon" (PRD §6); no content yet.
+sports:
+  - id: nba
+    name: NBA
+    status: coming_soon

@@ -8,3 +8,6 @@ dist/
 # Authored content is checked for meaning by `npm run content:check`; whitespace
 # style should never fail CI for non-engineer authors.
 content/
+
+# Generated content bundle for the app (rebuilt by npm run content -w @ball-knowledge/mobile).
+apps/mobile/src/generated/

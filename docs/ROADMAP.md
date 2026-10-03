@@ -28,7 +28,7 @@ If the loop doesn't converge within 5 iterations, or a fix would need a destruct
 |---|---|---|
 | 0 | Decision records ([`decisions/`](decisions/README.md)), this roadmap, repo guardrails | Done |
 | 1 | Monorepo scaffold: npm workspaces, strict TypeScript, ESLint, Prettier, Vitest, CI | Done |
-| 2 | Domain model (`packages/core`): zod schemas for sports, tracks, units, entities, knowledge items, exercises, lessons, memory tips, user state, review log | Planned |
+| 2 | Domain model (`packages/core`): zod schemas for sports, tracks, units, entities, knowledge items, exercises, lessons, memory tips, user state, review log | Done |
 | 3 | Retention engine (`packages/retention`): FSRS scheduling, mastery levels, decay, review queue, daily plan, callbacks, cue rotation, memory-tip re-show; unit, property, and 365-day simulation tests | Planned |
 | 4 | Content pipeline: YAML content in `content/nfl/`, `content:check` validator, `content:build` bundle, authoring guide; first Foundations unit from the official rulebook, left in review until the owner approves | Planned |
 | 5 | Expo app shell (`apps/mobile`): sport picker, track picker, learning path, local persistence behind a repository interface | Planned |

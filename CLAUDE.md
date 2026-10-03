@@ -50,10 +50,12 @@ Requires Node 22.12+ (CI uses the version in `.nvmrc`). Run everything from the 
 5. **Memory tips are seasoning, not the meal.** Mnemonics inspired by Memory OS (acronyms, the chain method, stories, memory palaces) appear only on big ordered or grouped content, like the list of eras. They're optional and dismissible, never on every lesson.
 6. **One sport first, multi-sport by design.** v1 ships a single sport: the NFL, confirmed in [ADR 0001](docs/decisions/0001-sport-nfl.md). Don't hard-code sport-specific assumptions into shared models.
 
-## Domain model (target shape)
+## Domain model
+
+The zod schemas in `packages/core/src` are the source of truth for this shape (Phase 2). Fixtures for tests are in `@ball-knowledge/core/testing`.
 
 - **Sport** → **Track** (`foundations` | `past` | `present`) → **Unit** (an era, position group, team…) → **Lesson** → **Exercise**.
-- **KnowledgeItem:** the atomic fact the user learns (a player, stat, moment, rule, or contract). It links to **Entities** (Player, Team, Coach, Era, Moment) and carries `source` and `lastVerifiedAt`.
+- **KnowledgeItem:** the atomic fact the user learns (a player, stat, moment, rule, or contract). It links to **Entities** (Player, Team, Coach, Era, Moment) and carries `sources` (at least one) and `lastVerifiedAt`.
 - **Exercise:** tests one or more KnowledgeItems through a cue type (name, photo, jersey, stat, timeline, clip).
 - **MemoryTip:** an optional mnemonic (`acronym` | `chain` | `story` | `palace`) attached to a *set* of KnowledgeItems. It is shown when that content is introduced and again in review after a miss.
 - **UserItemState:** per-user memory state for each KnowledgeItem (FSRS-style stability/difficulty, due date, mastery level). It drives the Review queue and lesson callbacks.

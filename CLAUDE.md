@@ -25,7 +25,8 @@ Requires Node 22.12+ (CI uses the version in `.nvmrc`). Run everything from the 
 | `npm test` | Run all tests once (Vitest; each `packages/*` is a test project) |
 | `npm run test:watch` | Tests in watch mode |
 | `npx vitest run packages/retention` | Run one package's tests |
-| `npm run coverage` | Tests with a coverage report (`coverage/index.html`) |
+| `npm run coverage` | Tests with a coverage report (`coverage/index.html`). CI fails if `packages/retention/src` drops below 90% lines. |
+| `npm run sim -w @ball-knowledge/retention` | Print a 365-day simulation of the scheduler (review load, north-star recall) |
 | `npm run lint` | ESLint (type-aware) |
 | `npm run typecheck` | `tsc --noEmit` in every workspace |
 | `npm run format` | Prettier: rewrites code/config files. Markdown is excluded on purpose. |
@@ -33,7 +34,7 @@ Requires Node 22.12+ (CI uses the version in `.nvmrc`). Run everything from the 
 ## Repo layout
 
 - `packages/core`: `@ball-knowledge/core`, the sport-agnostic domain model.
-- `packages/retention`: `@ball-knowledge/retention`, the retention engine.
+- `packages/retention`: `@ball-knowledge/retention`, the retention engine. See its [README](packages/retention/README.md) for modules, defaults, and simulation results. Tunables live in `src/config.ts`.
 - Workspace packages export TypeScript source directly (`"exports": "./src/index.ts"`); there is no build step.
 - ESLint enforces purity in `packages/core/src` and `packages/retention/src`:
   - no Node or UI imports

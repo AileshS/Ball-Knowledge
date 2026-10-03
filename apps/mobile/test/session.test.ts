@@ -360,6 +360,27 @@ describe('scoring and feedback', () => {
     expect(missed.grade).toBe('again');
   });
 
+  it('never time-stamps an answer before the last review of the item (fast clock elsewhere)', () => {
+    const itemId = 'nfl.rules.touchdown-points' as ItemId;
+    const future = new Date(T.getTime() + 5 * 60_000);
+    const synced = scheduler.applyReview(scheduler.newItemState(itemId, future), {
+      grade: 'good',
+      now: future,
+      cue: 'stat',
+      exerciseType: 'identify',
+      context: 'review',
+    }).state;
+    const scored = scoreAnswer(
+      scheduler,
+      new Map([[itemId, synced]]),
+      step('choice'),
+      ex('nfl.ex.scoring.touchdown-points'),
+      { correct: true },
+      T,
+    );
+    expect(scored.results[0]?.logEntry.reviewedAt.getTime()).toBe(future.getTime() + 1);
+  });
+
   it('shows the answer and why it matters, plus tips only after a miss', () => {
     const e = ex('nfl.ex.scoring.touchdown-points');
     const tip = MemoryTipSchema.parse({

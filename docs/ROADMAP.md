@@ -33,7 +33,7 @@ If the loop doesn't converge within 5 iterations, or a fix would need a destruct
 | 4 | Content pipeline: YAML content in `content/nfl/`, `content:check` validator, `content:build` bundle, authoring guide; first Foundations unit from the official rulebook, left in review until the owner approves | Done (content awaiting owner review) |
 | 5 | Expo app shell (`apps/mobile`): sport picker, track picker, learning path, local persistence behind a repository interface | Done |
 | 6 | **Playable vertical slice:** lesson player (callbacks → new items → recall check), first exercise types, review session, "done for today," dev clock-advance. Test with 3–5 target users before scaling content | Done (next: test with 3–5 target users) |
-| 7 | Accounts and sync (Supabase): email/Apple/Google auth, row-level security, review-log sync, account deletion | Planned |
+| 7 | Accounts and sync (Supabase): email/Apple/Google auth, row-level security, review-log sync, account deletion | Built; email code sign-in (Apple/Google later) |
 | 8 | Onboarding: placement quiz, Foundations skip, Past/Present switching on one review queue | Planned |
 | 9 | Gamification: recall-only XP, review streak (no guilt), mastery-gated ranks (no daily goal: ADR 0006), mastery map, "My tips" | Planned |
 | 10 | Remaining exercise types: match, timeline, identify (jersey/silhouette), who-did-it, clip with text fallback | Planned |

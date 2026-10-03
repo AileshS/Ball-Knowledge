@@ -48,6 +48,8 @@ Requires Node 22.12+ (CI uses the version in `.nvmrc`). Run everything from the 
   - Dev builds show a dev clock on the Today card (+1 day / +7 days) to test spacing. It only moves forward, because reviews must stay in chronological order.
   - The content bundle is generated into `src/generated/` (gitignored) by `npm run content -w @ball-knowledge/mobile`; app scripts do this automatically.
   - Progress is stored through a small key-value interface: expo-sqlite's store on iOS/Android (`create-store.ts`), localStorage on web (`create-store.web.ts`).
+  - Accounts and sync (`src/sync`, `src/state/Account.tsx`): Supabase email-code sign-in, and two-way sync of the append-only review log plus lesson completions. States are rebuilt by replay (ADR 0003). Settings live in `apps/mobile/.env` (gitignored; see `.env.example`). Without them the app runs offline.
+- `supabase/migrations/`: forward-only SQL. Apply each file once in the Supabase SQL editor, and never edit one that has already run. Setup steps are in [`docs/supabase-setup.md`](docs/supabase-setup.md).
 - **Windows note:** run commands from the correctly cased path (`C:\Users\…\Downloads\…`). Workspace links created from a differently cased path make Metro report "Unable to resolve module @ball-knowledge/…".
 - `packages/retention`: `@ball-knowledge/retention`, the retention engine. See its [README](packages/retention/README.md) for modules, defaults, and simulation results. Tunables live in `src/config.ts`.
 - Workspace packages export TypeScript source directly (`"exports": "./src/index.ts"`); there is no build step.

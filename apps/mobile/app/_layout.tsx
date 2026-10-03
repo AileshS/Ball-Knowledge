@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { AccountProvider } from '../src/state/Account';
 import { AppStateProvider } from '../src/state/AppState';
 import { useTheme } from '../src/ui/theme';
 
@@ -20,6 +21,7 @@ function Navigator() {
       <Stack.Screen name="[sport]/review" options={{ title: 'Review' }} />
       <Stack.Screen name="lesson/[id]" options={{ title: 'Lesson' }} />
       <Stack.Screen name="play/[id]" options={{ title: 'Lesson' }} />
+      <Stack.Screen name="account" options={{ title: 'Account' }} />
     </Stack>
   );
 }
@@ -27,8 +29,10 @@ function Navigator() {
 export default function RootLayout() {
   return (
     <AppStateProvider>
-      <StatusBar style="auto" />
-      <Navigator />
+      <AccountProvider>
+        <StatusBar style="auto" />
+        <Navigator />
+      </AccountProvider>
     </AppStateProvider>
   );
 }

@@ -35,3 +35,11 @@ Options considered: **Supabase** (Postgres, built-in auth, row-level security), 
   - Rules for apps offering third-party login. Sign in with Apple, already in the PRD, covers this alongside Google sign-in.
   
   Re-check the current App Store Review Guidelines before submission.
+
+## Update (2026-10-03, Phase 7)
+
+- **Sign-in:** an emailed 6-digit code (Supabase email OTP), which works the same on web and phones. Apple and Google come later, once their developer accounts exist.
+- **Storage:** the server stores only the append-only `review_log` and `lesson_completions`. Item memory state is never stored there; each device rebuilds it by replaying the merged log. That makes sync conflict-free: answers made offline on two devices simply both count.
+- **Device ownership:** a device's progress belongs to the first account that signs in on it. If a different account signs in, sync stops, and the user must explicitly choose to replace that device's copy. Two people's learning is never merged.
+- **Account deletion:** the `delete_my_account()` database function deletes the account and cascades to all of its synced rows.
+- **Setup:** see [docs/supabase-setup.md](../supabase-setup.md).

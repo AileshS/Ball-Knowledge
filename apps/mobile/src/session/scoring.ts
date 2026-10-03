@@ -42,16 +42,22 @@ export function scoreAnswer(
     },
     scheduler.config,
   );
-  const results = step.itemIds.map((itemId) =>
-    scheduler.applyReview(states.get(itemId) ?? scheduler.newItemState(itemId, now), {
+  const results = step.itemIds.map((itemId) => {
+    const previous = states.get(itemId) ?? scheduler.newItemState(itemId, now);
+    // A synced answer from a device whose clock runs fast can be "in the future".
+    // Never time-stamp at or before the item's last review: reviews stay in order,
+    // and each answer keeps a distinct sync id (item + time).
+    const last = previous.lastReviewedAt?.getTime() ?? -Infinity;
+    const at = now.getTime() > last ? now : new Date(last + 1);
+    return scheduler.applyReview(previous, {
       grade,
-      now,
+      now: at,
       cue: exercise.cue,
       exerciseType: exercise.type,
       context: PHASE_CONTEXT[step.phase],
       ...(outcome.responseMs === undefined ? {} : { responseMs: outcome.responseMs }),
-    }),
-  );
+    });
+  });
   return { grade, results };
 }
 

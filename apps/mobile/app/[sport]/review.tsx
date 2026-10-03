@@ -4,6 +4,7 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { planReview } from '../../src/session/plan';
 import { startOfLocalDay, todaySummary } from '../../src/session/today';
+import { useAccount } from '../../src/state/Account';
 import { useAppState } from '../../src/state/AppState';
 import { Body, Screen } from '../../src/ui/components';
 import { Button } from '../../src/ui/controls';
@@ -32,6 +33,7 @@ function ReviewRun({
   startStates: ReadonlyMap<ItemId, UserItemState>;
 }) {
   const { content, scheduler, clock, progress, log } = useAppState();
+  const { syncNow } = useAccount();
   const [steps] = useState(() => {
     const now = clock.now();
     const today = todaySummary({
@@ -70,5 +72,14 @@ function ReviewRun({
       </SessionComplete>
     );
   }
-  return <Player steps={steps} startStates={startStates} onFinish={setSummary} />;
+  return (
+    <Player
+      steps={steps}
+      startStates={startStates}
+      onFinish={(result) => {
+        setSummary(result);
+        void syncNow();
+      }}
+    />
+  );
 }

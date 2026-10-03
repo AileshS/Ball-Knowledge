@@ -4,6 +4,7 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { lessonStatus } from '../../src/model/path';
 import { planLesson } from '../../src/session/plan';
+import { useAccount } from '../../src/state/Account';
 import { useAppState, useCompletedLessons } from '../../src/state/AppState';
 import { Body, Screen } from '../../src/ui/components';
 import { Button } from '../../src/ui/controls';
@@ -60,6 +61,7 @@ function LessonRun({
   startStates: ReadonlyMap<ItemId, UserItemState>;
 }) {
   const { content, scheduler, clock, completeLesson } = useAppState();
+  const { syncNow } = useAccount();
   const [steps] = useState(() => {
     const now = clock.now();
     return planLesson({
@@ -76,7 +78,10 @@ function LessonRun({
 
   const finish = (result: SessionSummary) => {
     completeLesson(lesson.id).then(
-      () => setSummary(result),
+      () => {
+        setSummary(result);
+        void syncNow();
+      },
       (e: unknown) => setError(e instanceof Error ? e.message : String(e)),
     );
   };

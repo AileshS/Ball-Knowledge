@@ -17,6 +17,7 @@ import {
   type Progress,
   type ProgressRepository,
 } from '../progress/repository';
+import type { KeyValueStore } from '../progress/store';
 import { advanceClock, createClock, loadClockOffset, type Clock } from '../session/clock';
 
 interface Loaded {
@@ -29,6 +30,8 @@ interface AppState {
   readonly content: AppContent;
   readonly scheduler: Scheduler;
   readonly repository: ProgressRepository;
+  /** The device key-value store (for small settings such as the sync owner). */
+  readonly store: KeyValueStore;
   /** Null while loading from storage. */
   readonly progress: Progress | null;
   /** The answer log (oldest first); empty while loading. */
@@ -104,6 +107,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       content: bundledContent,
       scheduler,
       repository,
+      store,
       progress: loaded?.progress ?? null,
       log: loaded?.log ?? [],
       clock: loaded?.clock ?? createClock(0),
@@ -113,7 +117,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       completeLesson,
       advanceDays,
     }),
-    [scheduler, repository, loaded, error, reload, saveResults, completeLesson, advanceDays],
+    [scheduler, repository, store, loaded, error, reload, saveResults, completeLesson, advanceDays],
   );
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;
 }

@@ -60,14 +60,27 @@ interface FieldProps {
   readonly onSubmit: () => void;
   readonly label: string;
   readonly editable?: boolean;
+  readonly placeholder?: string;
+  readonly keyboardType?: 'default' | 'email-address' | 'number-pad';
+  readonly autoFocus?: boolean;
 }
 
-export function Field({ value, onChangeText, onSubmit, label, editable = true }: FieldProps) {
+export function Field({
+  value,
+  onChangeText,
+  onSubmit,
+  label,
+  editable = true,
+  placeholder = 'Type your answer',
+  keyboardType = 'default',
+  autoFocus = true,
+}: FieldProps) {
   const t = useTheme();
   return (
     <TextInput
       accessibilityLabel={label}
-      placeholder="Type your answer"
+      placeholder={placeholder}
+      keyboardType={keyboardType}
       placeholderTextColor={t.textMuted}
       value={value}
       onChangeText={onChangeText}
@@ -75,7 +88,7 @@ export function Field({ value, onChangeText, onSubmit, label, editable = true }:
       editable={editable}
       autoCapitalize="none"
       autoCorrect={false}
-      autoFocus
+      autoFocus={autoFocus}
       returnKeyType="done"
       style={[styles.field, { color: t.text, borderColor: t.border, backgroundColor: t.surface }]}
     />

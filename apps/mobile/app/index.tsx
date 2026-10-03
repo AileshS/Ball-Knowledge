@@ -1,10 +1,12 @@
 import { router } from 'expo-router';
 import { awaitingReview, sportCards } from '../src/model/path';
+import { useAccount } from '../src/state/Account';
 import { useAppState } from '../src/state/AppState';
 import { Badge, Banner, Body, Card, Heading, Row, Screen, Title } from '../src/ui/components';
 
 export default function SportPicker() {
   const { content, error } = useAppState();
+  const account = useAccount();
   const pending = awaitingReview(content);
 
   return (
@@ -16,6 +18,24 @@ export default function SportPicker() {
       {error && <Banner>Couldn't load your progress: {error}</Banner>}
       {content.mode === 'dev' && pending > 0 && (
         <Banner>Preview build: {pending} fact(s) are still awaiting review.</Banner>
+      )}
+      {account.configured && (
+        <Card
+          accessibilityLabel={
+            account.email ? `Account: ${account.email}` : 'Sign in to sync your progress'
+          }
+          onPress={() => router.push('/account')}
+        >
+          <Row>
+            <Body>
+              {account.email ? `Signed in as ${account.email}` : 'Sign in to sync your progress'}
+            </Body>
+            <Badge
+              label={account.email ? 'Account' : 'Sign in'}
+              tone={account.email ? 'muted' : 'primary'}
+            />
+          </Row>
+        </Card>
       )}
       <Heading>Choose a sport</Heading>
       {sportCards(content).map((sport) => (

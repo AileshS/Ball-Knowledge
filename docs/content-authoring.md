@@ -66,6 +66,7 @@ Every item needs:
   - `locator`: where in the source the fact appears, e.g. a rule, section, and article, or a page and table.
   - `quote`: the supporting text, copied **verbatim**. Use `…` to skip words. Don't paraphrase.
   - `accessedAt`: the date you read it.
+- **`derivedValues`** (only if needed): any number in the statement that you computed rather than quoted, such as a unit conversion. Each entry has the `value` and `from` (how it was computed). The checker requires every other number in the statement to appear in a source quote. It also requires numbers in exercise prompts and answers to appear in the tested facts' statements. A typo like 6 → 7 fails the check.
 - **`lastVerifiedAt`:** the date you last confirmed the fact against its sources.
 - **`reviewStatus`:** `draft` while writing, `in_review` when ready for a second person, and `approved` only after that person checks every quote against its source.
 
@@ -104,7 +105,7 @@ Use these sparingly: only for big ordered or grouped content, like the sequence 
 Before setting `reviewStatus: approved`, open each source and confirm:
 
 - [ ] The `quote` appears verbatim at the `locator`, in the current edition of the source.
-- [ ] The `statement` says exactly what the quote supports: no more, no less. Unit conversions are correct.
+- [ ] The `statement` says exactly what the quote supports: no more, no less. Every `derivedValues` computation is correct.
 - [ ] The `whyItMatters` line is true and follows from cited facts.
 - [ ] Exercise answers are correct, and no distractor could also be right.
 - [ ] Nothing uses photos, logos, or invented numbers.

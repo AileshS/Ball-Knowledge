@@ -7,6 +7,7 @@ import {
   SportSchema,
   UnitSchema,
   validate,
+  withoutPlaceholders,
   type Entity,
   type Exercise,
   type KnowledgeItem,
@@ -17,6 +18,7 @@ import {
 } from '@ball-knowledge/core';
 import type { z } from 'zod';
 import type { Collection, LoadResult, RawRecord } from './load';
+import { numbersIn, untracedNumbers } from './numbers';
 
 /**
  * `dev`: what CI runs on every change. Unreviewed content is allowed (as warnings).
@@ -326,6 +328,46 @@ export function checkContent(loaded: LoadResult, options: CheckOptions): CheckRe
     }
   }
   freshness.sort((a, b) => b.ageDays - a.ageDays || (a.itemId < b.itemId ? -1 : 1));
+
+  // 8. Every number a user sees traces back to a source (accuracy, principle 4).
+  const traceable = new Map<string, Set<string>>();
+  for (const { value: item, where } of parsed.items) {
+    const quoted = new Set(item.sources.flatMap((s) => (s.quote ? numbersIn(s.quote) : [])));
+    const derived = new Set(item.derivedValues.flatMap((d) => numbersIn(d.value)));
+    for (const n of untracedNumbers(
+      withoutPlaceholders(item.statement),
+      new Set([...quoted, ...derived]),
+    )) {
+      error(
+        where,
+        `Number "${n}" in the statement isn't in any source quote; quote it, or list it in derivedValues with how it was computed`,
+      );
+    }
+    traceable.set(
+      item.id,
+      new Set([...numbersIn(withoutPlaceholders(item.statement)), ...derived]),
+    );
+  }
+  for (const { value: exercise, where } of parsed.exercises) {
+    const allowed = new Set(exercise.itemIds.flatMap((id) => [...(traceable.get(id) ?? [])]));
+    const shown: [string, string][] = [['prompt', exercise.prompt]];
+    if (exercise.textFallback) shown.push(['textFallback', exercise.textFallback]);
+    if ('answer' in exercise) {
+      shown.push(['answer', exercise.answer]);
+      exercise.acceptedAnswers.forEach((a, i) => shown.push([`acceptedAnswers.${i}`, a]));
+    }
+    if (exercise.type === 'match') {
+      exercise.pairs.forEach((p, i) => shown.push([`pairs.${i}`, `${p.left} ${p.right}`]));
+    }
+    if (exercise.type === 'higher_lower' && exercise.explanation) {
+      shown.push(['explanation', exercise.explanation]);
+    }
+    for (const [field, text] of shown) {
+      for (const n of untracedNumbers(text, allowed)) {
+        error(where, `Number "${n}" in ${field} doesn't appear in the tested items' statements`);
+      }
+    }
+  }
 
   const values = <T>(list: Located<T>[]) => list.map((l) => l.value);
   return {

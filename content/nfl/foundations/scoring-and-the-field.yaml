@@ -3,8 +3,8 @@
 # Every fact below comes from the 2026 NFL Rulebook (operations.nfl.com), checked on
 # 2026-10-02. Each source has a `locator` (rule, section, article) and a verbatim
 # `quote`, so a reviewer can confirm it in seconds.
-# Numbers in yards that the rulebook gives in feet are plain conversions
-# (3 feet = 1 yard), stated as such.
+# Numbers in yards that the rulebook gives in feet are conversions (3 feet = 1
+# yard), declared in `derivedValues` so the checker can trace every number.
 #
 # Status: in_review. The owner approves before anything ships.
 
@@ -114,6 +114,9 @@ items:
     kind: rule
     label: Size of the field
     statement: The field is 360 feet long and 160 feet wide (120 yards by 53⅓ yards).
+    derivedValues:
+      - { value: '120', from: 360 feet ÷ 3 feet per yard }
+      - { value: 53⅓, from: 160 feet ÷ 3 feet per yard }
     whyItMatters: Every yard line you hear on a broadcast lives inside these dimensions.
     tags: [topic:field]
     availableCues: [name, stat]
@@ -129,7 +132,7 @@ items:
     track: foundations
     kind: rule
     label: Goal lines and end zones
-    statement: Each goal line sits 10 yards in from its end line; the end zone is the area between them, and the field of play lies between the two goal lines.
+    statement: Each goal line sits 10 yards in from its end line; the end zone is the area between them, and the field of play lies between the goal lines.
     whyItMatters: Ten yards of end zone at each end of a 120-yard field leaves the familiar 100 yards between the goal lines.
     tags: [topic:field]
     availableCues: [name, stat]

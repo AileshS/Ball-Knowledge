@@ -58,6 +58,14 @@ export const KnowledgeItemSchema = z
       .optional(),
     availableCues: z.array(CueSchema).min(1, 'An item needs at least one cue'),
     dataRefs: z.array(DataRefSchema).default([]),
+    /**
+     * Numbers in the statement that are computed from quoted ones rather than quoted
+     * directly (e.g. feet → yards), each with how. The content checker requires every
+     * other number in the statement to appear in a source quote.
+     */
+    derivedValues: z
+      .array(z.object({ value: z.string().trim().min(1), from: z.string().trim().min(1) }))
+      .default([]),
     sources: z.array(SourceSchema).min(1, 'Every fact needs at least one source'),
     lastVerifiedAt: IsoDateSchema,
     reviewStatus: ReviewStatusSchema,

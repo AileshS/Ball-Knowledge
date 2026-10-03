@@ -1,0 +1,385 @@
+# Foundations: Scoring & the field
+#
+# Every fact below comes from the 2026 NFL Rulebook (operations.nfl.com), checked on
+# 2026-10-02. Each source has a `locator` (rule, section, article) and a verbatim
+# `quote`, so a reviewer can confirm it in seconds.
+# Numbers in yards that the rulebook gives in feet are conversions (3 feet = 1
+# yard), declared in `derivedValues` so the checker can trace every number.
+#
+# Status: in_review. The owner approves before anything ships.
+
+x-sources:
+  rulebook: &rulebook
+    url: https://operations.nfl.com/the-rules/nfl-rulebook/index.html
+    title: 2026 NFL Rulebook
+    publisher: NFL Football Operations
+    accessedAt: 2026-10-02
+
+units:
+  - id: nfl.foundations.scoring-and-the-field
+    sportId: nfl
+    track: foundations
+    kind: topic
+    title: Scoring & the field
+    order: 0
+    tags: [topic:scoring, topic:field]
+
+items:
+  - id: nfl.rules.touchdown-points
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Touchdown points
+    statement: A touchdown is worth 6 points.
+    whyItMatters: It's the biggest single score, so every other score is measured against it.
+    tags: [topic:scoring]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 11, Section 1, Article 2
+        quote: 'Touchdown: 6 points'
+    lastVerifiedAt: 2026-10-02
+    reviewStatus: in_review
+
+  - id: nfl.rules.field-goal-points
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Field goal points
+    statement: A field goal is worth 3 points.
+    whyItMatters: Half a touchdown, which is why a team down by 3 can tie with one kick.
+    tags: [topic:scoring]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 11, Section 1, Article 2
+        quote: 'Field Goal: 3 points'
+    lastVerifiedAt: 2026-10-02
+    reviewStatus: in_review
+
+  - id: nfl.rules.safety-points
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Safety points
+    statement: A safety is worth 2 points.
+    whyItMatters: One way it happens is a ball carrier being downed in his own end zone, so the points go to the defense.
+    tags: [topic:scoring]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 11, Section 1, Article 2
+        quote: 'Safety: 2 points'
+      - <<: *rulebook
+        locator: Rule 11, Section 5, Article 1
+        quote: 'when an impetus by a team sends the ball behind its own goal line, and the ball is dead in the end zone in its possession or the ball is out of bounds behind the goal line.'
+    lastVerifiedAt: 2026-10-02
+    reviewStatus: in_review
+
+  - id: nfl.rules.try-points
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Points on the try
+    statement: After a touchdown, the try is worth 1 point for a kick through the goal or 2 points for scoring again by run or pass.
+    whyItMatters: Kick for 1 or go for 2 — if the try succeeds, the touchdown ends up worth 7 or 8, a choice that shapes late-game math.
+    tags: [topic:scoring, topic:try]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 11, Section 1, Article 2
+        quote: 'Try after touchdown: 1 point (Field Goal or Safety) or 2 points (Touchdown)'
+    lastVerifiedAt: 2026-10-02
+    reviewStatus: in_review
+
+  - id: nfl.rules.try-spots
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Where the try starts
+    statement: A try kick is snapped 15 yards from the goal line; a two-point try by run or pass starts 2 yards out.
+    whyItMatters: 'The two options start in very different places: a kick from 15 yards out, or a run or pass from just 2 yards away.'
+    tags: [topic:try, topic:field]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 11, Section 3, Article 1
+        quote: '15 yards from the defensive team’s goal line for a Try-kick; or two yards from the defensive team’s goal line for a Try by pass or run.'
+    lastVerifiedAt: 2026-10-02
+    reviewStatus: in_review
+
+  - id: nfl.rules.field-size
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Size of the field
+    statement: The field is 360 feet long and 160 feet wide (120 yards by 53⅓ yards).
+    derivedValues:
+      - { value: '120', from: 360 feet ÷ 3 feet per yard }
+      - { value: 53⅓, from: 160 feet ÷ 3 feet per yard }
+    whyItMatters: Every yard line you hear on a broadcast lives inside these dimensions.
+    tags: [topic:field]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 1, Section 1, Article 1
+        quote: 'The game shall be played upon a rectangular field, 360 feet in length and 160 feet in width.'
+    lastVerifiedAt: 2026-10-02
+    reviewStatus: in_review
+
+  - id: nfl.rules.end-zones
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Goal lines and end zones
+    statement: Each goal line sits 10 yards in from its end line; the end zone is the area between them, and the field of play lies between the goal lines.
+    whyItMatters: Ten yards of end zone at each end of a 120-yard field leaves the familiar 100 yards between the goal lines.
+    tags: [topic:field]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 1, Section 1, Article 1
+        quote: 'Goal Lines shall be established in the field 10 yards from and parallel to each end line. The area bounded by goal lines and sidelines is known as the Field of Play. … The areas bounded by goal lines, end lines, and sidelines are known as the End Zones.'
+    lastVerifiedAt: 2026-10-02
+    reviewStatus: in_review
+
+  - id: nfl.rules.crossbar
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: The crossbar
+    statement: The goal's crossbar sits in the plane of each end line; it is 18 feet 6 inches long, and its top is 10 feet above the ground.
+    whyItMatters: Because the goal sits on the end line, a kick has to travel the 10-yard end zone on top of the distance to the goal line.
+    tags: [topic:field, topic:scoring]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 1, Section 3, Article 1
+        quote: 'In the plane of each end line, there shall be a centrally placed horizontal crossbar 18 feet, 6 inches in length, the top face of which is 10 feet above the ground.'
+    lastVerifiedAt: 2026-10-02
+    reviewStatus: in_review
+
+exercises:
+  # Lesson 1: How teams score
+  - id: nfl.ex.scoring.touchdown-points
+    type: multiple_choice
+    itemIds: [nfl.rules.touchdown-points]
+    cue: stat
+    prompt: How many points is a touchdown worth?
+    answer: '6'
+    acceptedAnswers: [six]
+    distractors: ['3', '7']
+
+  - id: nfl.ex.scoring.field-goal-points
+    type: multiple_choice
+    itemIds: [nfl.rules.field-goal-points]
+    cue: stat
+    prompt: How many points is a field goal worth?
+    answer: '3'
+    acceptedAnswers: [three]
+    distractors: ['2', '6']
+
+  - id: nfl.ex.scoring.safety-points
+    type: multiple_choice
+    itemIds: [nfl.rules.safety-points]
+    cue: stat
+    prompt: How many points is a safety worth?
+    answer: '2'
+    acceptedAnswers: [two]
+    distractors: ['1', '3']
+
+  - id: nfl.ex.scoring.try-kick-points
+    type: fill_blank
+    itemIds: [nfl.rules.try-points]
+    cue: stat
+    prompt: A successful kick on the try after a touchdown is worth ___ point.
+    answer: '1'
+    acceptedAnswers: [one]
+    distractors: ['2', '3']
+
+  - id: nfl.ex.scoring.try-touchdown-points
+    type: fill_blank
+    itemIds: [nfl.rules.try-points]
+    cue: stat
+    prompt: Scoring a touchdown on the try, by run or pass, is worth ___ points.
+    answer: '2'
+    acceptedAnswers: [two]
+    distractors: ['1', '3']
+
+  - id: nfl.ex.scoring.match-values
+    type: match
+    itemIds: [nfl.rules.touchdown-points, nfl.rules.field-goal-points, nfl.rules.safety-points]
+    cue: name
+    prompt: Match each score to its points.
+    pairs:
+      - { left: Touchdown, right: 6 points }
+      - { left: Field goal, right: 3 points }
+      - { left: Safety, right: 2 points }
+
+  - id: nfl.ex.scoring.field-goal-vs-safety
+    type: higher_lower
+    itemIds: [nfl.rules.field-goal-points, nfl.rules.safety-points]
+    cue: stat
+    prompt: Which is worth more?
+    metric: Points
+    left: { label: Field goal }
+    right: { label: Safety }
+    higher: left
+    explanation: A field goal is worth 3 points; a safety is worth 2.
+
+  - id: nfl.ex.scoring.recall-three-points
+    type: identify
+    itemIds: [nfl.rules.field-goal-points]
+    cue: stat
+    prompt: Name the score worth 3 points.
+    answer: Field goal
+    acceptedAnswers: [field goal, fg]
+    distractors: [Safety, Touchdown]
+
+  - id: nfl.ex.scoring.recall-six-points
+    type: identify
+    itemIds: [nfl.rules.touchdown-points]
+    cue: stat
+    prompt: Name the score worth 6 points.
+    answer: Touchdown
+    acceptedAnswers: [td]
+    distractors: [Field goal, Safety]
+
+  - id: nfl.ex.scoring.recall-two-points
+    type: identify
+    itemIds: [nfl.rules.safety-points]
+    cue: stat
+    prompt: Name the score worth 2 points that the defense earns.
+    answer: Safety
+    distractors: [Field goal, Touchdown]
+
+  # Lesson 2: The field and the try
+  - id: nfl.ex.field.length
+    type: multiple_choice
+    itemIds: [nfl.rules.field-size]
+    cue: stat
+    prompt: How long is an NFL field from end line to end line?
+    answer: 360 feet
+    acceptedAnswers: ['360', 120 yards]
+    distractors: [300 feet, 330 feet]
+
+  - id: nfl.ex.field.width
+    type: multiple_choice
+    itemIds: [nfl.rules.field-size]
+    cue: stat
+    prompt: How wide is an NFL field?
+    answer: 160 feet
+    acceptedAnswers: ['160']
+    distractors: [150 feet, 180 feet]
+
+  - id: nfl.ex.field.goal-line-distance
+    type: fill_blank
+    itemIds: [nfl.rules.end-zones]
+    cue: stat
+    prompt: Each goal line is ___ yards in from its end line.
+    answer: '10'
+    acceptedAnswers: [ten]
+    distractors: ['5', '15']
+
+  - id: nfl.ex.field.end-zone-name
+    type: identify
+    itemIds: [nfl.rules.end-zones]
+    cue: name
+    prompt: What is the area between a goal line and its end line called?
+    answer: End zone
+    acceptedAnswers: [the end zone]
+    distractors: [Field of play, Side zone]
+
+  - id: nfl.ex.try.kick-spot
+    type: multiple_choice
+    itemIds: [nfl.rules.try-spots]
+    cue: stat
+    prompt: How far from the goal line is a try kick snapped?
+    answer: 15 yards
+    acceptedAnswers: ['15']
+    distractors: [2 yards, 10 yards]
+
+  - id: nfl.ex.field.crossbar-height
+    type: multiple_choice
+    itemIds: [nfl.rules.crossbar]
+    cue: stat
+    prompt: How high above the ground is the top of the crossbar?
+    answer: 10 feet
+    acceptedAnswers: ['10']
+    distractors: [8 feet, 12 feet]
+
+  - id: nfl.ex.field.recall-length
+    type: identify
+    itemIds: [nfl.rules.field-size]
+    cue: stat
+    prompt: How many feet long is an NFL field, end line to end line?
+    answer: '360'
+    acceptedAnswers: [360 feet]
+    distractors: ['300', '330']
+
+  - id: nfl.ex.try.recall-two-point-spot
+    type: identify
+    itemIds: [nfl.rules.try-spots]
+    cue: stat
+    prompt: How many yards from the goal line does a two-point try by run or pass start?
+    answer: '2'
+    acceptedAnswers: [two, 2 yards]
+    distractors: ['1', '3']
+
+  - id: nfl.ex.field.recall-crossbar
+    type: identify
+    itemIds: [nfl.rules.crossbar]
+    cue: name
+    prompt: The crossbar sits in the plane of which line?
+    answer: End line
+    acceptedAnswers: [the end line]
+    distractors: [Goal line, Sideline]
+
+lessons:
+  - id: nfl.lesson.how-teams-score
+    unitId: nfl.foundations.scoring-and-the-field
+    order: 0
+    title: How teams score
+    estimatedMinutes: 3
+    introducesItemIds:
+      [
+        nfl.rules.touchdown-points,
+        nfl.rules.field-goal-points,
+        nfl.rules.safety-points,
+        nfl.rules.try-points,
+      ]
+    exerciseIds:
+      - nfl.ex.scoring.touchdown-points
+      - nfl.ex.scoring.field-goal-points
+      - nfl.ex.scoring.safety-points
+      - nfl.ex.scoring.try-kick-points
+      - nfl.ex.scoring.try-touchdown-points
+      - nfl.ex.scoring.match-values
+      - nfl.ex.scoring.field-goal-vs-safety
+    recallCheckExerciseIds:
+      - nfl.ex.scoring.recall-three-points
+      - nfl.ex.scoring.recall-six-points
+      - nfl.ex.scoring.recall-two-points
+    # The very first lesson has nothing earlier to call back to.
+    callbackCount: 0
+
+  - id: nfl.lesson.field-and-the-try
+    unitId: nfl.foundations.scoring-and-the-field
+    order: 1
+    title: The field and the try
+    estimatedMinutes: 4
+    introducesItemIds:
+      [nfl.rules.field-size, nfl.rules.end-zones, nfl.rules.crossbar, nfl.rules.try-spots]
+    exerciseIds:
+      - nfl.ex.field.length
+      - nfl.ex.field.width
+      - nfl.ex.field.goal-line-distance
+      - nfl.ex.field.end-zone-name
+      - nfl.ex.try.kick-spot
+      - nfl.ex.field.crossbar-height
+    recallCheckExerciseIds:
+      - nfl.ex.field.recall-length
+      - nfl.ex.try.recall-two-point-spot
+      - nfl.ex.field.recall-crossbar
+    callbackCount: 2
+    callbackHints: [topic:scoring]

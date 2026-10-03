@@ -26,6 +26,8 @@ Requires Node 22.12+ (CI uses the version in `.nvmrc`). Run everything from the 
 | `npm run test:watch` | Tests in watch mode |
 | `npx vitest run packages/retention` | Run one package's tests |
 | `npm run coverage` | Tests with a coverage report (`coverage/index.html`). CI fails if `packages/retention/src` drops below 90% lines. |
+| `npm run content:check` | Validate everything in `content/` (also part of `npm run check`) |
+| `npm run content:build` | Validate and write `dist/content/content.json`; add `-- --ship` for a release (approved content only) |
 | `npm run sim -w @ball-knowledge/retention` | Print a 365-day simulation of the scheduler (review load, north-star recall) |
 | `npm run lint` | ESLint (type-aware) |
 | `npm run typecheck` | `tsc --noEmit` in every workspace |
@@ -34,6 +36,8 @@ Requires Node 22.12+ (CI uses the version in `.nvmrc`). Run everything from the 
 ## Repo layout
 
 - `packages/core`: `@ball-knowledge/core`, the sport-agnostic domain model.
+- `packages/content-tools`: `@ball-knowledge/content-tools`, which loads, validates, and bundles `content/` YAML. Authoring rules are in [`docs/content-authoring.md`](docs/content-authoring.md).
+- `content/`: authored lessons, facts, and exercises as YAML (Phase 4).
 - `packages/retention`: `@ball-knowledge/retention`, the retention engine. See its [README](packages/retention/README.md) for modules, defaults, and simulation results. Tunables live in `src/config.ts`.
 - Workspace packages export TypeScript source directly (`"exports": "./src/index.ts"`); there is no build step.
 - ESLint enforces purity in `packages/core/src` and `packages/retention/src`:

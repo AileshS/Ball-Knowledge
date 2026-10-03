@@ -1,0 +1,40 @@
+{
+  "name": "@ball-knowledge/mobile",
+  "version": "0.0.0",
+  "main": "expo-router/entry",
+  "dependencies": {
+    "@ball-knowledge/core": "*",
+    "@ball-knowledge/retention": "*",
+    "@expo/metro-runtime": "~57.0.16",
+    "expo": "~57.0.26",
+    "expo-constants": "~57.0.20",
+    "expo-linking": "~57.0.11",
+    "expo-router": "~57.0.24",
+    "expo-sqlite": "~57.0.3",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "~4.26.0",
+    "react-native-web": "~0.21.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "@ball-knowledge/content-tools": "*"
+  },
+  "scripts": {
+    "content": "tsx ../../packages/content-tools/src/cli.ts build ../../content --out src/generated",
+    "content:release": "tsx ../../packages/content-tools/src/cli.ts build ../../content --out src/generated --ship",
+    "start": "npm run content && expo start",
+    "android": "npm run content && expo start --android",
+    "ios": "npm run content && expo start --ios",
+    "web": "npm run content && expo start --web",
+    "export:web": "npm run content:release && expo export --platform web",
+    "export:web:preview": "npm run content && expo export --platform web",
+    "typecheck": "npm run content --silent && tsc --noEmit -p . && tsc --noEmit -p test"
+  },
+  "private": true,
+  "description": "The Ball Knowledge app (Expo + Expo Router): iOS, Android, and web."
+}

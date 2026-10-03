@@ -12,28 +12,25 @@ export interface TodayInput {
   readonly log: readonly ReviewLogEntry[];
   readonly scheduler: Scheduler;
   readonly now: Date;
-  /** Start of the user's local day; the day runs for 24 hours from here. */
+  /** Start of the user's local day, for the "today" counts. */
   readonly dayStart: Date;
 }
 
 export interface TodaySummary {
-  /** Reviews left for today, most-forgotten first. */
+  /** Every fact due now, most-forgotten first. No daily cap (ADR 0006). */
   readonly reviewItemIds: readonly ItemId[];
   readonly reviewsDoneToday: number;
-  /** Due items pushed to tomorrow by the daily cap. */
-  readonly deferred: number;
+  /** The next open lesson on the path, if any. */
   readonly nextLesson: { readonly id: string; readonly title: string } | null;
   readonly lessonsDoneToday: number;
-  /** New lessons in today's goal: 1, or 0 while a review backlog is over the cap. */
-  readonly lessonGoal: 0 | 1;
-  /** Today's goal is met: "you're done for today" (PRD §9). */
-  readonly done: boolean;
+  /** Nothing is due right now (more lessons may still be open). */
+  readonly caughtUp: boolean;
 }
 
 /**
- * Today's small, finishable goal: due reviews (capped per day, counting reviews
- * already done today) plus one new lesson. Once met, the app says so instead of
- * offering more (PRD §9, CLAUDE.md principle 1).
+ * What's waiting for the user in this sport: everything due now and the next
+ * lesson. There is no daily goal or "done for today" stop (ADR 0006); the due
+ * queue still puts the facts closest to being forgotten first.
  */
 export function todaySummary(input: TodayInput): TodaySummary {
   const { content, sportId, states, completedLessons, log, scheduler, now, dayStart } = input;
@@ -44,17 +41,12 @@ export function todaySummary(input: TodayInput): TodaySummary {
   const sportStates = reviewableStates(content, states, sportId);
   const inSport = (id: string) => content.itemsById.get(id)?.sportId === sportId;
 
-  const reviewedToday = new Set(
+  const reviewItemIds = buildReviewQueue(scheduler, sportStates.values(), now);
+  const reviewsDoneToday = new Set(
     log
       .filter((e) => e.context === 'review' && isToday(e.reviewedAt) && inSport(e.itemId))
       .map((e) => e.itemId),
-  );
-  const due = buildReviewQueue(scheduler, sportStates.values(), now, { dueBy: dayEnd }).filter(
-    (id) => !reviewedToday.has(id),
-  );
-  const cap = Math.max(0, scheduler.config.maxDailyReviews - reviewedToday.size);
-  const reviewItemIds = due.slice(0, cap);
-  const deferred = due.length - reviewItemIds.length;
+  ).size;
 
   const lessonsDoneToday = [...completedLessons].filter(([lessonId, iso]) => {
     const lesson = content.lessonsById.get(lessonId);
@@ -81,17 +73,12 @@ export function todaySummary(input: TodayInput): TodaySummary {
     }
   }
 
-  const overCap = reviewedToday.size + due.length > scheduler.config.maxDailyReviews;
-  const lessonGoal: 0 | 1 = lessonsDoneToday > 0 || (nextLesson !== null && !overCap) ? 1 : 0;
-
   return {
     reviewItemIds,
-    reviewsDoneToday: reviewedToday.size,
-    deferred,
+    reviewsDoneToday,
     nextLesson,
     lessonsDoneToday,
-    lessonGoal,
-    done: reviewItemIds.length === 0 && lessonsDoneToday >= lessonGoal,
+    caughtUp: reviewItemIds.length === 0,
   };
 }
 

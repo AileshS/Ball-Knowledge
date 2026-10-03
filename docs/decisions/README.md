@@ -9,6 +9,7 @@ Each significant decision gets a short record so the reasoning outlives the conv
 | [0003](0003-backend-supabase.md) | Supabase for accounts and progress sync, arriving after the offline slice | Accepted (2026-10-02) |
 | [0004](0004-sports-data-provider.md) | Sports-data provider for Present-track stats and contracts | Deferred: gate before Present content |
 | [0005](0005-media-rights.md) | Clips, player photos, and team logos | Deferred: text-first until licensed |
+| [0006](0006-no-daily-stop.md) | No daily goal or "done for today" stop | Accepted (2026-10-03) |
 
 ## Template
 

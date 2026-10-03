@@ -104,6 +104,8 @@ For the **big, hard-to-hold content**, a lesson can show an optional **Memory ti
 
 **Principle:** once the day's goal is met, the app should say "you're done for today." It does not try to keep users scrolling.
 
+> **Decision (2026-10-03):** The owner removed the daily goal and the "done for today" stop. The app shows everything due and the next lesson with no daily cap. The rest of this section's incentives still apply. See [ADR 0006](decisions/0006-no-daily-stop.md).
+
 ## 10. Content and data
 
 - **Curated, fact-checked content** is the source of truth. AI can help draft lessons and generate exercise variants, but every fact must trace back to a cited source and pass review before it ships.

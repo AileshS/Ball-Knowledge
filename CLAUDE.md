@@ -106,6 +106,7 @@ Resolved:
 - Sport: **NFL** ([ADR 0001](docs/decisions/0001-sport-nfl.md))
 - Platform/stack: **Expo + TypeScript** ([ADR 0002](docs/decisions/0002-stack-expo-typescript.md))
 - Backend: **Supabase** ([ADR 0003](docs/decisions/0003-backend-supabase.md))
+- Daily goal: **none**, no "done for today" stop or daily review cap ([ADR 0006](docs/decisions/0006-no-daily-stop.md), reverses the PRD §9 daily goal)
 
 Still open (don't assume; check with the owner):
 - Sports-data provider ([ADR 0004](docs/decisions/0004-sports-data-provider.md), deferred). Must be decided before Present-track stats or contracts are authored.

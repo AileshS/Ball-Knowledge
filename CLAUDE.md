@@ -6,13 +6,40 @@ Guidance for Claude Code when working in this repository.
 
 **Ball Knowledge** is a Duolingo-style app for learning sports: rules, eras, legends, and current players, teams, and coaches, built around **long-term retention** (spaced repetition, active recall, callbacks to earlier lessons). The full product spec is in [`docs/PRD.md`](docs/PRD.md); read it before making product or architecture decisions.
 
-**Status:** Phase 0 of the [roadmap](docs/ROADMAP.md): decisions recorded, no app code yet.
+**Status:** see the [roadmap](docs/ROADMAP.md) for the current phase.
 
 - Sport: **NFL**
 - Stack: **Expo (React Native) + TypeScript** in an npm-workspaces monorepo
 - Backend: **Supabase**, arriving in Phase 7
 
-Decision records are in [`docs/decisions/`](docs/decisions/README.md). Build, test, and lint commands get added here in Phase 1.
+Decision records are in [`docs/decisions/`](docs/decisions/README.md).
+
+## Commands
+
+Requires Node 22.12+ (CI uses the version in `.nvmrc`). Run everything from the repo root:
+
+| Command | What it does |
+|---|---|
+| `npm ci` | Install exact dependencies from the lockfile |
+| `npm run check` | **Everything CI runs:** format check, lint, typecheck, tests with coverage. Must pass before every commit. |
+| `npm test` | Run all tests once (Vitest; each `packages/*` is a test project) |
+| `npm run test:watch` | Tests in watch mode |
+| `npx vitest run packages/retention` | Run one package's tests |
+| `npm run coverage` | Tests with a coverage report (`coverage/index.html`) |
+| `npm run lint` | ESLint (type-aware) |
+| `npm run typecheck` | `tsc --noEmit` in every workspace |
+| `npm run format` | Prettier: rewrites code/config files. Markdown is excluded on purpose. |
+
+## Repo layout
+
+- `packages/core`: `@ball-knowledge/core`, the sport-agnostic domain model.
+- `packages/retention`: `@ball-knowledge/retention`, the retention engine.
+- Workspace packages export TypeScript source directly (`"exports": "./src/index.ts"`); there is no build step.
+- ESLint enforces purity in `packages/core/src` and `packages/retention/src`:
+  - no Node or UI imports
+  - no `console`, `process`, `Buffer`, or `globalThis`
+  - no `Date.now()`, `Date()`, `new Date()`, or `Math.random()`; inject time and RNG instead
+- The `src` tsconfigs don't load Node types, so `tsc` rejects Node globals too. Tests have their own `test/tsconfig.json` with Node types.
 
 ## Product principles (apply these to every change)
 

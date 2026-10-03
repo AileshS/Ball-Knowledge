@@ -1,0 +1,6 @@
+# Prose docs are owner-authored; don't let the formatter rewrite them.
+**/*.md
+package-lock.json
+node_modules/
+coverage/
+dist/

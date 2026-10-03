@@ -13,6 +13,8 @@ export default defineConfig({
         // Native-only storage adapter and the generated-bundle import: covered by running the app.
         'apps/mobile/src/progress/create-store.ts',
         'apps/mobile/src/content/content.ts',
+        // React Native UI (theme, components, player): verified by running the app.
+        'apps/mobile/src/ui/**',
       ],
       reporter: ['text', 'html'],
       thresholds: {

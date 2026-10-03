@@ -43,7 +43,9 @@ Requires Node 22.12+ (CI uses the version in `.nvmrc`). Run everything from the 
 - `packages/content-tools`: `@ball-knowledge/content-tools`, which loads, validates, and bundles `content/` YAML. Authoring rules are in [`docs/content-authoring.md`](docs/content-authoring.md).
 - `content/`: authored lessons, facts, and exercises as YAML (Phase 4).
 - `apps/mobile`: `@ball-knowledge/mobile`, the Expo app (Expo Router; screens in `app/`).
-  - Logic that doesn't depend on React Native lives in `src/` and is tested with Vitest: content loading (`src/content`), the path model (`src/model`), and saved progress (`src/progress`).
+  - Logic that doesn't depend on React Native lives in `src/` and is tested with Vitest: content loading (`src/content`), the path model (`src/model`), saved progress (`src/progress`), and sessions (`src/session`: answer checking, lesson/review planning, scoring, the daily goal, the dev clock).
+  - The UI (`src/ui`, `app/`) stays thin and is verified by playing it in a browser. `src/ui/Player.tsx` runs both lessons and reviews.
+  - Dev builds show a dev clock on the Today card (+1 day / +7 days) to test spacing. It only moves forward, because reviews must stay in chronological order.
   - The content bundle is generated into `src/generated/` (gitignored) by `npm run content -w @ball-knowledge/mobile`; app scripts do this automatically.
   - Progress is stored through a small key-value interface: expo-sqlite's store on iOS/Android (`create-store.ts`), localStorage on web (`create-store.web.ts`).
 - **Windows note:** run commands from the correctly cased path (`C:\Users\…\Downloads\…`). Workspace links created from a differently cased path make Metro report "Unable to resolve module @ball-knowledge/…".

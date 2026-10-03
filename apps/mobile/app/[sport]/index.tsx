@@ -2,6 +2,7 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { trackCards } from '../../src/model/path';
 import { useAppState, useCompletedLessons } from '../../src/state/AppState';
 import { Badge, Body, Card, Heading, ProgressBar, Row, Screen } from '../../src/ui/components';
+import { TodayCard } from '../../src/ui/TodayCard';
 
 export default function TrackPicker() {
   const { sport: sportId } = useLocalSearchParams<{ sport: string }>();
@@ -20,6 +21,7 @@ export default function TrackPicker() {
   return (
     <Screen>
       <Stack.Screen options={{ title: sport.name }} />
+      <TodayCard sportId={sport.id} />
       <Body muted>Pick where to start. Past and Present share one review queue.</Body>
       {trackCards(content, sport.id, completed).map((card) => {
         const ready = card.lessonCount > 0;

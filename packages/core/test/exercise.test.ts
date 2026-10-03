@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ExerciseSchema, supportsTypedRecall, validate } from '../src/index';
+import { ExerciseSchema, normalizeAnswer, supportsTypedRecall, validate } from '../src/index';
 import { exerciseInput } from '../src/testing';
 
 const issuesFor = (overrides: Record<string, unknown>) => {
@@ -179,5 +179,16 @@ describe('ExerciseSchema', () => {
     expect(issuesFor({ itemIds: ['fixture.item.alpha', 'fixture.item.alpha'] })).toContain(
       'itemIds: Item ids must not repeat',
     );
+  });
+});
+
+describe('answer normalization shared with the app', () => {
+  it('treats "The end zone" and "end zone" as the same option', () => {
+    const result = validate(
+      ExerciseSchema,
+      exerciseInput({ answer: 'End zone', distractors: ['The end zone', 'Side zone'] }),
+    );
+    expect(result.ok).toBe(false);
+    expect(normalizeAnswer('  The End-Zone! ')).toBe('end zone');
   });
 });

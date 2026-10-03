@@ -148,6 +148,17 @@ describe('createProgressRepository', () => {
   });
 });
 
+describe('MemoryStore', () => {
+  it('gets, sets, removes, and lists keys', async () => {
+    const store = new MemoryStore();
+    await store.set('a', '1');
+    await store.set('b', '2');
+    await store.remove('a');
+    expect(await store.get('a')).toBeNull();
+    expect(await store.keys()).toEqual(['b']);
+  });
+});
+
 describe('web storage (localStorage)', () => {
   const original = (globalThis as { window?: unknown }).window;
   afterEach(() => {

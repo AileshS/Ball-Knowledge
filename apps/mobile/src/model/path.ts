@@ -178,6 +178,18 @@ export function lessonPreview(content: AppContent, lessonId: string): LessonPrev
   };
 }
 
+/** A single lesson's status on its path, or null if the lesson doesn't exist. */
+export function lessonStatus(
+  input: Omit<PathInput, 'sportId' | 'track'>,
+  lessonId: string,
+): LessonStatus | null {
+  const lesson = input.content.lessonsById.get(lessonId);
+  const unit = lesson ? input.content.unitsById.get(lesson.unitId) : undefined;
+  if (!unit) return null;
+  const units = learningPath({ ...input, sportId: unit.sportId, track: unit.track });
+  return units.flatMap((u) => u.lessons).find((l) => l.id === lessonId)?.status ?? null;
+}
+
 /** How many facts and tips still await owner review (shown as a dev banner). */
 export function awaitingReview(content: AppContent): number {
   return [...content.items, ...content.tips].filter((x) => x.reviewStatus !== 'approved').length;

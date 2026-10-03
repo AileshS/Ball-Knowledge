@@ -5,6 +5,7 @@ export * from './data-ref';
 export * from './sport';
 export * from './entity';
 export * from './knowledge-item';
+export * from './answer-text';
 export * from './exercise';
 export * from './lesson';
 export * from './memory-tip';

@@ -6,6 +6,7 @@ import {
   awaitingReview,
   learningPath,
   lessonPreview,
+  lessonStatus,
   sportCards,
   trackCards,
   type PathInput,
@@ -146,6 +147,22 @@ describe('lessonPreview', () => {
   it('works on the real first lesson', () => {
     const preview = lessonPreview(repoContent(), 'nfl.lesson.how-teams-score');
     expect(preview?.learns).toContain('Touchdown points');
+  });
+});
+
+describe('lessonStatus', () => {
+  it('reports a lesson status on its own path, or null when unknown', () => {
+    const input = {
+      content: fixtureContent(),
+      completedLessonIds: new Set(['fixture.lesson.one.a']),
+      states: new Map(),
+      scheduler,
+      now,
+    };
+    expect(lessonStatus(input, 'fixture.lesson.one.a')).toBe('completed');
+    expect(lessonStatus(input, 'fixture.lesson.one.b')).toBe('available');
+    expect(lessonStatus(input, 'fixture.lesson.two.a')).toBe('locked');
+    expect(lessonStatus(input, 'fixture.lesson.nope')).toBeNull();
   });
 });
 

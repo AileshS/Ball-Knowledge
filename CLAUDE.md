@@ -6,7 +6,13 @@ Guidance for Claude Code when working in this repository.
 
 **Ball Knowledge** is a Duolingo-style app for learning sports: rules, eras, legends, and current players, teams, and coaches, built around **long-term retention** (spaced repetition, active recall, callbacks to earlier lessons). The full product spec is in [`docs/PRD.md`](docs/PRD.md); read it before making product or architecture decisions.
 
-**Status:** pre-code. The tech stack has not been chosen yet. When it is, add the build, test, and lint commands to this file.
+**Status:** Phase 0 of the [roadmap](docs/ROADMAP.md): decisions recorded, no app code yet.
+
+- Sport: **NFL**
+- Stack: **Expo (React Native) + TypeScript** in an npm-workspaces monorepo
+- Backend: **Supabase**, arriving in Phase 7
+
+Decision records are in [`docs/decisions/`](docs/decisions/README.md). Build, test, and lint commands get added here in Phase 1.
 
 ## Product principles (apply these to every change)
 
@@ -15,7 +21,7 @@ Guidance for Claude Code when working in this repository.
 3. **Callbacks everywhere.** New lessons should reintroduce previously learned items in new contexts. A name the user has learned should keep coming back.
 4. **Accuracy is non-negotiable.** Sports fans will notice wrong stats. Every fact needs a source and a last-verified date. Never invent stats, contracts, quotes, or results, in code, seed data, or tests that might ship.
 5. **Memory tips are seasoning, not the meal.** Mnemonics inspired by Memory OS (acronyms, the chain method, stories, memory palaces) appear only on big ordered or grouped content, like the list of eras. They're optional and dismissible, never on every lesson.
-6. **One sport first, multi-sport by design.** v1 ships a single sport (NFL is the recommendation in the PRD, pending confirmation). Don't hard-code sport-specific assumptions into shared models.
+6. **One sport first, multi-sport by design.** v1 ships a single sport: the NFL, confirmed in [ADR 0001](docs/decisions/0001-sport-nfl.md). Don't hard-code sport-specific assumptions into shared models.
 
 ## Domain model (target shape)
 
@@ -33,8 +39,29 @@ Guidance for Claude Code when working in this repository.
 - Keep the user-facing tone confident, fun, and fan-friendly, and keep lessons short (3–5 minutes).
 - Highlight clips: use only licensed or embeddable sources, and always provide a text fallback.
 
-## Open decisions (don't assume; check with the owner)
+## Workflow guardrails (every change must be non-destructive)
 
-- Which sport ships first (NFL recommended).
-- Platform/stack (native, cross-platform, or web-first).
-- Sports-data provider and clip licensing.
+- **Branches:** one branch per phase or feature. Never commit to `main`, never force-push, never rewrite published history. Merge PRs with merge commits.
+- **Push and PRs:** ask the owner before pushing or opening PRs.
+- **Additive changes:** `docs/PRD.md` belongs to the owner. Record decisions as dated notes and [decision records](docs/decisions/README.md); never delete PRD text.
+- **Tooling:** no global installs or system changes. Tooling comes from `devDependencies` run through npm scripts, and `package-lock.json` is committed.
+- **Secrets:** never commit them. Only `.env.example` goes in git.
+- **Loop engineering:** every change runs a **build → check → review → fix** loop until it's green:
+  - `npm run check` passes.
+  - The diff touches only the intended files.
+  - The self-review has no open findings.
+  
+  If the loop doesn't converge in 5 iterations, or a fix would be destructive, stop and report.
+- **Test data:** tests and fixtures use obviously fictional entities (e.g., "Fixture Player Alpha") marked `fixture: true`, never real-looking stats.
+- **Media:** no player photos or team logos until [ADR 0005](docs/decisions/0005-media-rights.md) is resolved.
+
+## Decisions
+
+Resolved:
+- Sport: **NFL** ([ADR 0001](docs/decisions/0001-sport-nfl.md))
+- Platform/stack: **Expo + TypeScript** ([ADR 0002](docs/decisions/0002-stack-expo-typescript.md))
+- Backend: **Supabase** ([ADR 0003](docs/decisions/0003-backend-supabase.md))
+
+Still open (don't assume; check with the owner):
+- Sports-data provider ([ADR 0004](docs/decisions/0004-sports-data-provider.md), deferred). Must be decided before Present-track stats or contracts are authored.
+- Clip, photo, and logo licensing ([ADR 0005](docs/decisions/0005-media-rights.md), deferred). Text-first until then.

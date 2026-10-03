@@ -10,6 +10,10 @@ export const SourceSchema = z.object({
   title: z.string().trim().min(1, 'Source title is required'),
   publisher: z.string().trim().min(1).optional(),
   accessedAt: IsoDateSchema,
+  /** Where in the source the fact appears, e.g. "Rule 11, Section 1, Article 2". */
+  locator: z.string().trim().min(1).optional(),
+  /** The supporting text, copied verbatim, so reviewers can verify without hunting. */
+  quote: z.string().trim().min(1).optional(),
 });
 export type Source = z.infer<typeof SourceSchema>;
 

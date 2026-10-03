@@ -16,4 +16,7 @@ npm run check    # format check, lint, typecheck, and tests (what CI runs)
 - [`docs/ROADMAP.md`](docs/ROADMAP.md): the phased build plan and current status
 - [`docs/decisions/`](docs/decisions/README.md): decision records (sport, stack, backend, data, media)
 - `packages/core`: the domain model
+- [`docs/content-authoring.md`](docs/content-authoring.md): how to write and fact-check content
+- `content/`: lessons, facts, and exercises (YAML)
+- `packages/content-tools`: content validator and bundler (`npm run content:check`)
 - `packages/retention`: the retention engine

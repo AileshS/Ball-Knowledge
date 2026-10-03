@@ -4,3 +4,7 @@ package-lock.json
 node_modules/
 coverage/
 dist/
+
+# Authored content is checked for meaning by `npm run content:check`; whitespace
+# style should never fail CI for non-engineer authors.
+content/

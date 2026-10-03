@@ -116,6 +116,7 @@ export function lessonInput(overrides: Partial<Input<typeof LessonSchema>> = {})
   return {
     id: 'fixture.lesson.one',
     unitId: 'fixture.unit.one',
+    order: 0,
     title: 'Meet the Testville Testers',
     estimatedMinutes: 4,
     introducesItemIds: ['fixture.item.alpha'],

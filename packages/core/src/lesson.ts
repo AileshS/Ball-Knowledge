@@ -22,6 +22,8 @@ export const LessonSchema = z
   .object({
     id: LessonIdSchema,
     unitId: UnitIdSchema,
+    /** Position on the path within its unit (0 = first). */
+    order: z.number().int().nonnegative(),
     title: z.string().trim().min(1),
     estimatedMinutes: z.number().int().min(LESSON_MINUTES.min).max(LESSON_MINUTES.max),
     /** Items this lesson teaches for the first time. */

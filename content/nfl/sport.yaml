@@ -1,0 +1,5 @@
+# The NFL is v1's only live sport (ADR 0001).
+sports:
+  - id: nfl
+    name: NFL
+    status: live

@@ -17,6 +17,8 @@ npm run web -w @ball-knowledge/mobile     # in a browser at http://localhost:808
 npm run start -w @ball-knowledge/mobile   # on your phone: scan the QR code with Expo Go
 ```
 
+In dev builds, the Today card has a dev clock (+1 day / +7 days), so you can see reviews come due without waiting.
+
 ## Where things are
 
 - [`docs/PRD.md`](docs/PRD.md): the product spec

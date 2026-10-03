@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { normalizeAnswer } from './answer-text';
 import { CueSchema, MEDIA_CUES } from './cue';
 import { ExerciseIdSchema, hasNoDuplicates, ItemIdSchema } from './ids';
 
@@ -105,7 +106,8 @@ export function supportsTypedRecall(type: ExerciseType): boolean {
   return RECALL_TYPES.has(type);
 }
 
-const normalize = (s: string) => s.trim().toLowerCase();
+// Same comparison the app uses when grading, so "distinct" here means distinct there too.
+const normalize = normalizeAnswer;
 
 export const ExerciseSchema = z
   .discriminatedUnion('type', [

@@ -22,7 +22,7 @@ const UNIT_NOTE: Record<UnitStatus, string> = {
 export default function LearningPath() {
   const params = useLocalSearchParams<{ sport: string; track: string }>();
   const track = TrackSchema.safeParse(params.track);
-  const { content, scheduler, progress } = useAppState();
+  const { content, scheduler, progress, clock } = useAppState();
   const completed = useCompletedLessons();
 
   const units = useMemo(
@@ -35,10 +35,10 @@ export default function LearningPath() {
             completedLessonIds: completed,
             states: progress?.states ?? new Map(),
             scheduler,
-            now: new Date(),
+            now: clock.now(),
           })
         : [],
-    [content, params.sport, track.success, track.data, completed, progress, scheduler],
+    [content, params.sport, track.success, track.data, completed, progress, scheduler, clock],
   );
 
   if (!track.success) {

@@ -1,11 +1,13 @@
-import { Stack, useLocalSearchParams } from 'expo-router';
-import { lessonPreview } from '../../src/model/path';
-import { useAppState } from '../../src/state/AppState';
+import { router, Stack, useLocalSearchParams } from 'expo-router';
+import { lessonPreview, lessonStatus } from '../../src/model/path';
+import { useAppState, useCompletedLessons } from '../../src/state/AppState';
 import { Badge, Body, Card, Heading, Screen, Title } from '../../src/ui/components';
+import { Button } from '../../src/ui/controls';
 
 export default function LessonPreviewScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { content } = useAppState();
+  const { content, scheduler, progress, clock } = useAppState();
+  const completed = useCompletedLessons();
   const lesson = lessonPreview(content, id);
 
   if (!lesson) {
@@ -15,6 +17,18 @@ export default function LessonPreviewScreen() {
       </Screen>
     );
   }
+
+  const status = lessonStatus(
+    {
+      content,
+      completedLessonIds: completed,
+      states: progress?.states ?? new Map(),
+      scheduler,
+      now: clock.now(),
+    },
+    lesson.id,
+  );
+  const start = () => router.push({ pathname: '/play/[id]', params: { id: lesson.id } });
 
   return (
     <Screen>
@@ -33,16 +47,20 @@ export default function LessonPreviewScreen() {
       <Card>
         <Heading>How it goes</Heading>
         {lesson.callbacks > 0 && (
-          <Body>Warm-up: {lesson.callbacks} questions on things you've already learned</Body>
+          <Body>Warm-up: up to {lesson.callbacks} questions on things you've already learned</Body>
         )}
         <Body>Learn: {lesson.exercises} questions on the new facts</Body>
         <Body>Recall check: {lesson.recallChecks} questions to lock it in</Body>
         {lesson.memoryTip && <Body muted>Includes a memory tip: {lesson.memoryTip}</Body>}
       </Card>
-      <Card disabled accessibilityLabel="Start lesson, coming in the next update">
-        <Badge label="Next update" />
-        <Body muted>Playing lessons is coming in the next update.</Body>
-      </Card>
+      {status === 'available' && <Button label="Start lesson" onPress={start} />}
+      {status === 'completed' && (
+        <>
+          <Badge label="Completed" tone="accent" />
+          <Button label="Practice again" tone="secondary" onPress={start} />
+        </>
+      )}
+      {status === 'locked' && <Body muted>Finish the earlier lessons to unlock this one.</Body>}
     </Screen>
   );
 }

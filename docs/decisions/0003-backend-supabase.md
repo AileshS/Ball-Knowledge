@@ -43,3 +43,9 @@ Options considered: **Supabase** (Postgres, built-in auth, row-level security), 
 - **Device ownership:** a device's progress belongs to the first account that signs in on it. If a different account signs in, sync stops, and the user must explicitly choose to replace that device's copy. Two people's learning is never merged.
 - **Account deletion:** the `delete_my_account()` database function deletes the account and cascades to all of its synced rows.
 - **Setup:** see [docs/supabase-setup.md](../supabase-setup.md).
+
+## Update (2026-10-03, later)
+
+- **Sign-in is now email + password,** with "Confirm email" off. New free-tier projects can't edit email templates on Supabase's built-in sender, so the 6-digit code never appeared. Supabase's built-in sender also only emails organization members.
+- With confirmation off, no auth emails are sent, so development needs no SMTP. The owner chose to stay on Supabase over switching to Firebase.
+- **Before a beta:** set up custom SMTP. "Forgot password" and email verification depend on it.

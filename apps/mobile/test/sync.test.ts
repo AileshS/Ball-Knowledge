@@ -4,6 +4,11 @@ import { describe, expect, it } from 'vitest';
 import { createProgressRepository } from '../src/progress/repository';
 import { MemoryStore } from '../src/progress/store';
 import { readSupabaseConfig } from '../src/sync/config';
+import {
+  credentialsProblem,
+  friendlyAuthError,
+  MIN_PASSWORD_LENGTH,
+} from '../src/sync/credentials';
 import { clearOwner, ownershipFor, readOwner, writeOwner } from '../src/sync/owner';
 import {
   fromRemoteRow,
@@ -313,5 +318,29 @@ describe('readSupabaseConfig', () => {
     expect(readSupabaseConfig('https://abc.supabase.co', '')).toBeNull();
     expect(readSupabaseConfig('http://abc.supabase.co', 'key')).toBeNull();
     expect(readSupabaseConfig('https://abc.supabase.co/rest/v1', 'key')).toBeNull();
+  });
+});
+
+describe('email and password sign-in', () => {
+  it('checks what was typed before sending anything', () => {
+    expect(credentialsProblem('not-an-email', 'longenough', 'sign_in')).toBe(
+      'Enter a valid email address.',
+    );
+    expect(credentialsProblem('fan@example.com', '', 'sign_in')).toBe('Enter your password.');
+    expect(credentialsProblem('fan@example.com', 'short', 'sign_up')).toBe(
+      `Use at least ${MIN_PASSWORD_LENGTH} characters for your password.`,
+    );
+    expect(credentialsProblem('fan@example.com', 'short', 'sign_in')).toBeNull();
+    expect(credentialsProblem(' fan@example.com ', 'longenough', 'sign_up')).toBeNull();
+  });
+
+  it('explains Supabase errors in plain words', () => {
+    expect(friendlyAuthError('Invalid login credentials')).toBe('Wrong email or password.');
+    expect(friendlyAuthError('User already registered')).toMatch(/Sign in instead/);
+    expect(friendlyAuthError('Email not confirmed')).toMatch(/Confirm email/);
+    expect(friendlyAuthError('Password should be at least 6 characters')).toMatch(/too weak/);
+    expect(friendlyAuthError('Request rate limit reached')).toMatch(/Too many attempts/);
+    expect(friendlyAuthError('Failed to fetch')).toMatch(/Couldn't reach the server/);
+    expect(friendlyAuthError('Something unexpected')).toBe('Something unexpected');
   });
 });

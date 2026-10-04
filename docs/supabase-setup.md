@@ -22,32 +22,23 @@ The app works fully offline without this. Do these steps once per Supabase proje
 
 Migrations are forward-only. Run each file once, in order, and never edit one that has already run. Future changes come as new files.
 
-## 3. Send a 6-digit code instead of a link
+## 3. Turn off email confirmation
 
-The app signs in with an emailed code. Codes work identically on web and phones, with no deep-link setup.
+The app signs in with **email and password**. With email confirmation off, Supabase sends **no emails at all**, so you need no SMTP and no template edits. (New free projects can't edit templates on Supabase's built-in sender anyway.)
 
-Supabase uses two templates for this: **Confirm signup** for someone's very first sign-in, and **Magic Link** for later ones. Update **both**, or new users get a link the app can't use.
-
-1. Open **Authentication → Emails → Templates**.
-2. In **Confirm signup**, make sure the body includes the code, for example:
-
-   ```html
-   <h2>Your Ball Knowledge sign-in code</h2>
-   <p>Enter this code in the app: <strong>{{ .Token }}</strong></p>
-   ```
-
-3. Do the same in **Magic Link**. Save both.
-4. Email sign-in is on by default (**Authentication → Sign In / Providers → Email**). Leave it enabled.
+1. Open **Authentication → Sign In / Providers → Email**.
+2. Keep **Enable Email provider** on.
+3. Turn **Confirm email** off and save.
 
 ## 4. Before real users (later)
 
-- **Email sending:** Supabase's built-in email sender is rate-limited and meant for testing. Set up custom SMTP under **Authentication → Emails** before a beta.
+- **Custom SMTP:** set it up under **Authentication → Emails → SMTP Settings** before a beta, using an email service such as Resend, SendGrid, or Postmark. Supabase's built-in sender only emails members of your Supabase organization, at about 2 emails an hour. "Forgot password" emails and turning **Confirm email** back on (to verify addresses) both depend on this.
 - **Prod project:** create a separate prod project and run the same migrations there.
 - **Apple and Google sign-in:** these come later (roadmap). They need an Apple Developer account and a Google OAuth client.
 
 ## Check it works
 
 1. Restart the app (`npm run web -w @ball-knowledge/mobile`).
-2. The home screen shows **Sign in to sync your progress**. Tap it, enter your email, and type in the code from the email.
+2. The home screen shows **Sign in to sync your progress**. Tap it, choose **New here? Create an account**, and enter an email and a password of at least 8 characters.
 3. The account screen should say **Synced**.
 4. In the dashboard under **Table Editor → review_log**, you'll see your answers.

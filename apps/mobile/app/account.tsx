@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAccount } from '../src/state/Account';
 import { Badge, Banner, Body, Card, Heading, Row, Screen, Title } from '../src/ui/components';
+import { credentialsProblem, MIN_PASSWORD_LENGTH, type AuthMode } from '../src/sync/credentials';
 import { Button, Field } from '../src/ui/controls';
 
 const STATUS_LABEL = {
@@ -39,18 +40,24 @@ export default function AccountScreen() {
 }
 
 function SignIn() {
-  const { sendCode, verifyCode } = useAccount();
+  const { signIn, signUp } = useAccount();
+  const [mode, setMode] = useState<AuthMode>('sign_in');
   const [email, setEmail] = useState('');
-  const [code, setCode] = useState('');
-  const [sentTo, setSentTo] = useState<string | null>(null);
+  const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const run = async (task: () => Promise<void>) => {
+  const creating = mode === 'sign_up';
+  const submit = async () => {
+    const problem = credentialsProblem(email, password, mode);
+    if (problem) {
+      setError(problem);
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
-      await task();
+      await (creating ? signUp(email, password) : signIn(email, password));
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
@@ -58,67 +65,49 @@ function SignIn() {
     }
   };
 
-  const send = () =>
-    run(async () => {
-      await sendCode(email);
-      setSentTo(email.trim());
-    });
-  const verify = () => run(() => verifyCode(sentTo ?? email, code));
-  const validEmail = /^\S+@\S+\.\S+$/.test(email.trim());
-
   return (
     <Card>
-      <Heading>Sign in to sync</Heading>
+      <Heading>{creating ? 'Create your account' : 'Sign in to sync'}</Heading>
       <Body muted>
-        Keep your progress safe and use it on every device. We'll email you a 6-digit code — no
-        password needed.
+        Keep your progress safe and use it on every device. Anything you've already learned on this
+        device comes with you.
       </Body>
       {error && <Banner>{error}</Banner>}
-      {sentTo === null ? (
-        <>
-          <Field
-            label="Email address"
-            placeholder="you@example.com"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={setEmail}
-            onSubmit={() => validEmail && void send()}
-            editable={!busy}
-          />
-          <Button
-            label="Email me a code"
-            disabled={busy || !validEmail}
-            onPress={() => void send()}
-          />
-        </>
-      ) : (
-        <>
-          <Body>Enter the code sent to {sentTo}.</Body>
-          <Field
-            label="Sign-in code"
-            placeholder="6-digit code"
-            keyboardType="number-pad"
-            value={code}
-            onChangeText={setCode}
-            onSubmit={() => code.trim().length >= 6 && void verify()}
-            editable={!busy}
-          />
-          <Button
-            label="Sign in"
-            disabled={busy || code.trim().length < 6}
-            onPress={() => void verify()}
-          />
-          <Button
-            label="Use a different email"
-            tone="secondary"
-            disabled={busy}
-            onPress={() => {
-              setSentTo(null);
-              setCode('');
-            }}
-          />
-        </>
-      )}
+      <Field
+        label="Email address"
+        placeholder="you@example.com"
+        keyboardType="email-address"
+        autoComplete="email"
+        value={email}
+        onChangeText={setEmail}
+        onSubmit={() => void submit()}
+        editable={!busy}
+      />
+      <Field
+        label="Password"
+        placeholder={creating ? `At least ${MIN_PASSWORD_LENGTH} characters` : 'Password'}
+        secureTextEntry
+        autoFocus={false}
+        autoComplete={creating ? 'new-password' : 'current-password'}
+        value={password}
+        onChangeText={setPassword}
+        onSubmit={() => void submit()}
+        editable={!busy}
+      />
+      <Button
+        label={busy ? 'One moment…' : creating ? 'Create account' : 'Sign in'}
+        disabled={busy}
+        onPress={() => void submit()}
+      />
+      <Button
+        label={creating ? 'I already have an account' : 'New here? Create an account'}
+        tone="secondary"
+        disabled={busy}
+        onPress={() => {
+          setMode(creating ? 'sign_in' : 'sign_up');
+          setError(null);
+        }}
+      />
     </Card>
   );
 }

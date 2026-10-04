@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { readSupabaseConfig } from '../sync/config';
+import { friendlyAuthError } from '../sync/credentials';
 import { clearOwner, ownershipFor, readOwner, writeOwner } from '../sync/owner';
 import { createSupabase, supabaseRemote, type BallKnowledgeClient } from '../sync/supabase';
 import { createSerialRunner } from '../sync/runner';
@@ -15,8 +16,9 @@ interface AccountState {
   readonly status: SyncStatus;
   readonly message: string | null;
   readonly lastSyncedAt: Date | null;
-  readonly sendCode: (email: string) => Promise<void>;
-  readonly verifyCode: (email: string, code: string) => Promise<void>;
+  readonly signIn: (email: string, password: string) => Promise<void>;
+  /** Creates the account and signs in (requires "Confirm email" off in Supabase). */
+  readonly signUp: (email: string, password: string) => Promise<void>;
   readonly syncNow: () => Promise<void>;
   readonly signOut: () => Promise<void>;
   /** Resolves a conflict: replaces this device's progress with the signed-in account's. */
@@ -97,20 +99,26 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       status,
       message,
       lastSyncedAt,
-      async sendCode(email) {
-        const { error } = await requireClient().auth.signInWithOtp({
+      async signIn(email, password) {
+        const { error } = await requireClient().auth.signInWithPassword({
           email: email.trim(),
-          options: { shouldCreateUser: true },
+          password,
         });
-        if (error) throw new Error(error.message);
+        if (error) throw new Error(friendlyAuthError(error.message));
       },
-      async verifyCode(email, code) {
-        const { error } = await requireClient().auth.verifyOtp({
+      async signUp(email, password) {
+        const { data, error } = await requireClient().auth.signUp({
           email: email.trim(),
-          token: code.trim(),
-          type: 'email',
+          password,
         });
-        if (error) throw new Error(error.message);
+        if (error) throw new Error(friendlyAuthError(error.message));
+        // With "Confirm email" off (docs/supabase-setup.md) a session comes back
+        // immediately; without one, Supabase is still waiting on an email.
+        if (!data.session) {
+          throw new Error(
+            'Account created, but Supabase is waiting for email confirmation. Turn off "Confirm email" (see docs/supabase-setup.md), then sign in.',
+          );
+        }
       },
       syncNow: () => (runSync ? runSync() : Promise.resolve()),
       async signOut() {

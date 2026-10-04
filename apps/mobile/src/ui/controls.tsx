@@ -63,6 +63,8 @@ interface FieldProps {
   readonly placeholder?: string;
   readonly keyboardType?: 'default' | 'email-address' | 'number-pad';
   readonly autoFocus?: boolean;
+  readonly secureTextEntry?: boolean;
+  readonly autoComplete?: 'email' | 'current-password' | 'new-password' | 'off';
 }
 
 export function Field({
@@ -74,6 +76,8 @@ export function Field({
   placeholder = 'Type your answer',
   keyboardType = 'default',
   autoFocus = true,
+  secureTextEntry = false,
+  autoComplete = 'off',
 }: FieldProps) {
   const t = useTheme();
   return (
@@ -89,6 +93,8 @@ export function Field({
       autoCapitalize="none"
       autoCorrect={false}
       autoFocus={autoFocus}
+      secureTextEntry={secureTextEntry}
+      autoComplete={autoComplete}
       returnKeyType="done"
       style={[styles.field, { color: t.text, borderColor: t.border, backgroundColor: t.surface }]}
     />

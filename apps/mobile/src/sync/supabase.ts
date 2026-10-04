@@ -10,7 +10,7 @@ export function createSupabase(config: SupabaseConfig) {
       ...(authStorage ? { storage: authStorage } : {}),
       persistSession: true,
       autoRefreshToken: true,
-      // Sign-in uses a 6-digit email code, never a link, so no URL handling.
+      // Email + password sign-in: no email links to handle.
       detectSessionInUrl: false,
     },
   });

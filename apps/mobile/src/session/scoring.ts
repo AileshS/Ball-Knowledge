@@ -68,7 +68,7 @@ export interface Feedback {
   /** "Why it matters" lines for the tested items: the story that makes it stick. */
   readonly why: readonly string[];
   /** Memory tips to see before trying again (PRD §8), only after a miss. */
-  readonly tips: readonly { readonly title: string; readonly body: string }[];
+  readonly tips: readonly { readonly id: string; readonly title: string; readonly body: string }[];
 }
 
 /** The text a question's correct answer is shown as. */
@@ -94,7 +94,7 @@ export function feedbackFor(content: AppContent, exercise: Exercise, correct: bo
     : exercise.itemIds
         .flatMap((id) => tipsForRetry(id, false, content.tips))
         .filter((tip, i, all) => all.findIndex((t) => t.id === tip.id) === i)
-        .map((t) => ({ title: t.title, body: t.body }));
+        .map((t) => ({ id: t.id, title: t.title, body: t.body }));
   return {
     correct,
     answer: correctAnswerText(exercise),

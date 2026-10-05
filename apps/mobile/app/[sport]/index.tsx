@@ -4,6 +4,7 @@ import type { ChosenTrack } from '../../src/session/preferences';
 import { useAppState, useCompletedLessons } from '../../src/state/AppState';
 import { Badge, Body, Card, Heading, ProgressBar, Row, Screen } from '../../src/ui/components';
 import { Button } from '../../src/ui/controls';
+import { ProgressCard } from '../../src/ui/ProgressCard';
 import { TodayCard } from '../../src/ui/TodayCard';
 
 const CHOICES: readonly { track: ChosenTrack; label: string }[] = [
@@ -42,6 +43,7 @@ export default function TrackPicker() {
     <Screen>
       <Stack.Screen options={{ title: sport.name }} />
       <TodayCard sportId={sport.id} />
+      <ProgressCard sportId={sport.id} />
       <Card>
         <Row>
           <Heading>Your track</Heading>

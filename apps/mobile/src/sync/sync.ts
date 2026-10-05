@@ -75,6 +75,48 @@ export function fromRemoteRow(row: RemoteLogRow): ReviewLogEntry | null {
   return result.success ? result.data : null;
 }
 
+/** One step of a replay: an answer with the item's state just before and after it. */
+export interface ReplayStep {
+  readonly entry: ReviewLogEntry;
+  /** Undefined the first time the item was ever answered. */
+  readonly before: UserItemState | undefined;
+  readonly after: UserItemState;
+}
+
+/**
+ * Walks the log in time order, applying each answer with the scheduler and calling
+ * `visit` with the state before and after. Everything derived from the log (memory
+ * state, XP, streaks) goes through here, so it always agrees.
+ */
+export function foldLog(
+  scheduler: Scheduler,
+  entries: readonly ReviewLogEntry[],
+  visit?: (step: ReplayStep) => void,
+): Map<ItemId, UserItemState> {
+  const states = new Map<ItemId, UserItemState>();
+  const ordered = [...entries].sort(
+    (a, b) =>
+      a.reviewedAt.getTime() - b.reviewedAt.getTime() || (logEntryId(a) < logEntryId(b) ? -1 : 1),
+  );
+  for (const entry of ordered) {
+    const before = states.get(entry.itemId);
+    const { state: after } = scheduler.applyReview(
+      before ?? scheduler.newItemState(entry.itemId, entry.reviewedAt),
+      {
+        grade: entry.grade,
+        now: entry.reviewedAt,
+        cue: entry.cue,
+        exerciseType: entry.exerciseType,
+        context: entry.context,
+        ...(entry.responseMs === undefined ? {} : { responseMs: entry.responseMs }),
+      },
+    );
+    states.set(entry.itemId, after);
+    visit?.({ entry, before, after });
+  }
+  return states;
+}
+
 /**
  * Rebuilds every item's memory state from the review log. The scheduler is
  * deterministic, so replaying the merged log from all devices gives every device
@@ -84,25 +126,7 @@ export function replayStates(
   scheduler: Scheduler,
   entries: readonly ReviewLogEntry[],
 ): Map<ItemId, UserItemState> {
-  const states = new Map<ItemId, UserItemState>();
-  const ordered = [...entries].sort(
-    (a, b) =>
-      a.reviewedAt.getTime() - b.reviewedAt.getTime() || (logEntryId(a) < logEntryId(b) ? -1 : 1),
-  );
-  for (const entry of ordered) {
-    const previous =
-      states.get(entry.itemId) ?? scheduler.newItemState(entry.itemId, entry.reviewedAt);
-    const { state } = scheduler.applyReview(previous, {
-      grade: entry.grade,
-      now: entry.reviewedAt,
-      cue: entry.cue,
-      exerciseType: entry.exerciseType,
-      context: entry.context,
-      ...(entry.responseMs === undefined ? {} : { responseMs: entry.responseMs }),
-    });
-    states.set(entry.itemId, state);
-  }
-  return states;
+  return foldLog(scheduler, entries);
 }
 
 export interface SyncResult {

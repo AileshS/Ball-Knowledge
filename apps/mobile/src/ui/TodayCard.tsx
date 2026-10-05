@@ -4,7 +4,7 @@ import { useAppState } from '../state/AppState';
 import { Badge, Body, Card, Heading, Row } from './components';
 import { Button } from './controls';
 
-/** Today's small, finishable goal (PRD §9), then "you're done for today." */
+/** What's due now and the next lesson. No daily goal or stop (ADR 0006). */
 export function TodayCard({ sportId }: { sportId: string }) {
   const { content, scheduler, progress, log, clock, advanceDays } = useAppState();
   if (!progress) return null;
@@ -20,53 +20,36 @@ export function TodayCard({ sportId }: { sportId: string }) {
     now,
     dayStart: startOfLocalDay(now),
   });
-  const reviewsLeft = today.reviewItemIds.length;
-  const lessonLeft = today.lessonGoal > today.lessonsDoneToday && today.nextLesson;
+  const due = today.reviewItemIds.length;
 
   return (
     <Card>
       <Row>
         <Heading>Today</Heading>
-        {today.done ? (
-          <Badge label="Done" tone="accent" />
+        {today.caughtUp ? (
+          <Badge label="Caught up" tone="accent" />
         ) : (
-          <Badge label="Daily goal" tone="primary" />
+          <Badge label={`${due} due`} tone="primary" />
         )}
       </Row>
-      {today.done ? (
-        <>
-          <Body>You're done for today. Come back tomorrow — your memory does the rest.</Body>
-          {today.nextLesson && today.lessonsDoneToday > 0 && (
-            <Body muted>Next up tomorrow: {today.nextLesson.title}</Body>
-          )}
-        </>
-      ) : (
-        <>
-          {reviewsLeft > 0 && (
-            <Button
-              label={`Review ${reviewsLeft} fact${reviewsLeft === 1 ? '' : 's'}`}
-              onPress={() =>
-                router.push({ pathname: '/[sport]/review', params: { sport: sportId } })
-              }
-            />
-          )}
-          {lessonLeft && today.nextLesson && (
-            <Button
-              label={`New lesson: ${today.nextLesson.title}`}
-              tone={reviewsLeft > 0 ? 'secondary' : 'primary'}
-              onPress={() =>
-                router.push({ pathname: '/lesson/[id]', params: { id: today.nextLesson!.id } })
-              }
-            />
-          )}
-          {today.deferred > 0 && (
-            <Body muted>
-              {today.deferred} more due — they'll wait for tomorrow so today stays short.
-            </Body>
-          )}
-        </>
+      {due > 0 && (
+        <Button
+          label={`Review ${due} fact${due === 1 ? '' : 's'}`}
+          onPress={() => router.push({ pathname: '/[sport]/review', params: { sport: sportId } })}
+        />
       )}
-      {today.reviewsDoneToday > 0 && (
+      {today.caughtUp && <Body>Nothing due for review right now.</Body>}
+      {today.nextLesson && (
+        <Button
+          label={`Next lesson: ${today.nextLesson.title}`}
+          tone={due > 0 ? 'secondary' : 'primary'}
+          onPress={() =>
+            router.push({ pathname: '/lesson/[id]', params: { id: today.nextLesson!.id } })
+          }
+        />
+      )}
+      {!today.nextLesson && <Body muted>You've finished every lesson available so far.</Body>}
+      {(today.reviewsDoneToday > 0 || today.lessonsDoneToday > 0) && (
         <Body muted>
           Reviewed today: {today.reviewsDoneToday} · Lessons today: {today.lessonsDoneToday}
         </Body>

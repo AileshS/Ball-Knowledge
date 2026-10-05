@@ -13,6 +13,10 @@ export default defineConfig({
         // Native-only storage adapter and the generated-bundle import: covered by running the app.
         'apps/mobile/src/progress/create-store.ts',
         'apps/mobile/src/content/content.ts',
+        // Thin Supabase/platform adapters: verified against the real project.
+        'apps/mobile/src/sync/supabase.ts',
+        'apps/mobile/src/sync/auth-storage.ts',
+        'apps/mobile/src/sync/polyfill.ts',
         // React Native UI (theme, components, player): verified by running the app.
         'apps/mobile/src/ui/**',
       ],

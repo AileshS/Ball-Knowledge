@@ -360,6 +360,27 @@ describe('scoring and feedback', () => {
     expect(missed.grade).toBe('again');
   });
 
+  it('never time-stamps an answer before the last review of the item (fast clock elsewhere)', () => {
+    const itemId = 'nfl.rules.touchdown-points' as ItemId;
+    const future = new Date(T.getTime() + 5 * 60_000);
+    const synced = scheduler.applyReview(scheduler.newItemState(itemId, future), {
+      grade: 'good',
+      now: future,
+      cue: 'stat',
+      exerciseType: 'identify',
+      context: 'review',
+    }).state;
+    const scored = scoreAnswer(
+      scheduler,
+      new Map([[itemId, synced]]),
+      step('choice'),
+      ex('nfl.ex.scoring.touchdown-points'),
+      { correct: true },
+      T,
+    );
+    expect(scored.results[0]?.logEntry.reviewedAt.getTime()).toBe(future.getTime() + 1);
+  });
+
   it('shows the answer and why it matters, plus tips only after a miss', () => {
     const e = ex('nfl.ex.scoring.touchdown-points');
     const tip = MemoryTipSchema.parse({
@@ -408,71 +429,64 @@ describe('todaySummary', () => {
     dayStart,
   };
 
-  it('starts with the first lesson as the goal', () => {
-    const today = todaySummary(base);
-    expect(today).toMatchObject({
+  it('offers the first lesson when nothing is due', () => {
+    expect(todaySummary(base)).toMatchObject({
       reviewItemIds: [],
+      caughtUp: true,
       nextLesson: { id: 'nfl.lesson.how-teams-score' },
-      lessonGoal: 1,
-      done: false,
     });
   });
 
-  it('is done once today’s lesson is complete and nothing is due', () => {
+  it('keeps offering the next lesson after one is done today (no daily stop, ADR 0006)', () => {
     const today = todaySummary({
       ...base,
       completedLessons: new Map([['nfl.lesson.how-teams-score', T.toISOString()]]),
     });
     expect(today).toMatchObject({
       lessonsDoneToday: 1,
-      done: true,
       nextLesson: { id: 'nfl.lesson.field-and-the-try' },
     });
+    expect(today).not.toHaveProperty('done');
   });
 
-  it('lists due reviews, counts today’s, and caps the day', () => {
+  it('lists every due fact with no daily cap, and counts reviews done today', () => {
     const states = new Map<ItemId, UserItemState>();
-    const log = [];
-    const ids = content.items.map((i) => i.id);
-    for (const id of ids) {
-      const r = scheduler.applyReview(
-        scheduler.newItemState(id, new Date('2026-09-01T09:00:00Z')),
-        {
-          grade: 'good',
-          now: new Date('2026-09-01T09:00:00Z'),
-          cue: 'stat',
-          exerciseType: 'multiple_choice',
-          context: 'lesson',
-        },
-      );
-      states.set(id, r.state);
+    const learnedAt = new Date('2026-09-01T09:00:00Z');
+    for (const item of content.items) {
+      const r = scheduler.applyReview(scheduler.newItemState(item.id, learnedAt), {
+        grade: 'good',
+        now: learnedAt,
+        cue: 'stat',
+        exerciseType: 'multiple_choice',
+        context: 'lesson',
+      });
+      states.set(item.id, r.state);
     }
-    const due = todaySummary({ ...base, states });
-    expect(due.reviewItemIds).toHaveLength(ids.length);
-    expect(due.done).toBe(false);
+    const tiny = createScheduler({ ...scheduler.config, maxDailyReviews: 2 });
+    const due = todaySummary({ ...base, states, scheduler: tiny });
+    expect(due.reviewItemIds).toHaveLength(content.items.length);
+    expect(due.caughtUp).toBe(false);
 
-    const [first] = ids;
-    const reviewed = scheduler.applyReview(states.get(first!)!, {
+    const [first] = content.items;
+    const reviewed = scheduler.applyReview(states.get(first!.id)!, {
       grade: 'good',
       now: T,
       cue: 'stat',
       exerciseType: 'identify',
       context: 'review',
     });
-    log.push(reviewed.logEntry);
     const after = todaySummary({
       ...base,
-      states: new Map(states).set(first!, reviewed.state),
-      log,
+      states: new Map(states).set(first!.id, reviewed.state),
+      log: [reviewed.logEntry],
     });
     expect(after.reviewsDoneToday).toBe(1);
-    expect(after.reviewItemIds).not.toContain(first);
+    expect(after.reviewItemIds).not.toContain(first!.id);
+  });
 
-    const tight = createScheduler({ ...scheduler.config, maxDailyReviews: 3 });
-    const capped = todaySummary({ ...base, states, scheduler: tight });
-    expect(capped.reviewItemIds).toHaveLength(3);
-    expect(capped.deferred).toBe(ids.length - 3);
-    expect(capped.lessonGoal).toBe(0);
+  it('reports no next lesson once every lesson is done', () => {
+    const all = new Map(content.lessons.map((l) => [l.id, T.toISOString()] as const));
+    expect(todaySummary({ ...base, completedLessons: all }).nextLesson).toBeNull();
   });
 
   it('computes the local day start', () => {

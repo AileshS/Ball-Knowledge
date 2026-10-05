@@ -24,6 +24,20 @@ export interface ProgressRepository {
   completeLesson(lessonId: LessonId, at: Date): Promise<void>;
   /** The append-only answer log (oldest first): the basis for sync and analytics. */
   reviewLog(): Promise<ReviewLogEntry[]>;
+  /** Adds answers from another device, skipping any already present. */
+  importLog(entries: readonly ReviewLogEntry[]): Promise<void>;
+  /**
+   * Rebuilds item states from the log as it is *at that moment*, queued behind any
+   * pending saves, so a rebuild can never overwrite an answer saved meanwhile.
+   */
+  rebuildStates(
+    rebuild: (log: readonly ReviewLogEntry[]) => ReadonlyMap<ItemId, UserItemState>,
+  ): Promise<void>;
+  /**
+   * Removes this device's progress (states, log, lessons). Only ever called on an
+   * explicit user choice, e.g. switching to a different account.
+   */
+  clearProgress(): Promise<void>;
 }
 
 /** Bumped only with a forward migration; older app versions refuse newer data. */
@@ -85,6 +99,23 @@ export function createProgressRepository(store: KeyValueStore): ProgressReposito
       : {};
   };
 
+  const readLog = async (): Promise<ReviewLogEntry[]> => {
+    await ensureSchema();
+    const entries: ReviewLogEntry[] = [];
+    const days = (await store.keys()).filter((k) => k.startsWith(KEY.log(''))).sort();
+    for (const key of days) {
+      const raw = await store.get(key);
+      const list = raw === null ? [] : parseJson(raw);
+      if (!Array.isArray(list)) continue;
+      for (const value of list) {
+        const result = ReviewLogEntrySchema.safeParse(value);
+        if (result.success) entries.push(result.data);
+      }
+    }
+    // Imported answers may land mid-day, so order by time (stable for ties).
+    return entries.sort((a, b) => a.reviewedAt.getTime() - b.reviewedAt.getTime());
+  };
+
   return {
     async load() {
       await ensureSchema();
@@ -134,20 +165,55 @@ export function createProgressRepository(store: KeyValueStore): ProgressReposito
       });
     },
 
-    async reviewLog() {
-      await ensureSchema();
-      const entries: ReviewLogEntry[] = [];
-      const days = (await store.keys()).filter((k) => k.startsWith(KEY.log(''))).sort();
-      for (const key of days) {
-        const raw = await store.get(key);
-        const list = raw === null ? [] : parseJson(raw);
-        if (!Array.isArray(list)) continue;
-        for (const value of list) {
-          const result = ReviewLogEntrySchema.safeParse(value);
-          if (result.success) entries.push(result.data);
+    reviewLog: readLog,
+
+    importLog(entries) {
+      return serialized(async () => {
+        await ensureSchema();
+        const byDay = new Map<string, ReviewLogEntry[]>();
+        for (const entry of entries) {
+          const day = entry.reviewedAt.toISOString().slice(0, 10);
+          byDay.set(day, [...(byDay.get(day) ?? []), entry]);
         }
-      }
-      return entries;
+        for (const [day, incoming] of byDay) {
+          const key = KEY.log(day);
+          const raw = await store.get(key);
+          const parsed = raw === null ? [] : parseJson(raw);
+          if (!Array.isArray(parsed)) throw new Error(`Review log chunk ${key} is unreadable`);
+          const seen = new Set(
+            parsed.flatMap((v) => {
+              const r = ReviewLogEntrySchema.safeParse(v);
+              return r.success ? [entryKey(r.data)] : [];
+            }),
+          );
+          const fresh = incoming.filter((e) => !seen.has(entryKey(e)));
+          if (fresh.length > 0) await store.set(key, toJson([...(parsed as unknown[]), ...fresh]));
+        }
+      });
+    },
+
+    rebuildStates(rebuild) {
+      return serialized(async () => {
+        // Runs inside the queue: no save can land between reading the log and
+        // writing the states rebuilt from it.
+        const states = rebuild(await readLog());
+        for (const state of states.values()) {
+          await store.set(KEY.state(state.itemId), toJson(state));
+        }
+      });
+    },
+
+    clearProgress() {
+      return serialized(async () => {
+        for (const key of await store.keys()) {
+          const isProgress =
+            key === KEY.lessons || key.startsWith(KEY.state('')) || key.startsWith(KEY.log(''));
+          if (isProgress) await store.remove(key);
+        }
+      });
     },
   };
 }
+
+/** Same identity sync uses: one answer per item per instant. */
+const entryKey = (e: ReviewLogEntry) => `${e.itemId}@${e.reviewedAt.toISOString()}`;

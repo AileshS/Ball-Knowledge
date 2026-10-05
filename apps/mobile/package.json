@@ -6,6 +6,7 @@
     "@ball-knowledge/core": "*",
     "@ball-knowledge/retention": "*",
     "@expo/metro-runtime": "~57.0.16",
+    "@supabase/supabase-js": "^2.117.2",
     "expo": "~57.0.26",
     "expo-constants": "~57.0.20",
     "expo-linking": "~57.0.11",
@@ -17,12 +18,13 @@
     "react-native": "0.86.3",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "~4.26.0",
+    "react-native-url-polyfill": "^4.0.0",
     "react-native-web": "~0.21.0",
     "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@types/react": "~19.2.2",
-    "@ball-knowledge/content-tools": "*"
+    "@ball-knowledge/content-tools": "*",
+    "@types/react": "~19.2.2"
   },
   "scripts": {
     "content": "tsx ../../packages/content-tools/src/cli.ts build ../../content --out src/generated",

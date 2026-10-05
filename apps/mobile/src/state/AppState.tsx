@@ -18,6 +18,8 @@ import {
   type ProgressRepository,
 } from '../progress/repository';
 import type { KeyValueStore } from '../progress/store';
+import { readSavedTips, toggleSavedTip } from '../rewards/saved-tips';
+import { createTaskQueue } from '../sync/runner';
 import { advanceClock, createClock, loadClockOffset, type Clock } from '../session/clock';
 import {
   chooseTrack,
@@ -58,6 +60,9 @@ interface AppState {
   readonly preferences: ReadonlyMap<string, SportPreferences>;
   readonly finishOnboarding: (sportId: string) => Promise<void>;
   readonly setTrack: (sportId: string, track: ChosenTrack) => Promise<void>;
+  /** Memory tips saved to "My tips", newest first. */
+  readonly savedTips: readonly string[];
+  readonly toggleSavedTip: (tipId: string) => Promise<void>;
 }
 
 const AppStateContext = createContext<AppState | null>(null);
@@ -82,7 +87,12 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       ([progress, log, offset, prefs]) => {
         if (!cancelled) {
           const preferences = new Map(sportIds.map((id, i) => [id, prefs[i]!] as const));
-          setLoaded({ progress, log, clock: createClock(__DEV__ ? offset : 0), preferences });
+          setLoaded({
+            progress,
+            log,
+            clock: createClock(__DEV__ ? offset : 0),
+            preferences,
+          });
           setError(null);
         }
       },
@@ -152,6 +162,30 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     [store, reload, updatePreferences],
   );
 
+  // Saved tips live outside the reload snapshot, so a reload that started earlier
+  // can never overwrite a newer save. Toggles run one at a time, in order.
+  const [savedTips, setSavedTips] = useState<readonly string[]>([]);
+  const tipQueue = useMemo(() => createTaskQueue(), []);
+  useEffect(() => {
+    let cancelled = false;
+    readSavedTips(store).then(
+      (tips) => {
+        if (!cancelled) setSavedTips(tips);
+      },
+      () => undefined,
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [store]);
+
+  const toggleTip = useCallback(
+    (tipId: string) => {
+      return tipQueue(() => toggleSavedTip(store, tipId)).then((next) => setSavedTips(next));
+    },
+    [store, tipQueue],
+  );
+
   const value = useMemo<AppState>(
     () => ({
       content: bundledContent,
@@ -169,6 +203,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       preferences: loaded?.preferences ?? new Map(),
       finishOnboarding,
       setTrack,
+      savedTips,
+      toggleSavedTip: toggleTip,
     }),
     [
       scheduler,
@@ -182,6 +218,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       advanceDays,
       finishOnboarding,
       setTrack,
+      toggleTip,
+      savedTips,
     ],
   );
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;

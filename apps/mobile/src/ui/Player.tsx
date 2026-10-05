@@ -11,6 +11,7 @@ import {
   wrongOptions,
 } from '../session/answers';
 import { requeueIfMissed, type QuestionStep, type Step } from '../session/plan';
+import { xpForAnswer } from '../rewards/xp';
 import { feedbackFor, scoreAnswer, type Feedback } from '../session/scoring';
 import { useAppState } from '../state/AppState';
 import { Badge, Banner, Body, Card, Heading, ProgressBar, Row, Title } from './components';
@@ -19,6 +20,8 @@ import { Button, Field } from './controls';
 export interface SessionSummary {
   readonly answered: number;
   readonly correct: number;
+  /** XP earned this session (correct recall only). */
+  readonly xp: number;
 }
 
 interface PlayerProps {
@@ -59,12 +62,12 @@ export function Player({
   score,
   onAnswered,
 }: PlayerProps) {
-  const { content, scheduler, clock, saveResults } = useAppState();
+  const { content, scheduler, clock, saveResults, savedTips, toggleSavedTip } = useAppState();
   const [steps, setSteps] = useState<readonly Step[]>(initialSteps);
   const [index, setIndex] = useState(0);
   const [states, setStates] = useState(startStates);
   const [feedback, setFeedback] = useState<(Feedback & { typo: boolean }) | null>(null);
-  const [tally, setTally] = useState<SessionSummary>({ answered: 0, correct: 0 });
+  const [tally, setTally] = useState<SessionSummary>({ answered: 0, correct: 0, xp: 0 });
   const [saveError, setSaveError] = useState<string | null>(null);
   // When the current step appeared, for response times (set after render, not during it).
   const shownAt = useRef(0);
@@ -100,7 +103,15 @@ export function Player({
     saveResults(results).catch((e: unknown) =>
       setSaveError(e instanceof Error ? e.message : String(e)),
     );
-    setTally((t) => ({ answered: t.answered + 1, correct: t.correct + (correct ? 1 : 0) }));
+    const xp = results.reduce(
+      (sum, r) => sum + xpForAnswer(states.get(r.state.itemId), r.logEntry),
+      0,
+    );
+    setTally((t) => ({
+      answered: t.answered + 1,
+      correct: t.correct + (correct ? 1 : 0),
+      xp: t.xp + xp,
+    }));
     setFeedback({ ...feedbackFor(content, exercise, correct), typo });
   };
 
@@ -128,6 +139,7 @@ export function Player({
           <Heading>{step.title}</Heading>
           <Body>{step.body}</Body>
           <Button label="Got it" onPress={() => advance()} />
+          <SaveTipButton tipId={step.tipId} saved={savedTips} onToggle={toggleSavedTip} />
           <Button label="Skip tip" tone="secondary" onPress={() => advance()} />
         </Card>
       )}
@@ -168,6 +180,7 @@ export function Player({
               <Badge label="Memory tip" tone="accent" />
               <Body>{tip.title}</Body>
               <Body muted>{tip.body}</Body>
+              <SaveTipButton tipId={tip.id} saved={savedTips} onToggle={toggleSavedTip} />
             </Card>
           ))}
           <Button
@@ -378,6 +391,26 @@ function Question({ step, exercise, locked, onAnswer }: QuestionProps) {
   return <Banner>This question type isn't supported yet.</Banner>;
 }
 
+function SaveTipButton({
+  tipId,
+  saved,
+  onToggle,
+}: {
+  tipId: string;
+  saved: readonly string[];
+  onToggle: (tipId: string) => Promise<void>;
+}) {
+  const isSaved = saved.includes(tipId);
+  return (
+    <Button
+      label={isSaved ? 'Saved to My tips' : 'Save to My tips'}
+      tone="secondary"
+      selected={isSaved}
+      onPress={() => void onToggle(tipId)}
+    />
+  );
+}
+
 export function SessionComplete({
   title,
   summary,
@@ -391,7 +424,7 @@ export function SessionComplete({
     <Card>
       <Title>{title}</Title>
       <Body>
-        {summary.correct} of {summary.answered} right
+        {summary.correct} of {summary.answered} right · +{summary.xp} XP
       </Body>
       {children}
     </Card>

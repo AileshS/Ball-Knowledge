@@ -396,7 +396,7 @@ describe('scoring and feedback', () => {
     const miss = feedbackFor(withTip, e, false);
     expect(miss.answer).toBe('6');
     expect(miss.why[0]).toMatch(/biggest single score/);
-    expect(miss.tips).toEqual([{ title: 'Tip', body: 'Body' }]);
+    expect(miss.tips).toEqual([{ id: 'nfl.tip.story', title: 'Tip', body: 'Body' }]);
     expect(feedbackFor(withTip, e, true).tips).toEqual([]);
   });
 

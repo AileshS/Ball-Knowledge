@@ -29,3 +29,17 @@ export function createSerialRunner(task: () => Promise<void>): () => Promise<voi
     return start();
   };
 }
+
+/**
+ * Runs async tasks strictly one after another, in the order they were queued.
+ * Each task sees the effects of the ones before it (unlike a serial runner, no
+ * request is merged away). A failed task doesn't block the ones after it.
+ */
+export function createTaskQueue(): <T>(task: () => Promise<T>) => Promise<T> {
+  let tail: Promise<unknown> = Promise.resolve();
+  return <T>(task: () => Promise<T>) => {
+    const run = tail.then(task, task);
+    tail = run.catch(() => undefined);
+    return run;
+  };
+}

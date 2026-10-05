@@ -21,7 +21,8 @@
     "coverage": "vitest run --coverage",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run content:check && npm run coverage",
     "content:check": "tsx packages/content-tools/src/cli.ts check content",
-    "content:build": "tsx packages/content-tools/src/cli.ts build content --out dist/content"
+    "content:build": "tsx packages/content-tools/src/cli.ts build content --out dist/content",
+    "content:verify-quotes": "tsx packages/content-tools/src/verify-quotes-cli.ts content"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

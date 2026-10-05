@@ -1,0 +1,528 @@
+# Past track deep dive: our AFL Rivalry Era (1960s)
+#
+# The upstart league, the merger, and the first four Super Bowls. Sources are the
+# Pro Football Hall of Fame's chronology and enshrinee biographies, checked on
+# 2026-10-04, each with a verbatim quote.
+# Status: in_review. The owner approves before anything ships.
+
+x-sources:
+  hof1966: &hof1966
+    url: https://www.profootballhof.com/football-history/football-history/1960-1979/1966
+    title: '1966 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1966
+  hof1967: &hof1967
+    url: https://www.profootballhof.com/football-history/football-history/1960-1979/1967
+    title: '1967 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1967
+  hof1968: &hof1968
+    url: https://www.profootballhof.com/football-history/football-history/1960-1979/1968
+    title: '1968 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1968
+  hof1969: &hof1969
+    url: https://www.profootballhof.com/football-history/football-history/1960-1979/1969
+    title: '1969 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1969
+  hof1970: &hof1970
+    url: https://www.profootballhof.com/football-history/football-history/1960-1979/1970
+    title: '1970 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1970
+  hunt: &hunt
+    url: https://www.profootballhof.com/players/lamar-hunt/
+    title: 'Lamar Hunt | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Biography
+  lombardi: &lombardi
+    url: https://www.profootballhof.com/players/vince-lombardi/
+    title: 'Vince Lombardi | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Biography
+  namath: &namath
+    url: https://www.profootballhof.com/players/joe-namath/
+    title: 'Joe Namath | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Biography
+
+units:
+  - id: nfl.past.afl-rivalry
+    sportId: nfl
+    track: past
+    kind: era_deep_dive
+    title: 'Deep dive: our AFL Rivalry Era'
+    order: 1
+    prerequisites: [nfl.past.eras]
+    tags: [era:nfl.era.afl-rivalry]
+
+entities:
+  - id: nfl.coach.vince-lombardi
+    sportId: nfl
+    kind: coach
+    name: Vince Lombardi
+    tags: [era:nfl.era.afl-rivalry, team:nfl.team.packers]
+  - id: nfl.player.joe-namath
+    sportId: nfl
+    kind: player
+    name: Joe Namath
+    tags: [era:nfl.era.afl-rivalry, team:nfl.team.jets, position:quarterback]
+  - { id: nfl.team.packers, sportId: nfl, kind: team, name: Green Bay Packers, tags: [era:nfl.era.afl-rivalry] }
+  - { id: nfl.team.jets, sportId: nfl, kind: team, name: New York Jets, tags: [era:nfl.era.afl-rivalry] }
+  - { id: nfl.team.chiefs, sportId: nfl, kind: team, name: Kansas City Chiefs, tags: [era:nfl.era.afl-rivalry] }
+
+items:
+  # Lesson 1: The AFL takes on the NFL
+  - id: nfl.history.hunt-founds-afl
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Lamar Hunt starts the AFL
+    statement: In 1959, Lamar Hunt, a 26-year-old from Dallas frustrated in his attempts to get an NFL franchise, set out to form a rival league; within seven months the American Football League was born.
+    whyItMatters: The AFL exists because the NFL kept saying no to Hunt.
+    eraId: nfl.era.afl-rivalry
+    tags: [era:nfl.era.afl-rivalry]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hunt
+        quote: 'In 1959, a young man, totally frustrated in his repeated attempts to gain a franchise in the National Football League, hit upon an idea. The young man was Lamar Hunt, a 26-year-old sports-minded, civic-minded individual who called Dallas home, and his idea, simply, was to form a new professional football league to rival the NFL. … within seven months, the American Football League was born.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.merger-announced
+    sportId: nfl
+    track: past
+    kind: moment
+    label: The merger is announced (1966)
+    statement: After secret meetings between Lamar Hunt and Tex Schramm, Commissioner Pete Rozelle announced the AFL-NFL merger on June 8, 1966.
+    derivedValues:
+      - { value: '1966', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: The agreement also created an annual championship game between the leagues, the game we now call the Super Bowl.
+    eraId: nfl.era.afl-rivalry
+    tags: [era:nfl.era.afl-rivalry]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hof1966
+        quote: 'A series of secret meetings regarding a possible AFL-NFL merger were held in the spring between Lamar Hunt of Kansas City and Tex Schramm of Dallas. Rozelle announced the merger on June 8. … the leagues agreed to play an annual AFL-NFL World Championship Game beginning in January of 1967'
+      - <<: *hof1966
+        quote: 'Commissioner Pete Rozelle'
+      - <<: *hof1969
+        quote: 'The title Super Bowl was recognized by the NFL for the first time.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.lombardi-packers
+    sportId: nfl
+    track: past
+    kind: coach
+    label: Lombardi's Packers
+    statement: Vince Lombardi became head coach and general manager of the Green Bay Packers at age 45; in the next eight years the Packers won six divisional and five NFL championships, plus Super Bowls I and II.
+    whyItMatters: Five NFL championships and the first two Super Bowls, all in eight years.
+    entityIds: [nfl.coach.vince-lombardi, nfl.team.packers]
+    eraId: nfl.era.afl-rivalry
+    tags: [era:nfl.era.afl-rivalry, team:nfl.team.packers]
+    availableCues: [name, stat]
+    sources:
+      - <<: *lombardi
+        quote: 'Vince Lombardi, at the age of 45, when most pro football luminaries have made their mark and passed from the scene of a young man''s game, was embarking on the dual adventure of being head coach and general manager of the Green Bay Packers.'
+      - <<: *lombardi
+        quote: 'The next eight years, the Packers were in a class by themselves, winning six divisional and five NFL championships and achieving victories in Super Bowls I and II.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.super-bowl-i
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Super Bowl I
+    statement: In the first AFL-NFL World Championship Game, now known as Super Bowl I, the Green Bay Packers beat the Kansas City Chiefs 35-10 on January 15, 1967.
+    derivedValues:
+      - { value: '1967', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: It was the first game ever played between AFL and NFL teams.
+    entityIds: [nfl.team.packers, nfl.team.chiefs]
+    eraId: nfl.era.afl-rivalry
+    tags: [era:nfl.era.afl-rivalry, team:nfl.team.packers, team:nfl.team.chiefs]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof1967
+        quote: 'Green Bay earned the right to represent the NFL in the first AFL-NFL World Championship Game by defeating Dallas 34-27 on January 1. The same day, Kansas City defeated Buffalo 31-7 to represent the AFL. The Packers defeated the Chiefs 35-10 before 61,946 fans at the Los Angeles Memorial Coliseum in the first game between AFL and NFL teams on January 15.'
+      - <<: *lombardi
+        quote: 'achieving victories in Super Bowls I and II.'
+      - <<: *hof1969
+        quote: 'The title Super Bowl was recognized by the NFL for the first time.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.super-bowl-ii
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Super Bowl II
+    statement: Green Bay beat Oakland 33-14 in Super Bowl II at Miami on January 14, 1968.
+    derivedValues:
+      - { value: '1968', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: Two Super Bowls, two NFL wins; the AFL still had something to prove.
+    entityIds: [nfl.team.packers]
+    eraId: nfl.era.afl-rivalry
+    tags: [era:nfl.era.afl-rivalry, team:nfl.team.packers]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof1968
+        quote: 'Green Bay defeated Oakland 33-14 in Super Bowl II at Miami on January 14.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  # Lesson 2: The AFL strikes back
+  - id: nfl.history.super-bowl-iii
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Super Bowl III
+    statement: The New York Jets beat the Baltimore Colts 16-7 in Super Bowl III on January 12, 1969, the first Super Bowl won by an AFL team.
+    derivedValues:
+      - { value: '1969', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: The Hall of Fame calls it a stunning upset of a heavily favored NFL team.
+    entityIds: [nfl.team.jets, nfl.player.joe-namath]
+    eraId: nfl.era.afl-rivalry
+    tags: [era:nfl.era.afl-rivalry, team:nfl.team.jets]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof1969
+        quote: 'An AFL team won the Super Bowl for the first time, as the Jets defeated the Colts 16-7 at Miami on January 12 in Super Bowl III.'
+      - <<: *namath
+        quote: 'Joe Namath is best remembered for his performance in the New York Jets'' stunning 16-7 upset of the heavily favored Baltimore Colts in Super Bowl III.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.namath-guarantee
+    sportId: nfl
+    track: past
+    kind: player
+    label: Namath's guarantee
+    statement: Joe Namath made a pregame "guarantee" before Super Bowl III and was named its MVP; the Hall of Fame credits both with helping assure the competitive viability of the AFL-NFL Super Bowl series.
+    whyItMatters: One quarterback's promise, kept, made the young Super Bowl a real contest.
+    entityIds: [nfl.player.joe-namath, nfl.team.jets]
+    eraId: nfl.era.afl-rivalry
+    tags: [era:nfl.era.afl-rivalry, team:nfl.team.jets, position:quarterback]
+    availableCues: [name]
+    sources:
+      - <<: *namath
+        quote: 'His performance in the Jets’ win over the Colts in Super Bowl III earned him Super Bowl MVP honors. His pregame “guarantee” and MVP performance were a major factor in assuring the competitive viability of the AFL-NFL Super Bowl series.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.super-bowl-iv
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Super Bowl IV
+    statement: Kansas City beat Minnesota 23-7 in Super Bowl IV in New Orleans on January 11, 1970.
+    whyItMatters: The AFL won its second straight Super Bowl just before the leagues merged.
+    entityIds: [nfl.team.chiefs]
+    eraId: nfl.era.afl-rivalry
+    tags: [era:nfl.era.afl-rivalry, team:nfl.team.chiefs]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof1970
+        quote: 'Kansas City defeated Minnesota 23-7 in Super Bowl IV in New Orleans on January 11.'
+    derivedValues:
+      - { value: '1970', from: the year of the Hall of Fame chronology entry quoted }
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.lombardi-trophy
+    sportId: nfl
+    track: past
+    kind: moment
+    label: The Vince Lombardi Trophy
+    statement: Vince Lombardi died on September 3, 1970, and a week later, on September 10, the Super Bowl trophy was renamed the Vince Lombardi Trophy.
+    derivedValues:
+      - { value: '1970', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: The Super Bowl trophy is named for the coach who won the first two.
+    entityIds: [nfl.coach.vince-lombardi]
+    eraId: nfl.era.merged-league
+    tags: [era:nfl.era.afl-rivalry, era:nfl.era.merged-league, team:nfl.team.packers]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hof1970
+        quote: 'Vince Lombardi died of cancer at 57 on September 3. The Super Bowl trophy was renamed the Vince Lombardi trophy on September 10.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+exercises:
+  # Lesson 1: The AFL takes on the NFL
+  - id: nfl.ex.afl.hunt
+    type: multiple_choice
+    itemIds: [nfl.history.hunt-founds-afl]
+    cue: name
+    prompt: Who set out in 1959 to form a new league to rival the NFL?
+    answer: Lamar Hunt
+    acceptedAnswers: [Hunt]
+    distractors: [Pete Rozelle, Vince Lombardi]
+
+  - id: nfl.ex.afl.seven-months
+    type: fill_blank
+    itemIds: [nfl.history.hunt-founds-afl]
+    cue: timeline
+    prompt: Within ___ months of Lamar Hunt's idea, the American Football League was born.
+    answer: seven
+    acceptedAnswers: ['7']
+    distractors: [three, twelve]
+
+  - id: nfl.ex.afl.merger
+    type: multiple_choice
+    itemIds: [nfl.history.merger-announced]
+    cue: name
+    prompt: Who announced the AFL-NFL merger on June 8, 1966?
+    answer: Pete Rozelle
+    acceptedAnswers: [Rozelle, Commissioner Pete Rozelle]
+    distractors: [Lamar Hunt, Tex Schramm]
+
+  - id: nfl.ex.afl.sb1-winner
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-i]
+    cue: name
+    prompt: Who won the first AFL-NFL World Championship Game, now known as Super Bowl I?
+    answer: Green Bay Packers
+    acceptedAnswers: [Packers, Green Bay, the Packers]
+    distractors: [Kansas City Chiefs, Oakland Raiders]
+
+  - id: nfl.ex.afl.sb1-score
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-i]
+    cue: stat
+    prompt: What was the final score of Super Bowl I?
+    answer: 35-10
+    distractors: [33-14, 16-7]
+
+  - id: nfl.ex.afl.sb2-opponent
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-ii]
+    cue: name
+    prompt: Which AFL team did Green Bay beat in Super Bowl II?
+    answer: Oakland
+    acceptedAnswers: [Oakland Raiders, the Raiders, Raiders]
+    distractors: [Kansas City, New York]
+
+  - id: nfl.ex.afl.lombardi-titles
+    type: multiple_choice
+    itemIds: [nfl.history.lombardi-packers]
+    cue: stat
+    prompt: In the eight years after Vince Lombardi took over, how many NFL championships did the Packers win?
+    answer: '5'
+    acceptedAnswers: [five]
+    distractors: ['3', '7']
+
+  - id: nfl.ex.afl.match-first-two
+    type: match
+    itemIds: [nfl.history.super-bowl-i, nfl.history.super-bowl-ii]
+    cue: stat
+    prompt: Match each Super Bowl to Green Bay's win.
+    pairs:
+      - { left: Super Bowl I, right: 35-10 over Kansas City }
+      - { left: Super Bowl II, right: 33-14 over Oakland }
+
+  - id: nfl.ex.afl.recall-hunt
+    type: identify
+    itemIds: [nfl.history.hunt-founds-afl]
+    cue: name
+    prompt: Who started the AFL after failing to get an NFL franchise?
+    answer: Lamar Hunt
+    acceptedAnswers: [Hunt]
+    distractors: [Tex Schramm, Pete Rozelle]
+
+  - id: nfl.ex.afl.recall-lombardi
+    type: identify
+    itemIds: [nfl.history.lombardi-packers]
+    cue: name
+    prompt: Which coach led Green Bay to wins in Super Bowls I and II?
+    answer: Vince Lombardi
+    acceptedAnswers: [Lombardi]
+    distractors: [Weeb Ewbank, George Halas]
+
+  - id: nfl.ex.afl.recall-merger
+    type: identify
+    itemIds: [nfl.history.merger-announced]
+    cue: timeline
+    prompt: In what year was the AFL-NFL merger announced?
+    answer: '1966'
+    distractors: ['1960', '1970']
+
+  # Lesson 2: The AFL strikes back
+  - id: nfl.ex.afl.sb3-winner
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-iii]
+    cue: name
+    prompt: Which team won Super Bowl III, the first Super Bowl won by an AFL team?
+    answer: New York Jets
+    acceptedAnswers: [Jets, the Jets]
+    distractors: [Baltimore Colts, Kansas City Chiefs]
+
+  - id: nfl.ex.afl.sb3-score
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-iii]
+    cue: stat
+    prompt: What was the final score of Super Bowl III?
+    answer: 16-7
+    distractors: [35-10, 23-7]
+
+  - id: nfl.ex.afl.namath-mvp
+    type: multiple_choice
+    itemIds: [nfl.history.namath-guarantee]
+    cue: name
+    prompt: Who was named MVP of Super Bowl III?
+    answer: Joe Namath
+    acceptedAnswers: [Namath, Broadway Joe]
+    distractors: [Bart Starr, Len Dawson]
+
+  - id: nfl.ex.afl.guarantee
+    type: multiple_choice
+    itemIds: [nfl.history.namath-guarantee]
+    cue: name
+    prompt: What did Joe Namath famously make before Super Bowl III?
+    answer: A guarantee
+    acceptedAnswers: [guarantee]
+    distractors: [A retirement announcement, A trade request]
+
+  - id: nfl.ex.afl.sb4-winner
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-iv]
+    cue: name
+    prompt: Who won Super Bowl IV?
+    answer: Kansas City
+    acceptedAnswers: [Kansas City Chiefs, Chiefs, the Chiefs]
+    distractors: [Minnesota, Green Bay]
+
+  - id: nfl.ex.afl.trophy
+    type: multiple_choice
+    itemIds: [nfl.history.lombardi-trophy]
+    cue: name
+    prompt: Whom is the Super Bowl trophy named after?
+    answer: Vince Lombardi
+    acceptedAnswers: [Lombardi]
+    distractors: [Pete Rozelle, George Halas]
+
+  - id: nfl.ex.afl.timeline
+    type: timeline_order
+    itemIds:
+      [
+        nfl.history.super-bowl-i,
+        nfl.history.super-bowl-iii,
+        nfl.history.super-bowl-iv,
+        nfl.history.lombardi-trophy,
+      ]
+    cue: timeline
+    prompt: Put these in order, earliest first.
+    events:
+      - { label: The Packers win Super Bowl I, itemId: nfl.history.super-bowl-i }
+      - { label: The Jets win Super Bowl III, itemId: nfl.history.super-bowl-iii }
+      - { label: The Chiefs win Super Bowl IV, itemId: nfl.history.super-bowl-iv }
+      - { label: The trophy is renamed for Lombardi, itemId: nfl.history.lombardi-trophy }
+
+  - id: nfl.ex.afl.recall-sb3
+    type: identify
+    itemIds: [nfl.history.super-bowl-iii]
+    cue: name
+    prompt: Which AFL team won Super Bowl III?
+    answer: New York Jets
+    acceptedAnswers: [Jets, the Jets]
+    distractors: [Baltimore Colts, Oakland Raiders]
+
+  - id: nfl.ex.afl.recall-sb4
+    type: identify
+    itemIds: [nfl.history.super-bowl-iv]
+    cue: stat
+    prompt: What was the final score of Super Bowl IV?
+    answer: 23-7
+    distractors: [16-7, 33-14]
+
+  - id: nfl.ex.afl.recall-trophy
+    type: identify
+    itemIds: [nfl.history.lombardi-trophy]
+    cue: name
+    prompt: In 1970, the Super Bowl trophy was renamed for which coach?
+    answer: Vince Lombardi
+    acceptedAnswers: [Lombardi]
+    distractors: [George Halas, Weeb Ewbank]
+
+tips:
+  - id: nfl.tip.first-four-super-bowls
+    sportId: nfl
+    technique: story
+    itemIds:
+      [
+        nfl.history.super-bowl-i,
+        nfl.history.super-bowl-ii,
+        nfl.history.super-bowl-iii,
+        nfl.history.super-bowl-iv,
+      ]
+    title: 'The first four Super Bowls: a tug-of-war'
+    body: |-
+      Picture a tug-of-war between the two leagues.
+      The NFL pulls first, twice: Lombardi's Green Bay Packers win Super Bowls I and II.
+      Then the AFL pulls back, twice: Joe Namath's New York Jets in III, and Kansas City in IV.
+      Two pulls each, and then the rope is tied together in the 1970 merger.
+    reviewStatus: in_review
+
+lessons:
+  - id: nfl.lesson.afl-takes-on-nfl
+    unitId: nfl.past.afl-rivalry
+    order: 0
+    title: The AFL takes on the NFL
+    estimatedMinutes: 4
+    introducesItemIds:
+      - nfl.history.hunt-founds-afl
+      - nfl.history.merger-announced
+      - nfl.history.lombardi-packers
+      - nfl.history.super-bowl-i
+      - nfl.history.super-bowl-ii
+    exerciseIds:
+      - nfl.ex.afl.hunt
+      - nfl.ex.afl.seven-months
+      - nfl.ex.afl.merger
+      - nfl.ex.afl.sb1-winner
+      - nfl.ex.afl.sb1-score
+      - nfl.ex.afl.sb2-opponent
+      - nfl.ex.afl.lombardi-titles
+      - nfl.ex.afl.match-first-two
+    recallCheckExerciseIds:
+      - nfl.ex.afl.recall-hunt
+      - nfl.ex.afl.recall-lombardi
+      - nfl.ex.afl.recall-merger
+    callbackCount: 2
+    callbackHints: [era:nfl.era.afl-rivalry, era:nfl.era.merged-league]
+
+  - id: nfl.lesson.afl-strikes-back
+    unitId: nfl.past.afl-rivalry
+    order: 1
+    title: The AFL strikes back
+    estimatedMinutes: 4
+    introducesItemIds:
+      - nfl.history.super-bowl-iii
+      - nfl.history.namath-guarantee
+      - nfl.history.super-bowl-iv
+      - nfl.history.lombardi-trophy
+    exerciseIds:
+      - nfl.ex.afl.sb3-winner
+      - nfl.ex.afl.sb3-score
+      - nfl.ex.afl.namath-mvp
+      - nfl.ex.afl.guarantee
+      - nfl.ex.afl.sb4-winner
+      - nfl.ex.afl.trophy
+      - nfl.ex.afl.timeline
+    recallCheckExerciseIds:
+      - nfl.ex.afl.recall-sb3
+      - nfl.ex.afl.recall-sb4
+      - nfl.ex.afl.recall-trophy
+    memoryTipIds: [nfl.tip.first-four-super-bowls]
+    callbackCount: 2
+    callbackHints: [era:nfl.era.afl-rivalry, team:nfl.team.packers]

@@ -28,6 +28,7 @@ Requires Node 22.12+ (CI uses the version in `.nvmrc`). Run everything from the 
 | `npm run coverage` | Tests with a coverage report (`coverage/index.html`). CI fails if `packages/retention/src`, `packages/content-tools/src`, or `apps/mobile/src` drops below 90% lines. |
 | `npm run content:check` | Validate everything in `content/` (also part of `npm run check`) |
 | `npm run content:build` | Validate and write `dist/content/content.json`; add `-- --ship` for a release (approved content only) |
+| `npm run content:verify-quotes` | Fetch every cited page and confirm each source `quote` appears on it (needs the network, so it's not part of `check`) |
 | `npm run web -w @ball-knowledge/mobile` | Build content, then run the app in a browser (http://localhost:8081) |
 | `npm run start -w @ball-knowledge/mobile` | Build content, then start Expo for a phone (scan the QR code with Expo Go) |
 | `npm run export:web -w @ball-knowledge/mobile` | Release web bundle; refuses unless all content is approved (`--ship`) |

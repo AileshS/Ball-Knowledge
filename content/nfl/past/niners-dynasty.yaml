@@ -1,0 +1,443 @@
+# Past track deep dive: our Open Game Era (1978-1993) and the 49ers dynasty
+#
+# Bill Walsh, Joe Montana, and Jerry Rice. Sources are the Pro Football Hall of
+# Fame's chronology and enshrinee biographies, checked on 2026-10-04, each with a
+# verbatim quote. Super Bowl XXIX (January 1995) falls in our Salary Cap Era and
+# is tagged that way; it's here because it completes the dynasty's story.
+# Status: in_review. The owner approves before anything ships.
+
+x-sources:
+  hof1990: &hof1990
+    url: https://www.profootballhof.com/football-history/football-history/1980-1999/1990
+    title: '1990 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1990
+  hof1995: &hof1995
+    url: https://www.profootballhof.com/football-history/football-history/1980-1999/1995
+    title: '1995 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1995
+  walsh: &walsh
+    url: https://www.profootballhof.com/players/bill-walsh/
+    title: 'Bill Walsh | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Biography
+  montana: &montana
+    url: https://www.profootballhof.com/players/joe-montana/
+    title: 'Joe Montana | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Biography
+  rice: &rice
+    url: https://www.profootballhof.com/players/jerry-rice/
+    title: 'Jerry Rice | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Biography
+
+units:
+  - id: nfl.past.niners-dynasty
+    sportId: nfl
+    track: past
+    kind: era_deep_dive
+    title: 'Deep dive: the 49ers of our Open Game Era'
+    order: 2
+    prerequisites: [nfl.past.eras]
+    tags: [era:nfl.era.open-game, team:nfl.team.49ers]
+
+entities:
+  - id: nfl.coach.bill-walsh
+    sportId: nfl
+    kind: coach
+    name: Bill Walsh
+    tags: [era:nfl.era.open-game, team:nfl.team.49ers]
+  - id: nfl.player.joe-montana
+    sportId: nfl
+    kind: player
+    name: Joe Montana
+    tags: [era:nfl.era.open-game, team:nfl.team.49ers, position:quarterback]
+  - id: nfl.player.jerry-rice
+    sportId: nfl
+    kind: player
+    name: Jerry Rice
+    tags: [era:nfl.era.open-game, team:nfl.team.49ers, position:receiver]
+  - { id: nfl.team.49ers, sportId: nfl, kind: team, name: San Francisco 49ers, tags: [era:nfl.era.open-game] }
+
+items:
+  # Lesson 1: Walsh builds a dynasty
+  - id: nfl.history.walsh-turnaround
+    sportId: nfl
+    track: past
+    kind: coach
+    label: Walsh's turnaround
+    statement: The 49ers were 2-14 in 1978; in just three years, Bill Walsh led them to their first NFL championship, a 26-21 win over the Cincinnati Bengals in Super Bowl XVI.
+    whyItMatters: Just three seasons separated a 2-14 team from a championship.
+    entityIds: [nfl.coach.bill-walsh, nfl.team.49ers]
+    eraId: nfl.era.open-game
+    tags: [era:nfl.era.open-game, team:nfl.team.49ers]
+    availableCues: [name, stat]
+    sources:
+      - <<: *walsh
+        quote: 'The 49ers had won just 31 of their last 86 games and were 2-14 in 1978. But Walsh was up to the challenge and in just three years provided the 49ers with their first-ever National Football League championship with a 26-21 victory over the Cincinnati Bengals in Super Bowl XVI.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.walsh-titles
+    sportId: nfl
+    track: past
+    kind: coach
+    label: Walsh's three Super Bowls
+    statement: Under Bill Walsh, the 49ers won Super Bowls XVI, XIX, and XXIII, which the Hall of Fame says made them the NFL team of the 1980s.
+    whyItMatters: Three titles in one decade is the mark of a dynasty.
+    entityIds: [nfl.coach.bill-walsh, nfl.team.49ers]
+    eraId: nfl.era.open-game
+    tags: [era:nfl.era.open-game, team:nfl.team.49ers]
+    availableCues: [name]
+    sources:
+      - <<: *walsh
+        quote: 'Those NFC titles were followed with victories in Super Bowls XVI, XIX, and XXIII which made the 49ers, by every measurement, the NFL team of the 1980s.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.super-bowl-xxiv
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Super Bowl XXIV
+    statement: San Francisco beat Denver 55-10 in Super Bowl XXIV on January 28, 1990, joining Pittsburgh as the NFL's only teams to win four Super Bowls.
+    derivedValues:
+      - { value: '1990', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: The 49ers kept winning titles even after Walsh's three.
+    entityIds: [nfl.team.49ers]
+    eraId: nfl.era.open-game
+    tags: [era:nfl.era.open-game, team:nfl.team.49ers]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof1990
+        quote: 'San Francisco defeated Denver 55-10 in Super Bowl XXIV at the Louisiana Superdome, January 28. San Francisco joined Pittsburgh as the NFL''s only teams to win four Super Bowls.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.super-bowl-xxix
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Super Bowl XXIX
+    statement: The 49ers became the first team to win five Super Bowls by beating the San Diego Chargers 49-26 in Super Bowl XXIX on January 29, 1995.
+    derivedValues:
+      - { value: '1995', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: The fifth title came in January 1995, carrying the dynasty into our Salary Cap Era.
+    entityIds: [nfl.team.49ers]
+    eraId: nfl.era.salary-cap
+    tags: [era:nfl.era.salary-cap, era:nfl.era.open-game, team:nfl.team.49ers]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof1995
+        quote: 'The San Francisco 49ers became the first team to win five Super Bowls when they defeated the San Diego Chargers 49-26 in Super Bowl XXIX at Joe Robbie Stadium in Miami on January 29.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  # Lesson 2: Montana and Rice
+  - id: nfl.history.montana-super-bowls
+    sportId: nfl
+    track: past
+    kind: player
+    label: Montana's four Super Bowls
+    statement: Joe Montana won four Super Bowls with the 49ers (XVI, XIX, XXIII, and XXIV) and was named MVP of XVI, XIX, and XXIV.
+    whyItMatters: Four wins and three MVPs made Montana the face of the 49ers dynasty.
+    entityIds: [nfl.player.joe-montana, nfl.team.49ers]
+    eraId: nfl.era.open-game
+    tags: [era:nfl.era.open-game, team:nfl.team.49ers, position:quarterback]
+    availableCues: [name, stat]
+    sources:
+      - <<: *montana
+        quote: 'Along the way, he captured nine divisional championships and victories in Super Bowls XVI, XIX, XXIII, and XXIV. His outstanding play in Super Bowls XVI, XIX, and XXIV earned him Most Valuable Player honors in each game.'
+      - <<: *montana
+        quote: 'Joe Montana, selected by the San Francisco 49ers in the third round of the 1979 NFL Draft … Super Bowl championships (4)'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.montana-comebacks
+    sportId: nfl
+    track: past
+    kind: player
+    label: Montana's comebacks
+    statement: Joe Montana led his teams to 26 fourth-quarter come-from-behind wins, including a 92-yard drive in the closing seconds of Super Bowl XXIII.
+    whyItMatters: The Hall of Fame calls him a master of late-game comebacks.
+    entityIds: [nfl.player.joe-montana]
+    eraId: nfl.era.open-game
+    tags: [era:nfl.era.open-game, team:nfl.team.49ers, position:quarterback]
+    availableCues: [name, stat]
+    sources:
+      - <<: *montana
+        quote: 'A master of late-game comebacks, Montana directed his teams to 26 fourth-quarter come-from-behind wins during his illustrious career, including a 92-yard drive in the closing seconds of Super Bowl XXIII.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.rice-records
+    sportId: nfl
+    track: past
+    kind: player
+    label: Jerry Rice's career records
+    statement: Jerry Rice retired holding NFL career records for receptions (1,549), receiving yards (22,895), and total touchdowns (208).
+    whyItMatters: The Hall of Fame calls him the most prolific wide receiver in NFL history.
+    entityIds: [nfl.player.jerry-rice]
+    eraId: nfl.era.open-game
+    tags: [era:nfl.era.open-game, team:nfl.team.49ers, position:receiver]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rice
+        quote: 'By the time he retired after finishing his career with Oakland and Seattle, he was the most prolific wide receiver in NFL history with staggering career totals. … Some of the more notable career records include receptions (1,549); receiving yards (22,895 yards); most 1,000-yard receiving seasons (14); total touchdowns (208)'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.rice-super-bowl-mvp
+    sportId: nfl
+    track: past
+    kind: player
+    label: Rice, Super Bowl XXIII MVP
+    statement: Jerry Rice earned three Super Bowl rings with the 49ers and was MVP of their Super Bowl XXIII win over the Cincinnati Bengals.
+    whyItMatters: In the only one of Montana's four Super Bowl wins where he wasn't MVP, his receiver was.
+    entityIds: [nfl.player.jerry-rice, nfl.team.49ers]
+    eraId: nfl.era.open-game
+    tags: [era:nfl.era.open-game, team:nfl.team.49ers, position:receiver]
+    availableCues: [name]
+    sources:
+      - <<: *rice
+        quote: 'He earned three Super Bowl rings with the 49ers and was named the Most Valuable Player of San Francisco’s Super Bowl XXIII win over the Cincinnati Bengals.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+exercises:
+  # Lesson 1: Walsh builds a dynasty
+  - id: nfl.ex.niners.record-1978
+    type: multiple_choice
+    itemIds: [nfl.history.walsh-turnaround]
+    cue: stat
+    prompt: What was the 49ers' record in 1978, before Bill Walsh's turnaround?
+    answer: 2-14
+    distractors: [8-8, 6-10]
+
+  - id: nfl.ex.niners.three-years
+    type: multiple_choice
+    itemIds: [nfl.history.walsh-turnaround]
+    cue: stat
+    prompt: How many years did it take Bill Walsh to bring the 49ers their first NFL championship?
+    answer: '3'
+    acceptedAnswers: [three, three years]
+    distractors: ['1', '6']
+
+  - id: nfl.ex.niners.first-opponent
+    type: multiple_choice
+    itemIds: [nfl.history.walsh-turnaround]
+    cue: name
+    prompt: Whom did the 49ers beat in Super Bowl XVI for their first championship?
+    answer: Cincinnati Bengals
+    acceptedAnswers: [Bengals, Cincinnati]
+    distractors: [Miami Dolphins, Denver Broncos]
+
+  - id: nfl.ex.niners.walsh-titles
+    type: multiple_choice
+    itemIds: [nfl.history.walsh-titles]
+    cue: name
+    prompt: Which Super Bowls did the 49ers win under Bill Walsh?
+    answer: XVI, XIX, and XXIII
+    distractors: ['XIX, XXIV, and XXIX', 'XVI, XXIV, and XXIX']
+
+  - id: nfl.ex.niners.xxiv-score
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-xxiv]
+    cue: stat
+    prompt: By what score did San Francisco beat Denver in Super Bowl XXIV?
+    answer: 55-10
+    distractors: [26-21, 49-26]
+
+  - id: nfl.ex.niners.four-club
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-xxiv]
+    cue: name
+    prompt: After Super Bowl XXIV, which other team had also won four Super Bowls?
+    answer: Pittsburgh
+    acceptedAnswers: [Pittsburgh Steelers, Steelers, the Steelers]
+    distractors: [Dallas, Miami]
+
+  - id: nfl.ex.niners.five
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-xxix]
+    cue: stat
+    prompt: With Super Bowl XXIX, the 49ers became the first team to win how many Super Bowls?
+    answer: '5'
+    acceptedAnswers: [five]
+    distractors: ['4', '6']
+
+  - id: nfl.ex.niners.recall-walsh
+    type: identify
+    itemIds: [nfl.history.walsh-turnaround]
+    cue: name
+    prompt: Which coach turned the 2-14 49ers of 1978 into champions?
+    answer: Bill Walsh
+    acceptedAnswers: [Walsh]
+    distractors: [Vince Lombardi, Weeb Ewbank]
+
+  - id: nfl.ex.niners.recall-xxiv
+    type: identify
+    itemIds: [nfl.history.super-bowl-xxiv]
+    cue: name
+    prompt: Which team did San Francisco beat 55-10 in Super Bowl XXIV?
+    answer: Denver
+    acceptedAnswers: [Denver Broncos, Broncos, the Broncos]
+    distractors: [Cincinnati, San Diego]
+
+  - id: nfl.ex.niners.recall-xxix
+    type: identify
+    itemIds: [nfl.history.super-bowl-xxix]
+    cue: name
+    prompt: Which Super Bowl made the 49ers the first five-time champions?
+    answer: Super Bowl XXIX
+    acceptedAnswers: [XXIX]
+    distractors: [Super Bowl XXIV, Super Bowl XXIII]
+
+  # Lesson 2: Montana and Rice
+  - id: nfl.ex.niners.montana-wins
+    type: multiple_choice
+    itemIds: [nfl.history.montana-super-bowls]
+    cue: stat
+    prompt: How many Super Bowls did Joe Montana win?
+    answer: '4'
+    acceptedAnswers: [four]
+    distractors: ['3', '5']
+
+  - id: nfl.ex.niners.not-mvp
+    type: multiple_choice
+    itemIds: [nfl.history.montana-super-bowls, nfl.history.rice-super-bowl-mvp]
+    cue: name
+    prompt: Montana won four Super Bowls. In which of them was another player named MVP?
+    answer: XXIII
+    acceptedAnswers: [Super Bowl XXIII]
+    distractors: [XVI, XIX]
+
+  - id: nfl.ex.niners.comebacks
+    type: multiple_choice
+    itemIds: [nfl.history.montana-comebacks]
+    cue: stat
+    prompt: How many fourth-quarter come-from-behind wins did Montana lead?
+    answer: '26'
+    distractors: ['16', '36']
+
+  - id: nfl.ex.niners.drive
+    type: fill_blank
+    itemIds: [nfl.history.montana-comebacks]
+    cue: stat
+    prompt: Montana's winning drive in the closing seconds of Super Bowl XXIII covered ___ yards.
+    answer: '92'
+    distractors: ['80', '99']
+
+  - id: nfl.ex.niners.rice-match
+    type: match
+    itemIds: [nfl.history.rice-records]
+    cue: stat
+    prompt: Match each of Jerry Rice's career records to its number.
+    pairs:
+      - { left: Receptions, right: '1,549' }
+      - { left: Receiving yards, right: '22,895' }
+      - { left: Total touchdowns, right: '208' }
+
+  - id: nfl.ex.niners.rice-rings
+    type: multiple_choice
+    itemIds: [nfl.history.rice-super-bowl-mvp]
+    cue: stat
+    prompt: How many Super Bowl rings did Jerry Rice earn with the 49ers?
+    answer: '3'
+    acceptedAnswers: [three]
+    distractors: ['2', '4']
+
+  - id: nfl.ex.niners.rice-higher-lower
+    type: higher_lower
+    itemIds: [nfl.history.rice-records]
+    cue: stat
+    prompt: Which of Jerry Rice's career totals is higher?
+    metric: Career total
+    left: { label: Receptions }
+    right: { label: Total touchdowns }
+    higher: left
+    explanation: Rice retired with 1,549 receptions and 208 total touchdowns.
+
+  - id: nfl.ex.niners.recall-rice-mvp
+    type: identify
+    itemIds: [nfl.history.rice-super-bowl-mvp]
+    cue: name
+    prompt: Who was MVP of Super Bowl XXIII?
+    answer: Jerry Rice
+    acceptedAnswers: [Rice]
+    distractors: [Joe Montana, Bill Walsh]
+
+  - id: nfl.ex.niners.recall-montana
+    type: identify
+    itemIds: [nfl.history.montana-super-bowls]
+    cue: stat
+    prompt: Type the number of Super Bowls Joe Montana won.
+    answer: '4'
+    acceptedAnswers: [four]
+    distractors: ['3', '5']
+
+  - id: nfl.ex.niners.recall-rice-tds
+    type: identify
+    itemIds: [nfl.history.rice-records]
+    cue: stat
+    prompt: How many total touchdowns did Jerry Rice score in his career?
+    answer: '208'
+    distractors: ['175', '250']
+
+lessons:
+  - id: nfl.lesson.walsh-builds-a-dynasty
+    unitId: nfl.past.niners-dynasty
+    order: 0
+    title: Walsh builds a dynasty
+    estimatedMinutes: 4
+    introducesItemIds:
+      - nfl.history.walsh-turnaround
+      - nfl.history.walsh-titles
+      - nfl.history.super-bowl-xxiv
+      - nfl.history.super-bowl-xxix
+    exerciseIds:
+      - nfl.ex.niners.record-1978
+      - nfl.ex.niners.three-years
+      - nfl.ex.niners.first-opponent
+      - nfl.ex.niners.walsh-titles
+      - nfl.ex.niners.xxiv-score
+      - nfl.ex.niners.four-club
+      - nfl.ex.niners.five
+    recallCheckExerciseIds:
+      - nfl.ex.niners.recall-walsh
+      - nfl.ex.niners.recall-xxiv
+      - nfl.ex.niners.recall-xxix
+    callbackCount: 2
+    callbackHints: [era:nfl.era.open-game]
+
+  - id: nfl.lesson.montana-and-rice
+    unitId: nfl.past.niners-dynasty
+    order: 1
+    title: Montana and Rice
+    estimatedMinutes: 4
+    introducesItemIds:
+      - nfl.history.montana-super-bowls
+      - nfl.history.montana-comebacks
+      - nfl.history.rice-records
+      - nfl.history.rice-super-bowl-mvp
+    exerciseIds:
+      - nfl.ex.niners.montana-wins
+      - nfl.ex.niners.not-mvp
+      - nfl.ex.niners.comebacks
+      - nfl.ex.niners.drive
+      - nfl.ex.niners.rice-match
+      - nfl.ex.niners.rice-rings
+      - nfl.ex.niners.rice-higher-lower
+    recallCheckExerciseIds:
+      - nfl.ex.niners.recall-rice-mvp
+      - nfl.ex.niners.recall-montana
+      - nfl.ex.niners.recall-rice-tds
+    callbackCount: 2
+    callbackHints: [team:nfl.team.49ers, position:quarterback, position:receiver]

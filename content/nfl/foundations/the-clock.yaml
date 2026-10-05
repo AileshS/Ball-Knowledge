@@ -1,0 +1,373 @@
+# Foundations: The clock
+#
+# Every fact below comes from the 2026 NFL Rulebook (operations.nfl.com), checked on
+# 2026-10-04, with a `locator` and a verbatim `quote` per fact.
+#
+# Status: in_review. The owner approves before anything ships.
+
+x-sources:
+  rulebook: &rulebook
+    url: https://operations.nfl.com/the-rules/nfl-rulebook/index.html
+    title: 2026 NFL Rulebook
+    publisher: NFL Football Operations
+    accessedAt: 2026-10-04
+
+units:
+  - id: nfl.foundations.the-clock
+    sportId: nfl
+    track: foundations
+    kind: topic
+    title: The clock
+    order: 2
+    prerequisites: [nfl.foundations.downs-and-distance]
+    tags: [topic:clock]
+
+items:
+  - id: nfl.rules.game-length
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Length of a game
+    statement: A game is 60 minutes long, divided into four periods (quarters) of 15 minutes each.
+    whyItMatters: Two 15-minute periods make each 30-minute half, the frame for every comeback story.
+    tags: [topic:clock]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 4, Section 1, Article 1
+        quote: 'The length of the game is 60 minutes, divided into four periods of 15 minutes each.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.halftime
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Halftime
+    statement: Halftime comes between the second and third periods and lasts 13 minutes.
+    whyItMatters: Thirteen minutes is all the time coaches get to fix a first-half game plan.
+    tags: [topic:clock]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 4, Section 1, Article 3
+        quote: 'Between the second and third periods, there shall be an intermission of 13 minutes.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.two-minute-warning
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: The two-minute warning
+    statement: The two-minute warning is an automatic timeout after the last play that starts before two minutes remain in the second and fourth periods.
+    whyItMatters: It works like a free timeout for both teams right before the end of each half, when the clock matters most.
+    tags: [topic:clock]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 3, Section 41
+        quote: 'The two-minute warning is an automatic timeout that occurs at the conclusion of the last down for which the ball is legally snapped or kicked prior to two minutes remaining on the game clock in the second and fourth periods.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.play-clock
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: The play clock
+    statement: The offense must snap the ball within 40 seconds after the play clock starts, or within 25 seconds after certain stoppages such as a timeout; otherwise it's delay of game.
+    whyItMatters: The play clock is the countdown you see on a broadcast; it limits how long an offense can take between plays.
+    tags: [topic:clock]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 4, Section 6, Article 1
+        quote: 'It is a delay of the game if the ball is not put in play by a snap within 40 seconds after the start of the play clock.'
+      - <<: *rulebook
+        locator: Rule 4, Section 6, Article 2
+        quote: 'In the event of certain administrative stoppages or other delays, a team will have 25 seconds, beginning with the Referee’s whistle, to put the ball in play next by a snap or a kick. … a charged team timeout;'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.timeouts
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Timeouts per half
+    statement: Each team is allowed three charged timeouts in each half, and two in a regular-season overtime period.
+    whyItMatters: With only three per half, when to spend a timeout is a real coaching decision.
+    tags: [topic:clock]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 4, Section 5, Article 1, Item 1
+        quote: 'A team is allowed three charged team timeouts during each half and two timeouts during an overtime period in the regular season.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.overtime
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Overtime
+    statement: A tie after regulation goes to overtime. In the regular season there is at most one 10-minute period, and the game can end tied; in the postseason, 15-minute periods continue until there is a winner.
+    whyItMatters: A regular-season game can end in a tie; a playoff game never does.
+    tags: [topic:clock]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 16, Section 1, Article 3
+        quote: 'There shall be a maximum of one 10-minute period, even if the second team has not had an opportunity to possess the ball or if its initial possession has not ended. If the score is tied at the end of the period, the game shall result in a tie.'
+      - <<: *rulebook
+        locator: Rule 16, Section 1, Article 4
+        quote: 'another overtime period will begin, and play will continue, regardless of how many 15-minute periods are necessary. … play will continue until a winner is declared.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.overtime-possession
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Both teams get the ball in overtime
+    statement: In overtime, both teams must have the opportunity to possess the ball, unless the team that kicks off scores a safety on the receiving team's first possession; in the regular season, though, the single 10-minute period can run out before the second team gets the ball.
+    whyItMatters: An opening-drive touchdown doesn't win overtime by itself; the other team gets its chance if time allows.
+    tags: [topic:clock]
+    availableCues: [name]
+    sources:
+      - <<: *rulebook
+        locator: Rule 16, Section 1, Article 3
+        quote: 'Both teams must have the opportunity to possess the ball once during the extra period, unless the team kicking off to start the overtime period scores a safety on the receiving team’s initial possession, in which case the team that kicked off is the winner.'
+      - <<: *rulebook
+        locator: Rule 16, Section 1, Article 4
+        quote: 'Both teams must have the opportunity to possess the ball at least once during the extra period'
+      - <<: *rulebook
+        locator: Rule 16, Section 1, Article 3
+        quote: 'There shall be a maximum of one 10-minute period, even if the second team has not had an opportunity to possess the ball'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+exercises:
+  # Lesson 1: Quarters, halves, and the two-minute warning
+  - id: nfl.ex.clock.game-length
+    type: multiple_choice
+    itemIds: [nfl.rules.game-length]
+    cue: stat
+    prompt: How long is an NFL game, not counting overtime?
+    answer: 60 minutes
+    acceptedAnswers: ['60']
+    distractors: [48 minutes, 90 minutes]
+
+  - id: nfl.ex.clock.period-length
+    type: fill_blank
+    itemIds: [nfl.rules.game-length]
+    cue: stat
+    prompt: Each of the four periods lasts ___ minutes.
+    answer: '15'
+    acceptedAnswers: [fifteen]
+    distractors: ['12', '20']
+
+  - id: nfl.ex.clock.halftime-length
+    type: multiple_choice
+    itemIds: [nfl.rules.halftime]
+    cue: stat
+    prompt: How long is halftime?
+    answer: 13 minutes
+    acceptedAnswers: ['13', thirteen minutes]
+    distractors: [10 minutes, 20 minutes]
+
+  - id: nfl.ex.clock.halftime-when
+    type: multiple_choice
+    itemIds: [nfl.rules.halftime]
+    cue: timeline
+    prompt: Between which periods does halftime fall?
+    answer: Second and third
+    distractors: [First and second, Third and fourth]
+
+  - id: nfl.ex.clock.two-minute-warning
+    type: multiple_choice
+    itemIds: [nfl.rules.two-minute-warning]
+    cue: timeline
+    prompt: In which periods does the two-minute warning happen?
+    answer: Second and fourth
+    distractors: [Fourth only, All four periods]
+
+  - id: nfl.ex.clock.two-minute-what
+    type: multiple_choice
+    itemIds: [nfl.rules.two-minute-warning]
+    cue: name
+    prompt: What is the two-minute warning?
+    answer: An automatic timeout
+    acceptedAnswers: [automatic timeout, a timeout]
+    distractors: [A penalty, The end of the half]
+
+  - id: nfl.ex.clock.timeline
+    type: timeline_order
+    itemIds: [nfl.rules.halftime, nfl.rules.two-minute-warning]
+    cue: timeline
+    prompt: Put these moments in game order.
+    events:
+      - { label: Two-minute warning of the second period, itemId: nfl.rules.two-minute-warning }
+      - { label: Halftime, itemId: nfl.rules.halftime }
+      - { label: Two-minute warning of the fourth period }
+
+  - id: nfl.ex.clock.recall-game-length
+    type: identify
+    itemIds: [nfl.rules.game-length]
+    cue: stat
+    prompt: How many minutes long is a game without overtime?
+    answer: '60'
+    acceptedAnswers: [60 minutes, sixty]
+    distractors: ['48', '90']
+
+  - id: nfl.ex.clock.recall-halftime
+    type: identify
+    itemIds: [nfl.rules.halftime]
+    cue: stat
+    prompt: How many minutes does halftime last?
+    answer: '13'
+    acceptedAnswers: [thirteen, 13 minutes]
+    distractors: ['10', '20']
+
+  - id: nfl.ex.clock.recall-two-minute
+    type: identify
+    itemIds: [nfl.rules.two-minute-warning]
+    cue: name
+    prompt: Name the automatic timeout near the end of the second and fourth periods.
+    answer: The two-minute warning
+    acceptedAnswers: [two-minute warning, two minute warning]
+    distractors: [The halftime break, A TV timeout]
+
+  # Lesson 2: Timeouts, the play clock, and overtime
+  - id: nfl.ex.clock.play-clock
+    type: multiple_choice
+    itemIds: [nfl.rules.play-clock]
+    cue: stat
+    prompt: How long does the offense normally have to snap the ball once the play clock starts?
+    answer: 40 seconds
+    acceptedAnswers: ['40', forty seconds]
+    distractors: [30 seconds, 60 seconds]
+
+  - id: nfl.ex.clock.short-play-clock
+    type: fill_blank
+    itemIds: [nfl.rules.play-clock]
+    cue: stat
+    prompt: After a timeout, the offense gets ___ seconds to snap the ball.
+    answer: '25'
+    distractors: ['15', '40']
+
+  - id: nfl.ex.clock.timeouts
+    type: multiple_choice
+    itemIds: [nfl.rules.timeouts]
+    cue: stat
+    prompt: How many timeouts does each team get per half?
+    answer: '3'
+    acceptedAnswers: [three]
+    distractors: ['2', '4']
+
+  - id: nfl.ex.clock.overtime-regular
+    type: multiple_choice
+    itemIds: [nfl.rules.overtime]
+    cue: stat
+    prompt: How long is the overtime period in a regular-season game?
+    answer: 10 minutes
+    acceptedAnswers: ['10', ten minutes]
+    distractors: [15 minutes, 5 minutes]
+
+  - id: nfl.ex.clock.overtime-tie
+    type: multiple_choice
+    itemIds: [nfl.rules.overtime]
+    cue: name
+    prompt: Overtime ends with the score still tied. In which kind of game does it end as a tie?
+    answer: A regular-season game
+    acceptedAnswers: [regular season]
+    distractors: [A playoff game, Both kinds]
+
+  - id: nfl.ex.clock.overtime-possession
+    type: multiple_choice
+    itemIds: [nfl.rules.overtime-possession]
+    cue: name
+    prompt: The team that receives the overtime kickoff scores a touchdown with plenty of time left. What happens next?
+    answer: The other team gets a chance to possess the ball
+    distractors: [The game ends immediately, They must also score on the try]
+
+  - id: nfl.ex.clock.higher-lower
+    type: higher_lower
+    itemIds: [nfl.rules.overtime]
+    cue: stat
+    prompt: Which overtime period is longer?
+    metric: Length of an overtime period
+    left: { label: Regular season }
+    right: { label: Postseason }
+    higher: right
+    explanation: Regular-season overtime is 10 minutes; postseason overtime periods are 15 minutes each.
+
+  - id: nfl.ex.clock.recall-timeouts
+    type: identify
+    itemIds: [nfl.rules.timeouts]
+    cue: stat
+    prompt: Type how many timeouts each team has per half.
+    answer: '3'
+    acceptedAnswers: [three]
+    distractors: ['2', '4']
+
+  - id: nfl.ex.clock.recall-play-clock
+    type: identify
+    itemIds: [nfl.rules.play-clock]
+    cue: stat
+    prompt: How many seconds is the normal play clock?
+    answer: '40'
+    acceptedAnswers: [forty, 40 seconds]
+    distractors: ['30', '25']
+
+  - id: nfl.ex.clock.recall-overtime
+    type: identify
+    itemIds: [nfl.rules.overtime]
+    cue: name
+    prompt: Can a regular-season game end in a tie?
+    answer: 'Yes'
+    distractors: ['No']
+
+lessons:
+  - id: nfl.lesson.quarters-and-halves
+    unitId: nfl.foundations.the-clock
+    order: 0
+    title: Quarters, halves, and the two-minute warning
+    estimatedMinutes: 3
+    introducesItemIds: [nfl.rules.game-length, nfl.rules.halftime, nfl.rules.two-minute-warning]
+    exerciseIds:
+      - nfl.ex.clock.game-length
+      - nfl.ex.clock.period-length
+      - nfl.ex.clock.halftime-length
+      - nfl.ex.clock.halftime-when
+      - nfl.ex.clock.two-minute-warning
+      - nfl.ex.clock.two-minute-what
+      - nfl.ex.clock.timeline
+    recallCheckExerciseIds:
+      - nfl.ex.clock.recall-game-length
+      - nfl.ex.clock.recall-halftime
+      - nfl.ex.clock.recall-two-minute
+    callbackCount: 2
+    callbackHints: [topic:downs]
+
+  - id: nfl.lesson.timeouts-and-overtime
+    unitId: nfl.foundations.the-clock
+    order: 1
+    title: Timeouts, the play clock, and overtime
+    estimatedMinutes: 4
+    introducesItemIds:
+      [nfl.rules.play-clock, nfl.rules.timeouts, nfl.rules.overtime, nfl.rules.overtime-possession]
+    exerciseIds:
+      - nfl.ex.clock.play-clock
+      - nfl.ex.clock.short-play-clock
+      - nfl.ex.clock.timeouts
+      - nfl.ex.clock.overtime-regular
+      - nfl.ex.clock.overtime-tie
+      - nfl.ex.clock.overtime-possession
+      - nfl.ex.clock.higher-lower
+    recallCheckExerciseIds:
+      - nfl.ex.clock.recall-timeouts
+      - nfl.ex.clock.recall-play-clock
+      - nfl.ex.clock.recall-overtime
+    callbackCount: 2
+    callbackHints: [topic:clock, topic:scoring]

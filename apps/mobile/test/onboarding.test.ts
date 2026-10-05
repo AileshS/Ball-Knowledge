@@ -37,14 +37,24 @@ const plan = (overrides: Partial<Parameters<typeof planPlacement>[0]> = {}) =>
   });
 
 describe('planPlacement', () => {
-  it('asks one typed question per Foundations fact, whole lessons at a time', () => {
+  it('asks one typed question per Foundations fact, whole lessons in path order up to the cap', () => {
     const p = plan();
-    const lessons = content.lessons.filter((l) => l.unitId.startsWith('nfl.foundations'));
-    const facts = lessons.flatMap((l) => l.introducesItemIds);
-    expect(p.lessonIds).toEqual(lessons.map((l) => l.id));
-    expect(p.steps.map((s) => s.itemIds[0])).toEqual(facts);
+    const unitOrder = new Map(content.units.map((u) => [u.id, u.order]));
+    const lessons = content.lessons
+      .filter((l) => l.unitId.startsWith('nfl.foundations'))
+      .sort((a, b) => unitOrder.get(a.unitId)! - unitOrder.get(b.unitId)! || a.order - b.order);
+    const placed = lessons.slice(0, p.lessonIds.length);
+    expect(p.lessonIds).toEqual(placed.map((l) => l.id));
+    expect(p.steps.map((s) => s.itemIds[0])).toEqual(placed.flatMap((l) => l.introducesItemIds));
     expect(p.steps.every((s) => s.phase === 'placement' && s.format === 'typed')).toBe(true);
     expect(p.steps.length).toBeLessThanOrEqual(MAX_PLACEMENT_QUESTIONS);
+    // It stopped only because the next whole lesson wouldn't fit.
+    const next = lessons[p.lessonIds.length];
+    if (next) {
+      expect(p.steps.length + next.introducesItemIds.length).toBeGreaterThan(
+        MAX_PLACEMENT_QUESTIONS,
+      );
+    }
   });
 
   it('prefers the lesson recall check for a fact', () => {
@@ -55,9 +65,9 @@ describe('planPlacement', () => {
   it('stops before a lesson that would go over the cap, and skips completed lessons', () => {
     expect(plan({ maxQuestions: 5 }).lessonIds).toEqual(['nfl.lesson.how-teams-score']);
     expect(plan({ maxQuestions: 3 }).steps).toEqual([]);
-    expect(plan({ completedLessonIds: new Set(['nfl.lesson.how-teams-score']) }).lessonIds).toEqual(
-      ['nfl.lesson.field-and-the-try'],
-    );
+    const skipped = plan({ completedLessonIds: new Set(['nfl.lesson.how-teams-score']) }).lessonIds;
+    expect(skipped[0]).toBe('nfl.lesson.field-and-the-try');
+    expect(skipped).not.toContain('nfl.lesson.how-teams-score');
     expect(plan({ sportId: 'nba' }).steps).toEqual([]);
   });
 

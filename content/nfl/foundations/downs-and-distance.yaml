@@ -1,0 +1,235 @@
+# Foundations: Downs & distance
+#
+# Every fact below comes from the 2026 NFL Rulebook (operations.nfl.com), checked on
+# 2026-10-04. Each source has a `locator` (rule, section, article) and a verbatim
+# `quote`; `npm run content:verify-quotes` confirms every quote against the live page.
+#
+# Status: in_review. The owner approves before anything ships.
+
+x-sources:
+  rulebook: &rulebook
+    url: https://operations.nfl.com/the-rules/nfl-rulebook/index.html
+    title: 2026 NFL Rulebook
+    publisher: NFL Football Operations
+    accessedAt: 2026-10-04
+
+units:
+  - id: nfl.foundations.downs-and-distance
+    sportId: nfl
+    track: foundations
+    kind: topic
+    title: Downs & distance
+    order: 1
+    prerequisites: [nfl.foundations.scoring-and-the-field]
+    tags: [topic:downs]
+
+items:
+  - id: nfl.rules.players-per-side
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Players per side
+    statement: The game is played by two teams of 11 players each.
+    whyItMatters: Count the players in any formation and you'll find 11; lining up with more is a foul.
+    tags: [topic:downs, topic:players]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 5, Section 1, Article 1
+        quote: 'The game is played by two teams of 11 players each. If Team A has more than 11 players in its formation for more than three seconds, or if Team B has more than 11 players in its formation and the snap is imminent, it is a foul.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.series-of-downs
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: A series of downs
+    statement: The offense gets a series of four downs to advance the ball to the line to gain and keep possession.
+    whyItMatters: Every "third-and-long" you hear about is a team running out of its four chances.
+    tags: [topic:downs]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 3, Section 8, Article 2
+        quote: 'A series of downs is the four consecutive charged scrimmage downs allotted to the offensive team during which it must advance the ball to a yard line called “the line to gain” in order to retain possession.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.line-to-gain
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: The line to gain
+    statement: The line to gain is 10 yards beyond the spot of the snap that starts a series, unless the goal line is closer, in which case the goal line is the line to gain.
+    whyItMatters: That's why it's "first-and-10" on most series, but "first-and-goal" when the end zone is less than 10 yards away.
+    tags: [topic:downs, topic:field]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 3, Section 8, Article 3
+        quote: 'The line to gain is the spot 10 yards in advance of the spot of the snap that starts a series, except when a goal line is less than 10 yards from this spot. In that case, the line to gain is the goal line.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.new-series
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Earning a first down
+    statement: When the ball is declared dead at or beyond the line to gain, the offense earns a new series of four downs, starting again with first down.
+    whyItMatters: Moving the chains resets the count, which is how a team can keep the ball all the way down the field.
+    tags: [topic:downs]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 7, Section 3, Article 1
+        quote: 'A new series of four scrimmage downs is awarded to Team A when the following conditions exist: … During a given series, the ball is declared dead in possession of Team A while at or beyond the line to gain.'
+      - <<: *rulebook
+        locator: Rule 3, Section 8, Article 5
+        quote: 'The initial down in each series is the first down.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.turnover-on-downs
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Turnover on downs
+    statement: If the offense fails to reach the line to gain during its series of downs, the other team is awarded a new series.
+    whyItMatters: Come up short after fourth down and the ball belongs to the other team.
+    tags: [topic:downs]
+    availableCues: [name]
+    sources:
+      - <<: *rulebook
+        locator: Rule 7, Section 3, Article 2
+        quote: 'A new series of four scrimmage downs is awarded to Team B when the following conditions exist: Team A fails to advance the ball to the line to gain during a series of downs'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+exercises:
+  - id: nfl.ex.downs.players-per-side
+    type: multiple_choice
+    itemIds: [nfl.rules.players-per-side]
+    cue: stat
+    prompt: How many players does each team have on the field?
+    answer: '11'
+    acceptedAnswers: [eleven]
+    distractors: ['10', '12']
+
+  - id: nfl.ex.downs.how-many-downs
+    type: multiple_choice
+    itemIds: [nfl.rules.series-of-downs]
+    cue: stat
+    prompt: How many downs are in a series?
+    answer: '4'
+    acceptedAnswers: [four]
+    distractors: ['3', '5']
+
+  - id: nfl.ex.downs.line-to-gain-distance
+    type: fill_blank
+    itemIds: [nfl.rules.line-to-gain]
+    cue: stat
+    prompt: The line to gain is usually ___ yards beyond the snap that starts a series.
+    answer: '10'
+    acceptedAnswers: [ten]
+    distractors: ['5', '15']
+
+  - id: nfl.ex.downs.goal-to-go
+    type: multiple_choice
+    itemIds: [nfl.rules.line-to-gain]
+    cue: name
+    prompt: A series starts closer than 10 yards from the goal line. What is the line to gain?
+    answer: The goal line
+    acceptedAnswers: [goal line]
+    distractors: [10 yards past the snap, The end line]
+
+  - id: nfl.ex.downs.new-series
+    type: multiple_choice
+    itemIds: [nfl.rules.new-series]
+    cue: name
+    prompt: The ball is declared dead beyond the line to gain on third down. What happens next?
+    answer: A new series starts with first down
+    distractors: [It becomes fourth down, The other team gets the ball]
+
+  - id: nfl.ex.downs.first-down-name
+    type: fill_blank
+    itemIds: [nfl.rules.new-series]
+    cue: name
+    prompt: The initial down in each series is called the ___ down.
+    answer: first
+    distractors: [opening, starting]
+
+  - id: nfl.ex.downs.turnover
+    type: multiple_choice
+    itemIds: [nfl.rules.turnover-on-downs]
+    cue: name
+    prompt: The offense is still short of the line to gain after its fourth down. Who gets the next series?
+    answer: The other team
+    acceptedAnswers: [the defense, other team]
+    distractors: [The same offense, Nobody; the down is replayed]
+
+  - id: nfl.ex.downs.match
+    type: match
+    itemIds: [nfl.rules.players-per-side, nfl.rules.series-of-downs, nfl.rules.line-to-gain]
+    cue: stat
+    prompt: Match each number to what it counts.
+    pairs:
+      - { left: '11', right: Players per team on the field }
+      - { left: '4', right: Downs in a series }
+      - { left: '10', right: Yards to the usual line to gain }
+
+  - id: nfl.ex.downs.recall-players
+    type: identify
+    itemIds: [nfl.rules.players-per-side]
+    cue: stat
+    prompt: Type how many players each team has on the field.
+    answer: '11'
+    acceptedAnswers: [eleven]
+    distractors: ['10', '12']
+
+  - id: nfl.ex.downs.recall-series
+    type: identify
+    itemIds: [nfl.rules.series-of-downs]
+    cue: name
+    prompt: What is the yard line the offense must reach to keep the ball called?
+    answer: The line to gain
+    acceptedAnswers: [line to gain]
+    distractors: [The line of scrimmage, The end line]
+
+  - id: nfl.ex.downs.recall-turnover
+    type: identify
+    itemIds: [nfl.rules.turnover-on-downs, nfl.rules.new-series]
+    cue: name
+    prompt: Fourth down ends short of the line to gain. Which team starts the next series?
+    answer: The other team
+    acceptedAnswers: [the defense, other team]
+    distractors: [The same offense, Neither team]
+
+lessons:
+  - id: nfl.lesson.four-downs
+    unitId: nfl.foundations.downs-and-distance
+    order: 0
+    title: Four downs to go 10 yards
+    estimatedMinutes: 4
+    introducesItemIds:
+      - nfl.rules.players-per-side
+      - nfl.rules.series-of-downs
+      - nfl.rules.line-to-gain
+      - nfl.rules.new-series
+      - nfl.rules.turnover-on-downs
+    exerciseIds:
+      - nfl.ex.downs.players-per-side
+      - nfl.ex.downs.how-many-downs
+      - nfl.ex.downs.line-to-gain-distance
+      - nfl.ex.downs.goal-to-go
+      - nfl.ex.downs.new-series
+      - nfl.ex.downs.first-down-name
+      - nfl.ex.downs.turnover
+      - nfl.ex.downs.match
+    recallCheckExerciseIds:
+      - nfl.ex.downs.recall-players
+      - nfl.ex.downs.recall-series
+      - nfl.ex.downs.recall-turnover
+    callbackCount: 2
+    callbackHints: [topic:field]

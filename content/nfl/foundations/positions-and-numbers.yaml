@@ -1,0 +1,387 @@
+# Foundations: Positions & numbers
+#
+# Jersey numbers follow playing positions (2026 NFL Rulebook, Rule 5, Section 1,
+# Article 2), so learning the ranges teaches the positions themselves. Checked on
+# 2026-10-04; each fact has a `locator` and a verbatim `quote`.
+# The rulebook's linebacker range is cut off on the page ("0-59 and 90"), so
+# linebackers are left out until it reads in full.
+#
+# Status: in_review. The owner approves before anything ships.
+
+x-sources:
+  rulebook: &rulebook
+    url: https://operations.nfl.com/the-rules/nfl-rulebook/index.html
+    title: 2026 NFL Rulebook
+    publisher: NFL Football Operations
+    accessedAt: 2026-10-04
+    locator: Rule 5, Section 1, Article 2
+
+units:
+  - id: nfl.foundations.positions-and-numbers
+    sportId: nfl
+    track: foundations
+    kind: topic
+    title: Positions & numbers
+    order: 3
+    prerequisites: [nfl.foundations.downs-and-distance]
+    tags: [topic:positions]
+
+items:
+  - id: nfl.rules.qb-numbers
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Quarterback numbers
+    statement: Quarterbacks wear numbers 0-19.
+    whyItMatters: No quarterback's number is above 19, so a jersey in the 20s or higher rules out quarterback.
+    tags: [topic:positions, position:quarterback]
+    availableCues: [name, jersey]
+    sources:
+      - <<: *rulebook
+        quote: 'Such numerals must be by playing position, as follows: quarterbacks: 0-19;'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.ol-numbers
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Offensive line numbers
+    statement: Offensive linemen wear numbers 50-79.
+    whyItMatters: On offense, a 50-79 number means a lineman, who isn't an eligible receiver unless he reports a change in position.
+    tags: [topic:positions, position:offensive-line]
+    availableCues: [name, jersey]
+    sources:
+      - <<: *rulebook
+        quote: 'offensive linemen: 50-79;'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.dl-numbers
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Defensive line numbers
+    statement: Defensive linemen wear numbers 50-79 or 90-99.
+    whyItMatters: A lineman in the 90s has to be on defense, because offensive linemen stop at 79.
+    tags: [topic:positions, position:defensive-line]
+    availableCues: [name, jersey]
+    sources:
+      - <<: *rulebook
+        quote: 'defensive linemen: 50-79 and 90-99;'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.db-numbers
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Defensive back numbers
+    statement: Defensive backs wear numbers 0-49.
+    whyItMatters: Every defensive back wears 49 or lower, so a defender in the 90s is never a defensive back.
+    tags: [topic:positions, position:defensive-back]
+    availableCues: [name, jersey]
+    sources:
+      - <<: *rulebook
+        quote: 'defensive backs: 0-49;'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.skill-numbers
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Running back, tight end, and receiver numbers
+    statement: Running backs, fullbacks, tight ends, H-backs, and wide receivers wear numbers 0-49 or 80-89.
+    whyItMatters: On offense, a number in the 80s means a running back, fullback, tight end, H-back, or wide receiver.
+    tags: [topic:positions, position:receiver]
+    availableCues: [name, jersey]
+    sources:
+      - <<: *rulebook
+        quote: 'running backs, fullbacks, tight ends, H-backs, and wide receivers: 0-49 and 80-89;'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.kicker-numbers
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Kicker and punter numbers
+    statement: Punters and placekickers wear numbers 0-49 or 90-99.
+    whyItMatters: Kickers share numbers with defensive backs and linemen, so watch who jogs on for fourth down.
+    tags: [topic:positions, position:special-teams]
+    availableCues: [name, jersey]
+    sources:
+      - <<: *rulebook
+        quote: 'punters and placekickers: 0-49 and 90-99;'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.eligible-numbers
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Eligible receiver numbers
+    statement: Eligible pass receivers and a T-formation quarterback must wear numbers 0-49 or 80-89; other numbers belong to ineligible players unless they report a change in position.
+    whyItMatters: That's why a lineman who lines up as a receiver on a trick play has to report the change first.
+    tags: [topic:positions, position:receiver]
+    availableCues: [name, jersey]
+    sources:
+      - <<: *rulebook
+        quote: 'Eligible pass receivers and a T-Formation Quarterback must be wearing numerals 0-49 or 80-89. All other numerals are worn by ineligible players unless they report a change in their position.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.t-formation-qb
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: T-formation quarterback
+    statement: A T-formation quarterback is a player lined up one yard or less behind the snapper.
+    whyItMatters: The rulebook uses this term in its rules on motion and on who may receive a pass, so you'll meet it again.
+    tags: [topic:positions, position:quarterback]
+    availableCues: [name]
+    sources:
+      - <<: *rulebook
+        locator: Rule 3, Section 42
+        quote: 'T-Formation Quarterback … is defined as a player aligned one yard or less behind the snapper.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+exercises:
+  # Lesson 1: Numbers in the trenches
+  - id: nfl.ex.positions.qb-range
+    type: multiple_choice
+    itemIds: [nfl.rules.qb-numbers]
+    cue: name
+    prompt: Which numbers may quarterbacks wear?
+    answer: 0-19
+    acceptedAnswers: [0 to 19, 0 through 19]
+    distractors: [50-79, 80-89]
+
+  - id: nfl.ex.positions.ol-range
+    type: multiple_choice
+    itemIds: [nfl.rules.ol-numbers]
+    cue: name
+    prompt: Which numbers may offensive linemen wear?
+    answer: 50-79
+    acceptedAnswers: [50 to 79, 50 through 79]
+    distractors: [0-19, 90-99]
+
+  - id: nfl.ex.positions.dl-range
+    type: multiple_choice
+    itemIds: [nfl.rules.dl-numbers]
+    cue: name
+    prompt: Which numbers may defensive linemen wear?
+    answer: 50-79 or 90-99
+    acceptedAnswers: [50-79 and 90-99]
+    distractors: [0-19, 80-89]
+
+  - id: nfl.ex.positions.db-range
+    type: multiple_choice
+    itemIds: [nfl.rules.db-numbers]
+    cue: name
+    prompt: Which numbers may defensive backs wear?
+    answer: 0-49
+    acceptedAnswers: [0 to 49, 0 through 49]
+    distractors: [50-79, 90-99]
+
+  - id: nfl.ex.positions.jersey-99
+    type: identify
+    itemIds: [nfl.rules.dl-numbers, nfl.rules.ol-numbers]
+    cue: jersey
+    visual: { kind: jersey, number: '99' }
+    prompt: A lineman wears this number. Is he on offense or defense?
+    answer: Defense
+    acceptedAnswers: [defensive lineman, defensive, defensive line]
+    distractors: [Offense]
+
+  - id: nfl.ex.positions.match
+    type: match
+    itemIds: [nfl.rules.qb-numbers, nfl.rules.ol-numbers, nfl.rules.db-numbers]
+    cue: name
+    prompt: Match each position group to its numbers.
+    pairs:
+      - { left: Quarterbacks, right: 0-19 }
+      - { left: Offensive linemen, right: 50-79 }
+      - { left: Defensive backs, right: 0-49 }
+
+  - id: nfl.ex.positions.higher-lower
+    type: higher_lower
+    itemIds: [nfl.rules.qb-numbers, nfl.rules.db-numbers]
+    cue: stat
+    prompt: Whose highest allowed number is higher?
+    metric: Highest allowed jersey number
+    left: { label: Quarterbacks }
+    right: { label: Defensive backs }
+    higher: right
+    explanation: Quarterbacks wear 0-19; defensive backs wear 0-49.
+
+  - id: nfl.ex.positions.recall-qb
+    type: identify
+    itemIds: [nfl.rules.qb-numbers]
+    cue: name
+    prompt: Type the number range quarterbacks wear.
+    answer: 0-19
+    acceptedAnswers: [0 to 19, 0 through 19]
+    distractors: [0-49, 80-89]
+
+  - id: nfl.ex.positions.recall-ol
+    type: fill_blank
+    itemIds: [nfl.rules.ol-numbers]
+    cue: name
+    prompt: Offensive linemen wear numbers 50 through ___.
+    answer: '79'
+    distractors: ['69', '89']
+
+  - id: nfl.ex.positions.recall-dl
+    type: fill_blank
+    itemIds: [nfl.rules.dl-numbers]
+    cue: name
+    prompt: Defensive linemen wear 50-79 or ___.
+    answer: 90-99
+    acceptedAnswers: [90 to 99, 90 through 99]
+    distractors: [80-89, 0-19]
+
+  # Lesson 2: Skill players, kickers, and eligibility
+  - id: nfl.ex.positions.skill-range
+    type: multiple_choice
+    itemIds: [nfl.rules.skill-numbers]
+    cue: name
+    prompt: Which numbers may running backs, tight ends, and wide receivers wear?
+    answer: 0-49 or 80-89
+    acceptedAnswers: [0-49 and 80-89]
+    distractors: [50-79, 90-99]
+
+  - id: nfl.ex.positions.kicker-range
+    type: multiple_choice
+    itemIds: [nfl.rules.kicker-numbers]
+    cue: name
+    prompt: Which numbers may punters and placekickers wear?
+    answer: 0-49 or 90-99
+    acceptedAnswers: [0-49 and 90-99]
+    distractors: [50-79, 80-89]
+
+  - id: nfl.ex.positions.jersey-89
+    type: identify
+    itemIds: [nfl.rules.eligible-numbers]
+    cue: jersey
+    visual: { kind: jersey, number: '89' }
+    prompt: Is this the number of an eligible pass receiver or an ineligible player?
+    answer: Eligible receiver
+    acceptedAnswers: [eligible, eligible pass receiver]
+    distractors: [Ineligible player]
+
+  - id: nfl.ex.positions.jersey-79
+    type: identify
+    itemIds: [nfl.rules.eligible-numbers, nfl.rules.ol-numbers]
+    cue: jersey
+    visual: { kind: jersey, number: '79' }
+    prompt: Is this the number of an eligible pass receiver or an ineligible player?
+    answer: Ineligible player
+    acceptedAnswers: [ineligible]
+    distractors: [Eligible receiver]
+
+  - id: nfl.ex.positions.report-change
+    type: multiple_choice
+    itemIds: [nfl.rules.eligible-numbers]
+    cue: name
+    prompt: A player in an ineligible number wants to line up as an eligible receiver. What must he do?
+    answer: Report a change in position
+    acceptedAnswers: [report]
+    distractors: [Nothing at all, Switch jerseys with a teammate]
+
+  - id: nfl.ex.positions.t-formation
+    type: fill_blank
+    itemIds: [nfl.rules.t-formation-qb]
+    cue: name
+    prompt: A T-formation quarterback lines up ___ yard or less behind the snapper.
+    answer: one
+    acceptedAnswers: ['1']
+    distractors: [three, five]
+
+  - id: nfl.ex.positions.match-skill
+    type: match
+    itemIds: [nfl.rules.skill-numbers, nfl.rules.kicker-numbers]
+    cue: name
+    prompt: Besides 0-49, which other range may each group wear?
+    pairs:
+      - { left: Wide receivers and tight ends, right: 80-89 }
+      - { left: Punters and placekickers, right: 90-99 }
+
+  - id: nfl.ex.positions.recall-eligible
+    type: identify
+    itemIds: [nfl.rules.eligible-numbers]
+    cue: name
+    prompt: Type the numbers an eligible pass receiver must wear.
+    answer: 0-49 or 80-89
+    acceptedAnswers: [0-49 and 80-89]
+    distractors: [50-79, 90-99]
+
+  - id: nfl.ex.positions.recall-kicker
+    type: identify
+    itemIds: [nfl.rules.kicker-numbers]
+    cue: name
+    prompt: Besides 0-49, which range may punters and placekickers wear?
+    answer: 90-99
+    acceptedAnswers: [90 to 99, 90 through 99]
+    distractors: [80-89, 50-79]
+
+  - id: nfl.ex.positions.recall-t-formation
+    type: identify
+    itemIds: [nfl.rules.t-formation-qb]
+    cue: name
+    prompt: At most, how many yards behind the snapper does a T-formation quarterback line up?
+    answer: '1'
+    acceptedAnswers: [one, 1 yard, one yard]
+    distractors: ['3', '5']
+
+lessons:
+  - id: nfl.lesson.numbers-in-the-trenches
+    unitId: nfl.foundations.positions-and-numbers
+    order: 0
+    title: Numbers on the line and in the backfield
+    estimatedMinutes: 4
+    introducesItemIds:
+      [nfl.rules.qb-numbers, nfl.rules.ol-numbers, nfl.rules.dl-numbers, nfl.rules.db-numbers]
+    exerciseIds:
+      - nfl.ex.positions.qb-range
+      - nfl.ex.positions.ol-range
+      - nfl.ex.positions.dl-range
+      - nfl.ex.positions.db-range
+      - nfl.ex.positions.jersey-99
+      - nfl.ex.positions.match
+      - nfl.ex.positions.higher-lower
+    recallCheckExerciseIds:
+      - nfl.ex.positions.recall-qb
+      - nfl.ex.positions.recall-ol
+      - nfl.ex.positions.recall-dl
+    callbackCount: 2
+    callbackHints: [topic:downs]
+
+  - id: nfl.lesson.skill-players-and-eligibility
+    unitId: nfl.foundations.positions-and-numbers
+    order: 1
+    title: Skill players, kickers, and eligibility
+    estimatedMinutes: 4
+    introducesItemIds:
+      [
+        nfl.rules.skill-numbers,
+        nfl.rules.kicker-numbers,
+        nfl.rules.eligible-numbers,
+        nfl.rules.t-formation-qb,
+      ]
+    exerciseIds:
+      - nfl.ex.positions.skill-range
+      - nfl.ex.positions.kicker-range
+      - nfl.ex.positions.jersey-89
+      - nfl.ex.positions.jersey-79
+      - nfl.ex.positions.report-change
+      - nfl.ex.positions.t-formation
+      - nfl.ex.positions.match-skill
+    recallCheckExerciseIds:
+      - nfl.ex.positions.recall-eligible
+      - nfl.ex.positions.recall-kicker
+      - nfl.ex.positions.recall-t-formation
+    callbackCount: 2
+    callbackHints: [topic:positions]

@@ -7,7 +7,7 @@ import {
   loadContentDir,
   parseContentFile,
 } from '../src/index';
-import { baseContent, check, TODAY } from './helpers';
+import { baseContent, check, CONTENT_CHECK_DATE, TODAY } from './helpers';
 
 describe('parseContentFile', () => {
   it('reads collections, skips x- anchor holders, and supports merge keys', () => {
@@ -111,7 +111,7 @@ describe('buildBundle ordering', () => {
 
 describe('the repository content', () => {
   const dir = join(import.meta.dirname, '..', '..', '..', 'content');
-  const result = checkContent(loadContentDir(dir), { mode: 'dev', today: TODAY });
+  const result = checkContent(loadContentDir(dir), { mode: 'dev', today: CONTENT_CHECK_DATE });
 
   it('passes the dev check with no errors', () => {
     expect(result.errors).toEqual([]);

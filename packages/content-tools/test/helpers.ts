@@ -13,6 +13,13 @@ import { checkContent, parseContentFile, type CheckOptions } from '../src/index'
 
 export const TODAY = '2026-10-02';
 
+/**
+ * The date to check the real repository content against. Facts are dated the day
+ * they're verified, so a frozen date would fail tomorrow's content; a day of margin
+ * covers authors whose local date is ahead of UTC.
+ */
+export const CONTENT_CHECK_DATE = new Date(Date.now() + 86_400_000).toISOString().slice(0, 10);
+
 const source = { ...FIXTURE_SOURCE, locator: 'Fixture page 1', quote: 'A fictional quote.' };
 
 /**

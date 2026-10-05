@@ -1,0 +1,412 @@
+# Foundations: The season & the playoffs
+#
+# League structure and the schedule come from NFL Football Operations' "Making the
+# Schedule" page; the playoff format comes from NFL.com (the 2020 expansion
+# article, plus the current tiebreaking procedures, which still describe three
+# Wild Cards per conference). Checked on 2026-10-04; each fact has a verbatim quote.
+#
+# Status: in_review. The owner approves before anything ships.
+
+x-sources:
+  schedule: &schedule
+    url: https://operations.nfl.com/calendar-events/nfl-schedule/making-the-schedule
+    title: Making the Schedule
+    publisher: NFL Football Operations
+    accessedAt: 2026-10-04
+  expansion: &expansion
+    url: https://www.nfl.com/news/owners-approve-expanding-postseason-to-14-teams-0ap3000001107961
+    title: Owners approve expanding postseason to 14 teams
+    publisher: NFL.com
+    accessedAt: 2026-10-04
+  tiebreakers: &tiebreakers
+    url: https://www.nfl.com/standings/tie-breaking-procedures
+    title: NFL Tiebreaking Procedures
+    publisher: NFL.com
+    accessedAt: 2026-10-04
+
+units:
+  - id: nfl.foundations.season-and-playoffs
+    sportId: nfl
+    track: foundations
+    kind: topic
+    title: The season & the playoffs
+    order: 5
+    prerequisites: [nfl.foundations.the-clock]
+    tags: [topic:season]
+
+items:
+  - id: nfl.season.conferences
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Two conferences
+    statement: The NFL's 32 teams are split into two conferences, the American Football Conference (AFC) and the National Football Conference (NFC).
+    whyItMatters: Each conference crowns a champion in its Conference Championship Game, one step before the Super Bowl.
+    tags: [topic:season]
+    availableCues: [name, stat]
+    sources:
+      - <<: *schedule
+        locator: Scheduling formula
+        quote: 'The league’s 32 teams are split into two conferences — the American Football Conference (AFC) and the National Football Conference (NFC).'
+      - <<: *tiebreakers
+        locator: Selection Procedures (draft order), items 2(C) and 2(D)
+        quote: 'The losers of the Conference Championship Games shall select 29th and 30th … The winner of the Super Bowl game shall select last and the Super Bowl loser will select next-to-last.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.season.divisions
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Eight divisions
+    statement: The 16 teams in each conference are split into East, North, South, and West divisions of four teams each.
+    whyItMatters: Four divisions of four in each conference is how 32 teams become a tidy grid.
+    tags: [topic:season]
+    availableCues: [name, stat]
+    sources:
+      - <<: *schedule
+        locator: Scheduling formula
+        quote: 'The 16 teams in each conference are split into the East, North, South and West divisions; every division has four teams.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.season.regular-season
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: The regular season
+    statement: Each team plays 17 regular-season games over an 18-week season, with one bye week.
+    whyItMatters: With 17 games, each one is about 6% of a team's season.
+    tags: [topic:season]
+    availableCues: [name, stat]
+    sources:
+      - <<: *schedule
+        locator: Scheduling formula
+        quote: 'Each NFL team plays 17 games over the 18-week season.'
+      - <<: *schedule
+        locator: Scheduling formula
+        quote: 'Every team will play 17 regular-season games with one bye week.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.season.division-games
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Division games
+    statement: Six of each team's games are against its division opponents, two against each team, one at home and one on the road.
+    whyItMatters: Six of 17 games, more than a third of the schedule, come against just three division opponents.
+    tags: [topic:season]
+    availableCues: [name, stat]
+    sources:
+      - <<: *schedule
+        locator: Breakdown of opponents
+        quote: 'Six games against divisional opponents — two games per team, one at home and one on the road.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.season.total-games
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Games on the schedule
+    statement: The regular-season schedule has 272 games in all.
+    whyItMatters: 'Check the math: 32 teams × 17 games ÷ 2 teams per game = 272.'
+    tags: [topic:season]
+    availableCues: [stat]
+    sources:
+      - <<: *schedule
+        locator: Scheduling formula
+        quote: 'The league uses a formula to determine all 272 matchups.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.season.playoff-field
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: The playoff field
+    statement: Since the 2020 season, 14 teams make the playoffs, seven from each conference.
+    derivedValues:
+      - { value: seven, from: 14 playoff teams ÷ 2 conferences, one more per conference than before 2020 }
+    whyItMatters: Fourteen of 32 teams means fewer than half the league gets a shot at the title.
+    tags: [topic:season, topic:playoffs]
+    availableCues: [name, stat]
+    sources:
+      - <<: *expansion
+        locator: Paragraphs 1 and 4
+        quote: 'League owners voted to approve expanding the postseason to 14 teams beginning in the 2020 season'
+      - <<: *expansion
+        locator: Paragraph 4
+        quote: 'The expanded format, which was agreed to in the new CBA, added one team per conference, creating six total wild card slots.'
+      - <<: *tiebreakers
+        locator: Selection Procedures (draft order), item 1
+        quote: 'Clubs not participating in the playoffs shall select in the first through 18th positions in reverse-standings order.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.season.wild-cards
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Wild Card teams
+    statement: Each conference's playoff field includes three Wild Card teams, six in all.
+    derivedValues:
+      - { value: three, from: 'the tiebreakers name a first, second, and third Wild Card per conference (six slots ÷ 2 conferences)' }
+    whyItMatters: A team that doesn't win its division can still reach the playoffs as a Wild Card.
+    tags: [topic:season, topic:playoffs]
+    availableCues: [name, stat]
+    sources:
+      - <<: *tiebreakers
+        locator: Breaking ties for Wild Card team
+        quote: 'When the first Wild Card team has been identified, the procedure is repeated to name the second and third Wild Card'
+      - <<: *expansion
+        locator: Paragraph 4
+        quote: 'added one team per conference, creating six total wild card slots.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.season.top-seed-bye
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: The first-round bye
+    statement: Only the No. 1 seed in each conference earns a first-round bye.
+    whyItMatters: Skipping the first round means one fewer game to win on the way to the Super Bowl.
+    tags: [topic:season, topic:playoffs]
+    availableCues: [name, stat]
+    sources:
+      - <<: *expansion
+        locator: Paragraph 5
+        quote: 'Adding an additional playoff team in each conference means only the No.1 seeds in the AFC and NFC will earn a postseason bye'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+exercises:
+  # Lesson 1: How the season is built
+  - id: nfl.ex.season.team-count
+    type: multiple_choice
+    itemIds: [nfl.season.conferences]
+    cue: stat
+    prompt: How many teams are in the NFL?
+    answer: '32'
+    distractors: ['30', '34']
+
+  - id: nfl.ex.season.conference-names
+    type: multiple_choice
+    itemIds: [nfl.season.conferences]
+    cue: name
+    prompt: What are the NFL's two conferences?
+    answer: AFC and NFC
+    acceptedAnswers: [NFC and AFC]
+    distractors: [AFL and NFL, East and West]
+
+  - id: nfl.ex.season.division-count
+    type: fill_blank
+    itemIds: [nfl.season.divisions]
+    cue: stat
+    prompt: Each conference is split into ___ divisions of four teams.
+    answer: '4'
+    acceptedAnswers: [four]
+    distractors: ['2', '8']
+
+  - id: nfl.ex.season.division-names
+    type: fill_blank
+    itemIds: [nfl.season.divisions]
+    cue: name
+    prompt: Every conference has an East, a North, a South, and a ___ division.
+    answer: West
+    distractors: [Central, Pacific]
+
+  - id: nfl.ex.season.games
+    type: multiple_choice
+    itemIds: [nfl.season.regular-season]
+    cue: stat
+    prompt: How many regular-season games does each team play?
+    answer: '17'
+    acceptedAnswers: [seventeen]
+    distractors: ['16', '18']
+
+  - id: nfl.ex.season.weeks
+    type: multiple_choice
+    itemIds: [nfl.season.regular-season]
+    cue: stat
+    prompt: How many weeks does the regular season span, counting each team's bye?
+    answer: '18'
+    acceptedAnswers: [eighteen]
+    distractors: ['17', '20']
+
+  - id: nfl.ex.season.division-rivals
+    type: multiple_choice
+    itemIds: [nfl.season.division-games]
+    cue: stat
+    prompt: How many times a season does a team play each division opponent?
+    answer: Twice
+    acceptedAnswers: ['2', two]
+    distractors: [Once, Three times]
+
+  - id: nfl.ex.season.match
+    type: match
+    itemIds: [nfl.season.conferences, nfl.season.regular-season, nfl.season.total-games]
+    cue: stat
+    prompt: Match each number to what it counts.
+    pairs:
+      - { left: '32', right: Teams in the league }
+      - { left: '17', right: Regular-season games per team }
+      - { left: '272', right: Games on the regular-season schedule }
+
+  - id: nfl.ex.season.recall-games
+    type: identify
+    itemIds: [nfl.season.regular-season]
+    cue: stat
+    prompt: Type the number of regular-season games each team plays.
+    answer: '17'
+    acceptedAnswers: [seventeen]
+    distractors: ['16', '18']
+
+  - id: nfl.ex.season.recall-total
+    type: identify
+    itemIds: [nfl.season.total-games]
+    cue: stat
+    prompt: How many games are on the regular-season schedule in all?
+    answer: '272'
+    distractors: ['256', '289']
+
+  - id: nfl.ex.season.recall-division-size
+    type: identify
+    itemIds: [nfl.season.divisions]
+    cue: stat
+    prompt: How many teams are in each division?
+    answer: '4'
+    acceptedAnswers: [four]
+    distractors: ['3', '5']
+
+  # Lesson 2: Making the playoffs
+  - id: nfl.ex.playoffs.field
+    type: multiple_choice
+    itemIds: [nfl.season.playoff-field]
+    cue: stat
+    prompt: How many teams make the playoffs?
+    answer: '14'
+    acceptedAnswers: [fourteen]
+    distractors: ['12', '16']
+
+  - id: nfl.ex.playoffs.per-conference
+    type: fill_blank
+    itemIds: [nfl.season.playoff-field]
+    cue: stat
+    prompt: Each conference sends ___ teams to the playoffs.
+    answer: '7'
+    acceptedAnswers: [seven]
+    distractors: ['6', '8']
+
+  - id: nfl.ex.playoffs.since
+    type: multiple_choice
+    itemIds: [nfl.season.playoff-field]
+    cue: timeline
+    prompt: The playoff field grew to 14 teams starting with which season?
+    answer: '2020'
+    distractors: ['2002', '2010']
+
+  - id: nfl.ex.playoffs.wild-cards
+    type: multiple_choice
+    itemIds: [nfl.season.wild-cards]
+    cue: stat
+    prompt: How many Wild Card teams does each conference get?
+    answer: '3'
+    acceptedAnswers: [three]
+    distractors: ['2', '4']
+
+  - id: nfl.ex.playoffs.bye
+    type: multiple_choice
+    itemIds: [nfl.season.top-seed-bye]
+    cue: name
+    prompt: Which playoff teams get a first-round bye?
+    answer: Only each conference's No. 1 seed
+    acceptedAnswers: [the No. 1 seeds, No. 1 seed, the top seed]
+    distractors: [The top two seeds in each conference, Every division winner]
+
+  - id: nfl.ex.playoffs.match
+    type: match
+    itemIds: [nfl.season.playoff-field, nfl.season.wild-cards]
+    cue: stat
+    prompt: Match each number to what it counts.
+    pairs:
+      - { left: '14', right: Playoff teams in all }
+      - { left: '7', right: Playoff teams per conference }
+      - { left: '3', right: Wild Cards per conference }
+
+  - id: nfl.ex.playoffs.recall-field
+    type: identify
+    itemIds: [nfl.season.playoff-field]
+    cue: stat
+    prompt: Type how many teams make the playoffs.
+    answer: '14'
+    acceptedAnswers: [fourteen]
+    distractors: ['12', '16']
+
+  - id: nfl.ex.playoffs.recall-wild-cards
+    type: identify
+    itemIds: [nfl.season.wild-cards]
+    cue: stat
+    prompt: How many Wild Card teams are there in all, across both conferences?
+    answer: '6'
+    acceptedAnswers: [six]
+    distractors: ['4', '8']
+
+  - id: nfl.ex.playoffs.recall-bye
+    type: identify
+    itemIds: [nfl.season.top-seed-bye]
+    cue: name
+    prompt: Which seed in each conference skips the first round of the playoffs?
+    answer: No. 1
+    acceptedAnswers: [the No. 1 seed, the top seed, top seed, first seed]
+    distractors: [No. 2, No. 7]
+
+lessons:
+  - id: nfl.lesson.how-the-season-works
+    unitId: nfl.foundations.season-and-playoffs
+    order: 0
+    title: How the season is built
+    estimatedMinutes: 4
+    introducesItemIds:
+      - nfl.season.conferences
+      - nfl.season.divisions
+      - nfl.season.regular-season
+      - nfl.season.division-games
+      - nfl.season.total-games
+    exerciseIds:
+      - nfl.ex.season.team-count
+      - nfl.ex.season.conference-names
+      - nfl.ex.season.division-count
+      - nfl.ex.season.division-names
+      - nfl.ex.season.games
+      - nfl.ex.season.weeks
+      - nfl.ex.season.division-rivals
+      - nfl.ex.season.match
+    recallCheckExerciseIds:
+      - nfl.ex.season.recall-games
+      - nfl.ex.season.recall-total
+      - nfl.ex.season.recall-division-size
+    callbackCount: 2
+    callbackHints: [topic:clock]
+
+  - id: nfl.lesson.making-the-playoffs
+    unitId: nfl.foundations.season-and-playoffs
+    order: 1
+    title: Making the playoffs
+    estimatedMinutes: 3
+    introducesItemIds: [nfl.season.playoff-field, nfl.season.wild-cards, nfl.season.top-seed-bye]
+    exerciseIds:
+      - nfl.ex.playoffs.field
+      - nfl.ex.playoffs.per-conference
+      - nfl.ex.playoffs.since
+      - nfl.ex.playoffs.wild-cards
+      - nfl.ex.playoffs.bye
+      - nfl.ex.playoffs.match
+    recallCheckExerciseIds:
+      - nfl.ex.playoffs.recall-field
+      - nfl.ex.playoffs.recall-wild-cards
+      - nfl.ex.playoffs.recall-bye
+    callbackCount: 2
+    callbackHints: [topic:season, topic:clock]

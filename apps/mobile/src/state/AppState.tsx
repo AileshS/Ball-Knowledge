@@ -19,11 +19,20 @@ import {
 } from '../progress/repository';
 import type { KeyValueStore } from '../progress/store';
 import { advanceClock, createClock, loadClockOffset, type Clock } from '../session/clock';
+import {
+  chooseTrack,
+  markOnboarded,
+  readPreferences,
+  withPreference,
+  type ChosenTrack,
+  type SportPreferences,
+} from '../session/preferences';
 
 interface Loaded {
   readonly progress: Progress;
   readonly log: readonly ReviewLogEntry[];
   readonly clock: Clock;
+  readonly preferences: ReadonlyMap<string, SportPreferences>;
 }
 
 interface AppState {
@@ -45,6 +54,10 @@ interface AppState {
   readonly completeLesson: (lessonId: LessonId) => Promise<void>;
   /** Dev builds only: move the clock forward to test spacing. */
   readonly advanceDays: (days: number) => Promise<void>;
+  /** Onboarding choices per sport (empty while loading). */
+  readonly preferences: ReadonlyMap<string, SportPreferences>;
+  readonly finishOnboarding: (sportId: string) => Promise<void>;
+  readonly setTrack: (sportId: string, track: ChosenTrack) => Promise<void>;
 }
 
 const AppStateContext = createContext<AppState | null>(null);
@@ -59,10 +72,17 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let cancelled = false;
-    Promise.all([repository.load(), repository.reviewLog(), loadClockOffset(store)]).then(
-      ([progress, log, offset]) => {
+    const sportIds = bundledContent.sports.map((sport) => sport.id);
+    Promise.all([
+      repository.load(),
+      repository.reviewLog(),
+      loadClockOffset(store),
+      Promise.all(sportIds.map((id) => readPreferences(store, id))),
+    ]).then(
+      ([progress, log, offset, prefs]) => {
         if (!cancelled) {
-          setLoaded({ progress, log, clock: createClock(__DEV__ ? offset : 0) });
+          const preferences = new Map(sportIds.map((id, i) => [id, prefs[i]!] as const));
+          setLoaded({ progress, log, clock: createClock(__DEV__ ? offset : 0), preferences });
           setError(null);
         }
       },
@@ -102,6 +122,36 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     [store, reload],
   );
 
+  /**
+   * Applies a preference change in memory right away, so a screen that navigates
+   * immediately afterwards sees it (the full reload lands a moment later).
+   */
+  const updatePreferences = useCallback(
+    (sportId: string, change: Partial<SportPreferences>) =>
+      setLoaded((prev) =>
+        prev ? { ...prev, preferences: withPreference(prev.preferences, sportId, change) } : prev,
+      ),
+    [],
+  );
+
+  const finishOnboarding = useCallback(
+    async (sportId: string) => {
+      await markOnboarded(store, sportId);
+      updatePreferences(sportId, { onboarded: true });
+      reload();
+    },
+    [store, reload, updatePreferences],
+  );
+
+  const setTrack = useCallback(
+    async (sportId: string, track: ChosenTrack) => {
+      await chooseTrack(store, sportId, track);
+      updatePreferences(sportId, { track });
+      reload();
+    },
+    [store, reload, updatePreferences],
+  );
+
   const value = useMemo<AppState>(
     () => ({
       content: bundledContent,
@@ -116,8 +166,23 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       saveResults,
       completeLesson,
       advanceDays,
+      preferences: loaded?.preferences ?? new Map(),
+      finishOnboarding,
+      setTrack,
     }),
-    [scheduler, repository, store, loaded, error, reload, saveResults, completeLesson, advanceDays],
+    [
+      scheduler,
+      repository,
+      store,
+      loaded,
+      error,
+      reload,
+      saveResults,
+      completeLesson,
+      advanceDays,
+      finishOnboarding,
+      setTrack,
+    ],
   );
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;
 }

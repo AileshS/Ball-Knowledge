@@ -190,6 +190,26 @@ export function lessonStatus(
   return units.flatMap((u) => u.lessons).find((l) => l.id === lessonId)?.status ?? null;
 }
 
+/**
+ * True once the user has any progress in this sport (a learned fact or a completed
+ * lesson). People who started before onboarding existed never see the welcome screen.
+ */
+export function hasStarted(
+  content: AppContent,
+  sportId: string,
+  states: ReadonlyMap<ItemId, UserItemState>,
+  completedLessonIds: Iterable<string>,
+): boolean {
+  for (const id of states.keys()) {
+    if (content.itemsById.get(id)?.sportId === sportId) return true;
+  }
+  for (const id of completedLessonIds) {
+    const lesson = content.lessonsById.get(id);
+    if (lesson && content.unitsById.get(lesson.unitId)?.sportId === sportId) return true;
+  }
+  return false;
+}
+
 /** How many facts and tips still await owner review (shown as a dev banner). */
 export function awaitingReview(content: AppContent): number {
   return [...content.items, ...content.tips].filter((x) => x.reviewStatus !== 'approved').length;

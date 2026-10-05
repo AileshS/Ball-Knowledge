@@ -16,7 +16,14 @@ export const GradeSchema = z.enum(['again', 'hard', 'good', 'easy']);
 export type Grade = z.infer<typeof GradeSchema>;
 
 /** Where a review happened; used for analytics such as review completion. */
-export const ReviewContextSchema = z.enum(['lesson', 'callback', 'recall_check', 'review']);
+// `placement`: answered in the onboarding placement quiz (Phase 8).
+export const ReviewContextSchema = z.enum([
+  'lesson',
+  'callback',
+  'recall_check',
+  'review',
+  'placement',
+]);
 export type ReviewContext = z.infer<typeof ReviewContextSchema>;
 
 /** How many recent cues to remember for cue rotation. */

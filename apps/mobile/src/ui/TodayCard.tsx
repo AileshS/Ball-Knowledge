@@ -6,7 +6,7 @@ import { Button } from './controls';
 
 /** What's due now and the next lesson. No daily goal or stop (ADR 0006). */
 export function TodayCard({ sportId }: { sportId: string }) {
-  const { content, scheduler, progress, log, clock, advanceDays } = useAppState();
+  const { content, scheduler, progress, log, clock, advanceDays, preferences } = useAppState();
   if (!progress) return null;
 
   const now = clock.now();
@@ -19,6 +19,7 @@ export function TodayCard({ sportId }: { sportId: string }) {
     scheduler,
     now,
     dayStart: startOfLocalDay(now),
+    chosenTrack: preferences.get(sportId)?.track ?? null,
   });
   const due = today.reviewItemIds.length;
 

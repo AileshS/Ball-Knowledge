@@ -78,3 +78,26 @@ describe('number tracing in checkContent', () => {
     expect(errors.some((e) => e.includes('"5"') || e.includes('"9"'))).toBe(false);
   });
 });
+
+describe('jersey numbers trace to the tested facts', () => {
+  it('rejects a jersey number that no tested statement contains', () => {
+    const content = baseContent();
+    Object.assign(content.items[0]!, {
+      statement: 'Fixture Player Alpha wore the fictional number 12.',
+      sources: [{ ...content.items[0]!.sources[0]!, quote: 'Alpha: number 12' }],
+    });
+    Object.assign(content.exercises[0]!, {
+      type: 'identify',
+      cue: 'jersey',
+      prompt: 'Which fictional player wore this jersey?',
+      answer: 'Fixture Player Alpha',
+      distractors: [],
+      visual: { kind: 'jersey', number: '21' },
+    });
+    expect(messages(check(content).errors)).toContain(
+      'Number "21" in visual.number doesn\'t appear in the tested items\' statements',
+    );
+    Object.assign(content.exercises[0]!, { visual: { kind: 'jersey', number: '12' } });
+    expect(check(content).errors).toEqual([]);
+  });
+});

@@ -352,6 +352,7 @@ export function checkContent(loaded: LoadResult, options: CheckOptions): CheckRe
     const allowed = new Set(exercise.itemIds.flatMap((id) => [...(traceable.get(id) ?? [])]));
     const shown: [string, string][] = [['prompt', exercise.prompt]];
     if (exercise.textFallback) shown.push(['textFallback', exercise.textFallback]);
+    if (exercise.visual) shown.push(['visual.number', exercise.visual.number]);
     if ('answer' in exercise) {
       shown.push(['answer', exercise.answer]);
       exercise.acceptedAnswers.forEach((a, i) => shown.push([`acceptedAnswers.${i}`, a]));

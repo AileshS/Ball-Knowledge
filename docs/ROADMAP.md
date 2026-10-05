@@ -36,7 +36,7 @@ If the loop doesn't converge within 5 iterations, or a fix would need a destruct
 | 7 | Accounts and sync (Supabase): email/Apple/Google auth, row-level security, review-log sync, account deletion | Built; email + password sign-in (Apple/Google later; SMTP before beta) |
 | 8 | Onboarding: placement quiz, Foundations skip, Past/Present switching on one review queue | Done (placement covers Foundations; Past/Present await content) |
 | 9 | Gamification: recall-only XP, review streak (no guilt), mastery-gated ranks (no daily goal: ADR 0006), mastery map, "My tips" | Done (rank titles tunable; Debate Mode later) |
-| 10 | Remaining exercise types: match, timeline, identify (jersey/silhouette), who-did-it, clip with text fallback | Planned |
+| 10 | Remaining exercise types: match, timeline, identify (jersey/silhouette), who-did-it, clip with text fallback | Done (silhouettes await art; clips text-only per ADR 0005) |
 | 11 | Content production: full Foundations; Past (all eras overview + 2–3 deep dives); Present (all position groups + "Is this trade worth it?") | Planned. Gated on [ADR 0004](decisions/0004-sports-data-provider.md) |
 | 12 | Measurement: north-star recall metric, review completion, D7/D30, "used it in a real conversation" prompt, privacy policy | Planned |
 | 13 | Beta and release: EAS builds, TestFlight / Play internal testing, store listings | Planned |

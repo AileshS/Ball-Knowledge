@@ -192,3 +192,38 @@ describe('answer normalization shared with the app', () => {
     expect(normalizeAnswer('  The End-Zone! ')).toBe('end zone');
   });
 });
+
+describe('jersey visual', () => {
+  const issues = (overrides: Record<string, unknown>) => {
+    const result = validate(ExerciseSchema, exerciseInput(overrides));
+    return result.ok ? [] : result.issues;
+  };
+
+  it('is required for a jersey cue and must be a 0-99 number', () => {
+    expect(
+      issues({ type: 'identify', cue: 'jersey', visual: { kind: 'jersey', number: '12' } }),
+    ).toEqual([]);
+    expect(issues({ type: 'identify', cue: 'jersey' })).toContain(
+      'visual: A "jersey" cue needs a visual: { kind: jersey, number }',
+    );
+    expect(
+      issues({ type: 'identify', cue: 'jersey', visual: { kind: 'jersey', number: '100' } }),
+    ).toContain('visual.number: Jersey numbers are 0, 00, or 1-99');
+    expect(
+      issues({ type: 'identify', cue: 'jersey', visual: { kind: 'jersey', number: 'd' } }),
+    ).toContain('visual.number: Jersey numbers are 0, 00, or 1-99');
+  });
+
+  it('accepts 0, 00 and 1-99, but no leading zeros', () => {
+    const jersey = (number: string) =>
+      issues({ type: 'identify', cue: 'jersey', visual: { kind: 'jersey', number } });
+    for (const ok of ['0', '00', '7', '12', '99']) expect(jersey(ok)).toEqual([]);
+    for (const bad of ['07', '007', '']) expect(jersey(bad).length).toBeGreaterThan(0);
+  });
+
+  it('only goes with the jersey cue', () => {
+    expect(issues({ visual: { kind: 'jersey', number: '7' } })).toContain(
+      'visual: A jersey visual only goes with the "jersey" cue',
+    );
+  });
+});

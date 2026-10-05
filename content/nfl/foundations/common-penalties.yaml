@@ -1,0 +1,415 @@
+# Foundations: Common penalties
+#
+# Every fact below comes from the 2026 NFL Rulebook (operations.nfl.com), checked on
+# 2026-10-04, with a `locator` and a verbatim `quote` per fact. Only the basic
+# yardage is taught; enforcement spots and exceptions are left for later units.
+#
+# Status: in_review. The owner approves before anything ships.
+
+x-sources:
+  rulebook: &rulebook
+    url: https://operations.nfl.com/the-rules/nfl-rulebook/index.html
+    title: 2026 NFL Rulebook
+    publisher: NFL Football Operations
+    accessedAt: 2026-10-04
+
+units:
+  - id: nfl.foundations.common-penalties
+    sportId: nfl
+    track: foundations
+    kind: topic
+    title: Common penalties
+    order: 4
+    prerequisites: [nfl.foundations.downs-and-distance]
+    tags: [topic:penalties]
+
+items:
+  # Before the snap
+  - id: nfl.rules.false-start
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: False start
+    statement: A false start, such as an interior lineman in a three-point stance moving his hand off the ground, costs the offense five yards from the line of scrimmage.
+    whyItMatters: It's enforced before the snap, so the offense loses five yards without running a play.
+    tags: [topic:penalties, position:offensive-line]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 7, Section 4, Article 2
+        quote: 'It is a False Start if an interior lineman (tackle to tackle) takes or simulates a three-point stance and then changes his position or moves the hand that is on the ground.'
+      - <<: *rulebook
+        locator: Rule 7, Section 4, Article 2 (penalty)
+        quote: 'Penalty: For a False Start: Loss of five yards from the line of scrimmage. The foul is enforced prior to the snap.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.encroachment
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Encroachment
+    statement: Encroachment is a defensive player entering the neutral zone and contacting an offensive player or the ball before the snap; it costs five yards.
+    whyItMatters: It's the defense's version of jumping early, and the whistle blows right away.
+    tags: [topic:penalties]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 7, Section 4, Article 3
+        quote: 'It is encroachment if a defensive player enters the neutral zone and contacts an offensive player or the ball prior to the snap, or if he interferes with the ball during the snap. Officials are to blow their whistles immediately. Penalty: For encroachment: Loss of five yards from the line of scrimmage.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.offside
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Offside
+    statement: A player is offside when any part of his body is in or beyond the neutral zone when the ball is put in play; it costs five yards.
+    whyItMatters: Unlike encroachment, offside needs no contact; being past the line when the ball is snapped is enough.
+    tags: [topic:penalties]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 7, Section 4, Article 5
+        quote: 'A player is offside when any part of his body is in or beyond the neutral zone or beyond a restraining line for an onside kick when the ball is put in play. Penalty: For offside: Loss of five yards.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.delay-of-game
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Delay of game
+    statement: If the ball isn't snapped before the play clock runs out, it's delay of game, a five-yard penalty.
+    whyItMatters: Even a perfect play call is wasted if the ball isn't snapped in time.
+    tags: [topic:penalties, topic:clock]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 4, Section 6, Article 1
+        quote: 'It is a delay of the game if the ball is not put in play by a snap within 40 seconds after the start of the play clock.'
+      - <<: *rulebook
+        locator: Rule 4, Section 6, Article 5
+        quote: 'Penalty: For delay of the game: Loss of five yards'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  # During the play
+  - id: nfl.rules.offensive-holding
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Offensive holding
+    statement: Holding by the offense, such as grabbing or tackling a defender, costs 10 yards.
+    whyItMatters: Ten yards is twice what a false start costs, a big step back for a drive.
+    tags: [topic:penalties, position:offensive-line]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 12, Section 1, Article 3
+        quote: 'Material restrictions include but are not limited to: grabbing or tackling an opponent; … Penalty: For holding by the offense: Loss of 10 yards.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.defensive-holding
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Defensive holding
+    statement: Defensive holding, tackling or holding an opponent other than the runner, costs five yards and gives the offense an automatic first down.
+    whyItMatters: The yards are small, but the automatic first down can keep a drive alive on third-and-long.
+    tags: [topic:penalties, position:defensive-back]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 12, Section 1, Article 6
+        quote: 'It is a foul for defensive holding if: a defensive player tackles or holds any opponent other than a runner … Penalty: For defensive holding: Loss of five yards and an automatic first down.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.defensive-pass-interference
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Defensive pass interference
+    statement: Pass interference by the defense gives the offense a first down at the spot of the foul.
+    whyItMatters: Because the ball goes to the spot of the foul, interference on a deep pass can gain far more than 15 yards.
+    tags: [topic:penalties, position:defensive-back]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 8, Section 5 (penalty for pass interference)
+        quote: 'Penalty: For pass interference by the defense: First down for the offensive team at the spot of the foul.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.roughing-the-passer
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Roughing the passer
+    statement: Roughing the passer costs 15 yards and gives the offense an automatic first down.
+    whyItMatters: The rulebook treats a passer in a passing posture as defenseless, which is why the penalty is so steep.
+    tags: [topic:penalties, position:quarterback]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 12, Section 2, Article 11
+        quote: 'Penalty: For roughing the passer: Loss of 15 yards and an automatic first down; disqualification, if flagrant.'
+      - <<: *rulebook
+        locator: Rule 12, Section 2, Article 11
+        quote: 'Players in a passing posture are considered to be a player in a defenseless posture.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.rules.facemask
+    sportId: nfl
+    track: foundations
+    kind: rule
+    label: Facemask
+    statement: Grasping and twisting, turning, pushing, or pulling an opponent's facemask costs 15 yards.
+    whyItMatters: The rule says a player who grabs a facemask must let go immediately; twisting or pulling it is a big foul.
+    tags: [topic:penalties]
+    availableCues: [name, stat]
+    sources:
+      - <<: *rulebook
+        locator: Rule 12, Section 2, Article 15
+        quote: 'If a player grasps an opponent’s facemask or helmet opening, he must immediately release it. He shall not grasp and control, twist, turn, push, or pull the facemask or helmet opening of an opponent in any direction. Penalty: For twisting, turning, pushing, pulling, or controlling the mask or helmet opening: Loss of 15 yards.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+exercises:
+  # Lesson 1: Before the snap
+  - id: nfl.ex.penalties.false-start-yards
+    type: multiple_choice
+    itemIds: [nfl.rules.false-start]
+    cue: stat
+    prompt: How many yards does a false start cost?
+    answer: 5 yards
+    acceptedAnswers: ['5', five yards, five]
+    distractors: [10 yards, 15 yards]
+
+  - id: nfl.ex.penalties.false-start-team
+    type: multiple_choice
+    itemIds: [nfl.rules.false-start]
+    cue: name
+    prompt: Which side gets flagged for a false start?
+    answer: The offense
+    acceptedAnswers: [offense]
+    distractors: [The defense, The kicking team only]
+
+  - id: nfl.ex.penalties.encroachment
+    type: multiple_choice
+    itemIds: [nfl.rules.encroachment]
+    cue: name
+    prompt: Before the snap, a defender steps into the neutral zone and touches an offensive lineman. What's the foul?
+    answer: Encroachment
+    distractors: [False start, Holding]
+
+  - id: nfl.ex.penalties.offside
+    type: multiple_choice
+    itemIds: [nfl.rules.offside]
+    cue: name
+    prompt: Part of a player's body is beyond the neutral zone as the ball is snapped, with no contact. What's the foul?
+    answer: Offside
+    distractors: [Holding, Delay of game]
+
+  - id: nfl.ex.penalties.delay
+    type: multiple_choice
+    itemIds: [nfl.rules.delay-of-game]
+    cue: name
+    prompt: The play clock runs out before the snap. What's the call?
+    answer: Delay of game
+    acceptedAnswers: [delay of the game]
+    distractors: [False start, Offside]
+
+  - id: nfl.ex.penalties.match-pre-snap
+    type: match
+    itemIds: [nfl.rules.false-start, nfl.rules.encroachment, nfl.rules.delay-of-game]
+    cue: name
+    prompt: Match each foul to what happened.
+    pairs:
+      - { left: False start, right: An offensive lineman moves his down hand }
+      - { left: Encroachment, right: A defender makes contact before the snap }
+      - { left: Delay of game, right: The play clock runs out }
+
+  - id: nfl.ex.penalties.pre-snap-yards
+    type: fill_blank
+    itemIds:
+      [nfl.rules.false-start, nfl.rules.encroachment, nfl.rules.offside, nfl.rules.delay-of-game]
+    cue: stat
+    prompt: False start, encroachment, offside, and delay of game each cost ___ yards.
+    answer: '5'
+    acceptedAnswers: [five]
+    distractors: ['10', '15']
+
+  - id: nfl.ex.penalties.recall-false-start
+    type: identify
+    itemIds: [nfl.rules.false-start]
+    cue: name
+    prompt: An interior lineman in a three-point stance lifts his hand before the snap. Name the foul.
+    answer: False start
+    distractors: [Offside, Encroachment]
+
+  - id: nfl.ex.penalties.recall-delay
+    type: identify
+    itemIds: [nfl.rules.delay-of-game]
+    cue: name
+    prompt: Name the foul for not snapping the ball before the play clock runs out.
+    answer: Delay of game
+    acceptedAnswers: [delay of the game]
+    distractors: [False start, Illegal formation]
+
+  - id: nfl.ex.penalties.recall-encroachment
+    type: identify
+    itemIds: [nfl.rules.encroachment]
+    cue: stat
+    prompt: How many yards does encroachment cost?
+    answer: '5'
+    acceptedAnswers: [five, 5 yards]
+    distractors: ['10', '15']
+
+  # Lesson 2: During the play
+  - id: nfl.ex.penalties.offensive-holding
+    type: multiple_choice
+    itemIds: [nfl.rules.offensive-holding]
+    cue: stat
+    prompt: How many yards does holding by the offense cost?
+    answer: 10 yards
+    acceptedAnswers: ['10', ten yards]
+    distractors: [5 yards, 15 yards]
+
+  - id: nfl.ex.penalties.defensive-holding
+    type: multiple_choice
+    itemIds: [nfl.rules.defensive-holding]
+    cue: stat
+    prompt: What does the offense get for defensive holding?
+    answer: 5 yards and an automatic first down
+    acceptedAnswers: [five yards and an automatic first down]
+    distractors: [10 yards only, 15 yards and the ball at the spot]
+
+  - id: nfl.ex.penalties.dpi
+    type: multiple_choice
+    itemIds: [nfl.rules.defensive-pass-interference]
+    cue: name
+    prompt: Where does the offense get the ball after defensive pass interference?
+    answer: At the spot of the foul, with a first down
+    acceptedAnswers: [at the spot of the foul, the spot of the foul]
+    distractors: [Back at the previous spot, Five yards ahead with the same down]
+
+  - id: nfl.ex.penalties.roughing
+    type: multiple_choice
+    itemIds: [nfl.rules.roughing-the-passer]
+    cue: stat
+    prompt: How many yards is roughing the passer?
+    answer: 15 yards
+    acceptedAnswers: ['15', fifteen yards]
+    distractors: [5 yards, 10 yards]
+
+  - id: nfl.ex.penalties.facemask
+    type: multiple_choice
+    itemIds: [nfl.rules.facemask]
+    cue: stat
+    prompt: How many yards for twisting or pulling an opponent's facemask?
+    answer: 15 yards
+    acceptedAnswers: ['15', fifteen yards]
+    distractors: [5 yards, 10 yards]
+
+  - id: nfl.ex.penalties.holding-higher-lower
+    type: higher_lower
+    itemIds: [nfl.rules.offensive-holding, nfl.rules.defensive-holding]
+    cue: stat
+    prompt: Which holding foul is marched off for more yards?
+    metric: Penalty yards
+    left: { label: Offensive holding }
+    right: { label: Defensive holding }
+    higher: left
+    explanation: Offensive holding costs 10 yards; defensive holding costs five yards, plus an automatic first down.
+
+  - id: nfl.ex.penalties.match-during
+    type: match
+    itemIds:
+      [nfl.rules.offensive-holding, nfl.rules.roughing-the-passer, nfl.rules.defensive-holding]
+    cue: stat
+    prompt: Match each foul to its penalty.
+    pairs:
+      - { left: Offensive holding, right: 10 yards }
+      - { left: Roughing the passer, right: 15 yards and an automatic first down }
+      - { left: Defensive holding, right: 5 yards and an automatic first down }
+
+  - id: nfl.ex.penalties.recall-offensive-holding
+    type: identify
+    itemIds: [nfl.rules.offensive-holding]
+    cue: stat
+    prompt: Type how many yards offensive holding costs.
+    answer: '10'
+    acceptedAnswers: [ten, 10 yards]
+    distractors: ['5', '15']
+
+  - id: nfl.ex.penalties.recall-dpi
+    type: identify
+    itemIds: [nfl.rules.defensive-pass-interference]
+    cue: name
+    prompt: Which defensive foul gives the offense a first down at the spot of the foul?
+    answer: Pass interference
+    acceptedAnswers: [defensive pass interference, dpi]
+    distractors: [Defensive holding, Roughing the passer]
+
+  - id: nfl.ex.penalties.recall-roughing
+    type: identify
+    itemIds: [nfl.rules.roughing-the-passer]
+    cue: stat
+    prompt: How many yards does roughing the passer cost?
+    answer: '15'
+    acceptedAnswers: [fifteen, 15 yards]
+    distractors: ['5', '10']
+
+lessons:
+  - id: nfl.lesson.before-the-snap
+    unitId: nfl.foundations.common-penalties
+    order: 0
+    title: Flags before the snap
+    estimatedMinutes: 4
+    introducesItemIds:
+      [nfl.rules.false-start, nfl.rules.encroachment, nfl.rules.offside, nfl.rules.delay-of-game]
+    exerciseIds:
+      - nfl.ex.penalties.false-start-yards
+      - nfl.ex.penalties.false-start-team
+      - nfl.ex.penalties.encroachment
+      - nfl.ex.penalties.offside
+      - nfl.ex.penalties.delay
+      - nfl.ex.penalties.match-pre-snap
+      - nfl.ex.penalties.pre-snap-yards
+    recallCheckExerciseIds:
+      - nfl.ex.penalties.recall-false-start
+      - nfl.ex.penalties.recall-delay
+      - nfl.ex.penalties.recall-encroachment
+    callbackCount: 2
+    callbackHints: [topic:clock, topic:downs]
+
+  - id: nfl.lesson.during-the-play
+    unitId: nfl.foundations.common-penalties
+    order: 1
+    title: Flags during the play
+    estimatedMinutes: 4
+    introducesItemIds:
+      - nfl.rules.offensive-holding
+      - nfl.rules.defensive-holding
+      - nfl.rules.defensive-pass-interference
+      - nfl.rules.roughing-the-passer
+      - nfl.rules.facemask
+    exerciseIds:
+      - nfl.ex.penalties.offensive-holding
+      - nfl.ex.penalties.defensive-holding
+      - nfl.ex.penalties.dpi
+      - nfl.ex.penalties.roughing
+      - nfl.ex.penalties.facemask
+      - nfl.ex.penalties.holding-higher-lower
+      - nfl.ex.penalties.match-during
+    recallCheckExerciseIds:
+      - nfl.ex.penalties.recall-offensive-holding
+      - nfl.ex.penalties.recall-dpi
+      - nfl.ex.penalties.recall-roughing
+    callbackCount: 2
+    callbackHints: [topic:penalties, topic:positions]

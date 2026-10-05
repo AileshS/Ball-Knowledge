@@ -1,0 +1,475 @@
+# Past track deep dive: our Salary Cap Era, the Patriots dynasty and Tom Brady
+#
+# Sources are the Pro Football Hall of Fame's year-by-year chronology, checked on
+# 2026-10-04, each with a verbatim quote. Brady is not yet enshrined, so his facts
+# come from the chronology, not a biography.
+# Status: in_review. The owner approves before anything ships.
+
+x-sources:
+  hof2004: &hof2004
+    url: https://www.profootballhof.com/football-history/football-history/2000-2009/2004
+    title: '2004 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 2004
+  hof2005: &hof2005
+    url: https://www.profootballhof.com/football-history/football-history/2000-2009/2005
+    title: '2005 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 2005
+  hof2015: &hof2015
+    url: https://www.profootballhof.com/football-history/football-history/2010-2019/2015
+    title: '2015 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 2015
+  hof2017: &hof2017
+    url: https://www.profootballhof.com/football-history/football-history/2010-2019/2017
+    title: '2017 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 2017
+  hof2019: &hof2019
+    url: https://www.profootballhof.com/football-history/football-history/2010-2019/2019
+    title: '2019 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 2019
+  hof2021: &hof2021
+    url: https://www.profootballhof.com/football-history/football-history/2020-present/2021
+    title: '2021 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 2021
+
+units:
+  - id: nfl.past.patriots-dynasty
+    sportId: nfl
+    track: past
+    kind: era_deep_dive
+    title: 'Deep dive: the Patriots of our Salary Cap Era'
+    order: 3
+    prerequisites: [nfl.past.eras]
+    tags: [era:nfl.era.salary-cap, team:nfl.team.patriots]
+
+entities:
+  - id: nfl.player.tom-brady
+    sportId: nfl
+    kind: player
+    name: Tom Brady
+    tags: [era:nfl.era.salary-cap, team:nfl.team.patriots, team:nfl.team.buccaneers, position:quarterback]
+  - { id: nfl.team.patriots, sportId: nfl, kind: team, name: New England Patriots, tags: [era:nfl.era.salary-cap] }
+  - { id: nfl.team.buccaneers, sportId: nfl, kind: team, name: Tampa Bay Buccaneers, tags: [era:nfl.era.salary-cap] }
+
+items:
+  # Lesson 1: A dynasty under the cap
+  - id: nfl.history.super-bowl-xxxviii
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Super Bowl XXXVIII
+    statement: The New England Patriots won their second Super Bowl in three years by beating the Carolina Panthers 32-29 in Super Bowl XXXVIII on February 1, 2004.
+    derivedValues:
+      - { value: '2004', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: Two titles in three years was the start of the dynasty.
+    entityIds: [nfl.team.patriots]
+    eraId: nfl.era.salary-cap
+    tags: [era:nfl.era.salary-cap, team:nfl.team.patriots]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof2004
+        quote: 'The New England Patriots won their second Super Bowl in three years by defeating the NFC champion Carolina Panthers 32-29 in Super Bowl XXXVIII at Reliant Stadium in Houston on February 1.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.super-bowl-xxxix
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Super Bowl XXXIX
+    statement: Beating the Philadelphia Eagles 24-21 in Super Bowl XXXIX on February 6, 2005, made the Patriots the second team in NFL history to win three Super Bowls in four seasons.
+    derivedValues:
+      - { value: '2005', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: Three titles in four seasons, under a salary cap, put New England in rare company.
+    entityIds: [nfl.team.patriots]
+    eraId: nfl.era.salary-cap
+    tags: [era:nfl.era.salary-cap, team:nfl.team.patriots]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof2005
+        quote: 'The New England Patriots became the second team in NFL history to win three Super Bowls in four seasons by defeating the Philadelphia Eagles 24-21 in Super Bowl XXXIX at ALLTEL Stadium in Jacksonville on February 6.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.super-bowl-xlix
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Super Bowl XLIX
+    statement: The Patriots won their fourth Super Bowl by beating the Seattle Seahawks 28-24 in Super Bowl XLIX on February 1, 2015.
+    derivedValues:
+      - { value: '2015', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: A decade after their third title, the Patriots were champions again.
+    entityIds: [nfl.team.patriots]
+    eraId: nfl.era.salary-cap
+    tags: [era:nfl.era.salary-cap, team:nfl.team.patriots]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof2015
+        quote: 'The New England Patriots won their fourth Super Bowl, defeating the Seattle Seahawks 28-24 in Super Bowl XLIX at University of Phoenix Stadium in Arizona on February 1.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.super-bowl-li
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Super Bowl LI, the first in overtime
+    statement: The Patriots beat the Atlanta Falcons 34-28 in Super Bowl LI on February 5, 2017, the first Super Bowl to go to overtime.
+    derivedValues:
+      - { value: '2017', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: Remember the postseason overtime rule? This was the first Super Bowl that needed it.
+    entityIds: [nfl.team.patriots]
+    eraId: nfl.era.salary-cap
+    tags: [era:nfl.era.salary-cap, team:nfl.team.patriots, topic:clock]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof2017
+        quote: 'The New England Patriots defeated the Atlanta Falcons 34-28 in Super Bowl LI in the first Super Bowl to go to overtime on February 5.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.super-bowl-liii
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Super Bowl LIII, title number six
+    statement: New England beat the Los Angeles Rams 13-3 in Super Bowl LIII in 2019 for the Patriots' sixth Super Bowl victory, matching the Pittsburgh Steelers' NFL record.
+    derivedValues:
+      - { value: '2019', from: the year of the Hall of Fame chronology entry quoted }
+      - { value: six, from: "the Patriots’ sixth Super Bowl victory" }
+    whyItMatters: Six titles tied the Patriots with the Steelers for the most in NFL history at the time.
+    entityIds: [nfl.team.patriots]
+    eraId: nfl.era.salary-cap
+    tags: [era:nfl.era.salary-cap, team:nfl.team.patriots]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof2019
+        quote: 'New England defeated the Los Angeles Rams, 13-3, at Mercedes-Benz Stadium in Super Bowl LIII, the Patriots’ sixth Super Bowl victory, matching the Pittsburgh Steelers’ NFL record'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  # Lesson 2: Tom Brady's records
+  - id: nfl.history.brady-four-mvps
+    sportId: nfl
+    track: past
+    kind: player
+    label: Brady's fourth Super Bowl MVP
+    statement: With Super Bowl LI in 2017, Patriots quarterback Tom Brady became the only player in NFL history to win four Super Bowl MVP awards.
+    derivedValues:
+      - { value: '2017', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: No player before him had won more than three.
+    entityIds: [nfl.player.tom-brady, nfl.team.patriots]
+    eraId: nfl.era.salary-cap
+    tags: [era:nfl.era.salary-cap, team:nfl.team.patriots, position:quarterback]
+    availableCues: [name, stat]
+    sources:
+      - <<: *hof2017
+        quote: 'The New England Patriots defeated the Atlanta Falcons 34-28 in Super Bowl LI in the first Super Bowl to go to overtime on February 5. Patriots quarterback Tom Brady became the only player in NFL history to win four Super Bowl Most Valuable Player Awards'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.brady-age-40
+    sportId: nfl
+    track: past
+    kind: player
+    label: Brady at 40
+    statement: In 2017, at age 40, Tom Brady led the NFL with 4,577 passing yards, becoming the oldest player in NFL history to lead the league in passing yards, and was named Associated Press MVP for the third time.
+    derivedValues:
+      - { value: '2017', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: No older player in NFL history had ever led the league in passing yards.
+    entityIds: [nfl.player.tom-brady, nfl.team.patriots]
+    eraId: nfl.era.salary-cap
+    tags: [era:nfl.era.salary-cap, team:nfl.team.patriots, position:quarterback]
+    availableCues: [name, stat]
+    sources:
+      - <<: *hof2017
+        quote: 'New England Patriots quarterback Tom Brady led the NFL with 4,577 passing yards at age 40, becoming the oldest player in NFL history to lead the league in passing yards. Brady was named the Associated Press Most Valuable Player for the third time in his career'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.brady-seventh-title
+    sportId: nfl
+    track: past
+    kind: player
+    label: Brady's seventh title
+    statement: In his first season with the Tampa Bay Buccaneers, Tom Brady won his seventh Super Bowl championship, more than any franchise, beating Kansas City 31-9 in Super Bowl LV; he also won a record fifth Super Bowl MVP.
+    derivedValues:
+      - { value: five, from: his "record fifth Super Bowl MVP" }
+    whyItMatters: At that point, no franchise had as many Super Bowl titles as Brady alone.
+    entityIds: [nfl.player.tom-brady, nfl.team.buccaneers]
+    eraId: nfl.era.salary-cap
+    tags: [era:nfl.era.salary-cap, team:nfl.team.buccaneers, position:quarterback]
+    availableCues: [name, stat]
+    sources:
+      - <<: *hof2021
+        quote: 'In his first season with the Tampa Bay Buccaneers, Tom Brady earned his seventh Super Bowl championship, more than any franchise, leading his team to a 31-9 triumph over the Kansas City Chiefs in Super Bowl LV on February 7. … Brady also captured his record fifth Super Bowl MVP.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.bucs-home-super-bowl
+    sportId: nfl
+    track: past
+    kind: moment
+    label: A Super Bowl at home
+    statement: The Buccaneers became the first NFL team to play a Super Bowl on its home field, after winning road playoff games in three straight weeks.
+    whyItMatters: No team had ever played a Super Bowl in its own stadium before.
+    entityIds: [nfl.team.buccaneers]
+    eraId: nfl.era.salary-cap
+    tags: [era:nfl.era.salary-cap, team:nfl.team.buccaneers]
+    availableCues: [name]
+    sources:
+      - <<: *hof2021
+        quote: 'The Bucs earned the right to become the first NFL team to play a Super Bowl on its home field by winning road playoff games in three straight weeks.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+exercises:
+  # Lesson 1: A dynasty under the cap
+  - id: nfl.ex.patriots.xxxviii
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-xxxviii]
+    cue: name
+    prompt: Whom did the Patriots beat 32-29 in Super Bowl XXXVIII?
+    answer: Carolina Panthers
+    acceptedAnswers: [Panthers, Carolina]
+    distractors: [Philadelphia Eagles, Seattle Seahawks]
+
+  - id: nfl.ex.patriots.three-in-four
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-xxxix]
+    cue: stat
+    prompt: Super Bowl XXXIX made the Patriots the second team to win three Super Bowls in how many seasons?
+    answer: '4'
+    acceptedAnswers: [four]
+    distractors: ['3', '5']
+
+  - id: nfl.ex.patriots.xlix
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-xlix]
+    cue: name
+    prompt: Which team did New England beat 28-24 in Super Bowl XLIX?
+    answer: Seattle Seahawks
+    acceptedAnswers: [Seahawks, Seattle]
+    distractors: [Atlanta Falcons, Carolina Panthers]
+
+  - id: nfl.ex.patriots.li-first
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-li]
+    cue: name
+    prompt: What made Super Bowl LI a first?
+    answer: It was the first Super Bowl to go to overtime
+    acceptedAnswers: [overtime, it went to overtime]
+    distractors: [It was the first Super Bowl played indoors, It was the first Super Bowl decided by a safety]
+
+  - id: nfl.ex.patriots.sixth
+    type: multiple_choice
+    itemIds: [nfl.history.super-bowl-liii]
+    cue: stat
+    prompt: Super Bowl LIII gave the Patriots how many Super Bowl wins, matching the Steelers' record?
+    answer: '6'
+    acceptedAnswers: [six]
+    distractors: ['5', '7']
+
+  - id: nfl.ex.patriots.match
+    type: match
+    itemIds:
+      [nfl.history.super-bowl-xxxviii, nfl.history.super-bowl-xlix, nfl.history.super-bowl-li]
+    cue: name
+    prompt: Match each Super Bowl to the team the Patriots beat.
+    pairs:
+      - { left: Super Bowl XXXVIII, right: Carolina Panthers }
+      - { left: Super Bowl XLIX, right: Seattle Seahawks }
+      - { left: Super Bowl LI, right: Atlanta Falcons }
+
+  - id: nfl.ex.patriots.timeline
+    type: timeline_order
+    itemIds:
+      - nfl.history.super-bowl-xxxviii
+      - nfl.history.super-bowl-xlix
+      - nfl.history.super-bowl-li
+      - nfl.history.super-bowl-liii
+    cue: timeline
+    prompt: Put these Patriots titles in order, earliest first.
+    events:
+      - { label: Super Bowl XXXVIII over Carolina, itemId: nfl.history.super-bowl-xxxviii }
+      - { label: Super Bowl XLIX over Seattle, itemId: nfl.history.super-bowl-xlix }
+      - { label: Super Bowl LI over Atlanta, itemId: nfl.history.super-bowl-li }
+      - { label: Super Bowl LIII over the Rams, itemId: nfl.history.super-bowl-liii }
+
+  - id: nfl.ex.patriots.recall-overtime
+    type: identify
+    itemIds: [nfl.history.super-bowl-li]
+    cue: name
+    prompt: Which Super Bowl was the first to go to overtime?
+    answer: Super Bowl LI
+    acceptedAnswers: [LI]
+    distractors: [Super Bowl XLIX, Super Bowl LIII]
+
+  - id: nfl.ex.patriots.recall-steelers
+    type: identify
+    itemIds: [nfl.history.super-bowl-liii]
+    cue: name
+    prompt: Whose record of six Super Bowl wins did the Patriots match in Super Bowl LIII?
+    answer: Pittsburgh Steelers
+    acceptedAnswers: [Steelers, Pittsburgh, the Steelers]
+    distractors: [San Francisco 49ers, Dallas Cowboys]
+
+  - id: nfl.ex.patriots.recall-xxxix
+    type: identify
+    itemIds: [nfl.history.super-bowl-xxxix]
+    cue: name
+    prompt: Which team did the Patriots beat in Super Bowl XXXIX?
+    answer: Philadelphia Eagles
+    acceptedAnswers: [Eagles, Philadelphia]
+    distractors: [Carolina Panthers, Atlanta Falcons]
+
+  # Lesson 2: Tom Brady's records
+  - id: nfl.ex.brady.four-mvps
+    type: multiple_choice
+    itemIds: [nfl.history.brady-four-mvps]
+    cue: stat
+    prompt: In 2017, Tom Brady became the only player to win how many Super Bowl MVP awards?
+    answer: '4'
+    acceptedAnswers: [four]
+    distractors: ['3', '5']
+
+  - id: nfl.ex.brady.age-40
+    type: multiple_choice
+    itemIds: [nfl.history.brady-age-40]
+    cue: stat
+    prompt: At what age did Brady lead the NFL with 4,577 passing yards?
+    answer: '40'
+    acceptedAnswers: [forty]
+    distractors: ['35', '43']
+
+  - id: nfl.ex.brady.ap-mvp
+    type: fill_blank
+    itemIds: [nfl.history.brady-age-40]
+    cue: stat
+    prompt: Brady's 2017 Associated Press MVP award was the ___ of his career.
+    answer: third
+    distractors: [first, fifth]
+
+  - id: nfl.ex.brady.seventh
+    type: fill_blank
+    itemIds: [nfl.history.brady-seventh-title]
+    cue: stat
+    prompt: In Super Bowl LV, Tom Brady won his ___ Super Bowl championship, more than any franchise.
+    answer: seventh
+    distractors: [fifth, sixth]
+
+  - id: nfl.ex.brady.lv-score
+    type: multiple_choice
+    itemIds: [nfl.history.brady-seventh-title]
+    cue: stat
+    prompt: What was the final score of Super Bowl LV?
+    answer: 31-9
+    distractors: [34-28, 13-3]
+
+  - id: nfl.ex.brady.home-field
+    type: multiple_choice
+    itemIds: [nfl.history.bucs-home-super-bowl]
+    cue: name
+    prompt: What first did the Buccaneers achieve on their way to Super Bowl LV?
+    answer: First team to play a Super Bowl on its home field
+    distractors: [First team to win a Super Bowl in overtime, First team to win a Super Bowl with a backup quarterback]
+
+  - id: nfl.ex.brady.road-games
+    type: multiple_choice
+    itemIds: [nfl.history.bucs-home-super-bowl]
+    cue: stat
+    prompt: How many straight weeks did Tampa Bay win road playoff games to reach that Super Bowl?
+    answer: '3'
+    acceptedAnswers: [three]
+    distractors: ['2', '4']
+
+  - id: nfl.ex.brady.recall-four-mvps
+    type: identify
+    itemIds: [nfl.history.brady-four-mvps]
+    cue: name
+    prompt: In 2017, who became the only player with four Super Bowl MVP awards?
+    answer: Tom Brady
+    acceptedAnswers: [Brady]
+    distractors: [Joe Montana, Jerry Rice]
+
+  - id: nfl.ex.brady.recall-mvps-total
+    type: identify
+    itemIds: [nfl.history.brady-seventh-title]
+    cue: stat
+    prompt: Super Bowl LV gave Brady a record number of Super Bowl MVP awards. How many?
+    answer: '5'
+    acceptedAnswers: [five]
+    distractors: ['4', '6']
+
+  - id: nfl.ex.brady.recall-team
+    type: identify
+    itemIds: [nfl.history.brady-seventh-title]
+    cue: name
+    prompt: With which team did Brady win his seventh Super Bowl?
+    answer: Tampa Bay Buccaneers
+    acceptedAnswers: [Buccaneers, Bucs, Tampa Bay]
+    distractors: [New England Patriots, Kansas City Chiefs]
+
+lessons:
+  - id: nfl.lesson.dynasty-under-the-cap
+    unitId: nfl.past.patriots-dynasty
+    order: 0
+    title: A dynasty under the cap
+    estimatedMinutes: 4
+    introducesItemIds:
+      - nfl.history.super-bowl-xxxviii
+      - nfl.history.super-bowl-xxxix
+      - nfl.history.super-bowl-xlix
+      - nfl.history.super-bowl-li
+      - nfl.history.super-bowl-liii
+    exerciseIds:
+      - nfl.ex.patriots.xxxviii
+      - nfl.ex.patriots.three-in-four
+      - nfl.ex.patriots.xlix
+      - nfl.ex.patriots.li-first
+      - nfl.ex.patriots.sixth
+      - nfl.ex.patriots.match
+      - nfl.ex.patriots.timeline
+    recallCheckExerciseIds:
+      - nfl.ex.patriots.recall-overtime
+      - nfl.ex.patriots.recall-steelers
+      - nfl.ex.patriots.recall-xxxix
+    callbackCount: 2
+    callbackHints: [era:nfl.era.salary-cap, topic:clock]
+
+  - id: nfl.lesson.brady-records
+    unitId: nfl.past.patriots-dynasty
+    order: 1
+    title: Tom Brady's records
+    estimatedMinutes: 4
+    introducesItemIds:
+      - nfl.history.brady-four-mvps
+      - nfl.history.brady-age-40
+      - nfl.history.brady-seventh-title
+      - nfl.history.bucs-home-super-bowl
+    exerciseIds:
+      - nfl.ex.brady.four-mvps
+      - nfl.ex.brady.age-40
+      - nfl.ex.brady.ap-mvp
+      - nfl.ex.brady.seventh
+      - nfl.ex.brady.lv-score
+      - nfl.ex.brady.home-field
+      - nfl.ex.brady.road-games
+    recallCheckExerciseIds:
+      - nfl.ex.brady.recall-four-mvps
+      - nfl.ex.brady.recall-mvps-total
+      - nfl.ex.brady.recall-team
+    callbackCount: 2
+    callbackHints: [position:quarterback, team:nfl.team.patriots]

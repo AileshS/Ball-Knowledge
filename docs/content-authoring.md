@@ -8,6 +8,7 @@ Lessons, facts, and exercises live as YAML files in [`content/`](../content). Th
 
 1. Copy an existing file such as [`content/nfl/foundations/scoring-and-the-field.yaml`](../content/nfl/foundations/scoring-and-the-field.yaml) and edit it.
 2. Run `npm run content:check`. It lists every problem with the file and record it's in.
+   Then run `npm run content:verify-quotes`, which fetches each cited page and confirms every `quote` appears on it, word for word (it ignores only typography: spacing, curly vs. straight quotes, dash styles). A number must match whole ("3" never matches inside "13"), and the parts of a quote split by `…` must sit close together on the page; when two passages are far apart, cite them as two sources.
 3. Open a pull request. A second person reviews the facts against their sources. Once confirmed, the reviewer sets `reviewStatus: approved`.
 
 `npm run content:build` writes the bundle the app loads (`dist/content/content.json`). Release builds use `--ship`, which refuses anything that isn't approved.
@@ -96,6 +97,13 @@ The checker rejects literal numbers in Present-track stat or contract items. The
 - **`callbackCount` and `callbackHints`:** the app opens the lesson by bringing back earlier items. Choose hint tags that connect to this lesson, such as the same era. The very first lesson uses `callbackCount: 0`.
 - **`order`:** the lesson's position within its unit (0 = first).
 
+## Past track: eras and history
+
+- **Era names are our labels; era boundaries are facts.** Each era starts at a documented milestone with its own quote (e.g. the 1933 split into two divisions). Statements say "our Founding Era", "our Open Game Era", and so on, so nobody mistakes a label for an official term.
+- **Era entities** (`kind: era`) carry `order`. Tag every history item and entity with `era:<era-id>` so callbacks can connect facts from the same era.
+- **Years from page headings:** a chronology page often states the year only in its heading ("1933") and not in the quoted sentence. List such years in `derivedValues` with `from: the year of the Hall of Fame chronology entry quoted`.
+- **Preferred sources:** the Pro Football Hall of Fame's year-by-year chronology and enshrinee biographies (profootballhof.com), and NFL Football Operations. Name records "at the time" when a later season might have broken them.
+
 ## Memory tips
 
 Use these sparingly: only for big ordered or grouped content, like the sequence of eras or a dynasty's core. A tip links at least 2 items, and a lesson shows at most one. Tips are reviewed like facts. A tip must never bend the facts it anchors.
@@ -104,7 +112,7 @@ Use these sparingly: only for big ordered or grouped content, like the sequence 
 
 Before setting `reviewStatus: approved`, open each source and confirm:
 
-- [ ] The `quote` appears verbatim at the `locator`, in the current edition of the source.
+- [ ] The `quote` appears verbatim at the `locator`, in the current edition of the source. (`npm run content:verify-quotes` proves the words are on the page; you still confirm the locator and that the quote means what the statement says.)
 - [ ] The `statement` says exactly what the quote supports: no more, no less. Every `derivedValues` computation is correct.
 - [ ] The `whyItMatters` line is true and follows from cited facts.
 - [ ] Exercise answers are correct, and no distractor could also be right.

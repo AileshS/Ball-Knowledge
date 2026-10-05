@@ -9,11 +9,16 @@ import { buildBundle, checkContent, loadContentDir } from '@ball-knowledge/conte
 import { join } from 'node:path';
 import { loadBundle, type AppContent } from '../src/content/bundle';
 
-/** The real repository content, built exactly as `npm run content` does. */
+/**
+ * The real repository content, built exactly as `npm run content` does. Facts are
+ * dated the day they're verified, so it's checked against tomorrow (UTC) rather
+ * than a frozen date.
+ */
 export function repoContent(): AppContent {
   const dir = join(import.meta.dirname, '..', '..', '..', 'content');
-  const result = checkContent(loadContentDir(dir), { mode: 'dev', today: '2026-10-03' });
-  return loadBundle(JSON.parse(JSON.stringify(buildBundle(result, 'dev', '2026-10-03'))));
+  const today = new Date(Date.now() + 86_400_000).toISOString().slice(0, 10);
+  const result = checkContent(loadContentDir(dir), { mode: 'dev', today });
+  return loadBundle(JSON.parse(JSON.stringify(buildBundle(result, 'dev', today))));
 }
 
 const lesson = (id: string, unitId: string, order: number, items: string[]) =>

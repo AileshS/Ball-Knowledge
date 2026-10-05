@@ -10,6 +10,7 @@ export default defineConfig({
       // Thin process entry points; their logic is tested through runCli().
       exclude: [
         'packages/*/src/cli.ts',
+        'packages/content-tools/src/verify-quotes-cli.ts',
         // Native-only storage adapter and the generated-bundle import: covered by running the app.
         'apps/mobile/src/progress/create-store.ts',
         'apps/mobile/src/content/content.ts',

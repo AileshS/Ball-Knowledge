@@ -1,0 +1,747 @@
+# Past track: The eras of the NFL
+#
+# The era NAMES are Ball Knowledge's own labels, and every statement says "our" to
+# mark them as such. Each era STARTS at a documented milestone, quoted from the Pro
+# Football Hall of Fame's year-by-year chronology (or NFL Football Operations for
+# the salary cap). Years that a chronology page gives only in its heading are
+# listed in `derivedValues`.
+# Checked on 2026-10-04. Status: in_review. The owner approves before anything ships.
+
+x-sources:
+  hof1920: &hof1920
+    url: https://www.profootballhof.com/football-history/football-history/1869-1939/1920
+    title: '1920 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1920
+  hof1922: &hof1922
+    url: https://www.profootballhof.com/football-history/football-history/1869-1939/1922
+    title: '1922 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1922
+  hof1933: &hof1933
+    url: https://www.profootballhof.com/football-history/football-history/1869-1939/1933
+    title: '1933 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1933
+  hof1960: &hof1960
+    url: https://www.profootballhof.com/football-history/football-history/1960-1979/1960
+    title: '1960 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1960
+  hof1966: &hof1966
+    url: https://www.profootballhof.com/football-history/football-history/1960-1979/1966
+    title: '1966 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1966
+  hof1970: &hof1970
+    url: https://www.profootballhof.com/football-history/football-history/1960-1979/1970
+    title: '1970 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1970
+  hof1978: &hof1978
+    url: https://www.profootballhof.com/football-history/football-history/1960-1979/1978
+    title: '1978 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1978
+  hof1994: &hof1994
+    url: https://www.profootballhof.com/football-history/football-history/1980-1999/1994
+    title: '1994 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 1994
+  hof2021: &hof2021
+    url: https://www.profootballhof.com/football-history/football-history/2020-present/2021
+    title: '2021 | Pro Football Hall of Fame'
+    publisher: Pro Football Hall of Fame
+    accessedAt: 2026-10-04
+    locator: Chronology of Football, 2021
+  salaryCap: &salaryCap
+    url: https://operations.nfl.com/calendar-events/nfl-free-agency/nfl-salary-cap
+    title: NFL Salary Cap
+    publisher: NFL Football Operations
+    accessedAt: 2026-10-04
+    locator: Salary cap by season (table)
+
+units:
+  - id: nfl.past.eras
+    sportId: nfl
+    track: past
+    kind: era
+    title: The eras of the NFL
+    order: 0
+    tags: [topic:eras]
+
+entities:
+  - { id: nfl.era.founding, sportId: nfl, kind: era, order: 0, name: Founding Era, tags: [topic:eras] }
+  - { id: nfl.era.championship-game, sportId: nfl, kind: era, order: 1, name: Championship Game Era, tags: [topic:eras] }
+  - { id: nfl.era.afl-rivalry, sportId: nfl, kind: era, order: 2, name: AFL Rivalry Era, tags: [topic:eras] }
+  - { id: nfl.era.merged-league, sportId: nfl, kind: era, order: 3, name: Merged League Era, tags: [topic:eras] }
+  - { id: nfl.era.open-game, sportId: nfl, kind: era, order: 4, name: Open Game Era, tags: [topic:eras] }
+  - { id: nfl.era.salary-cap, sportId: nfl, kind: era, order: 5, name: Salary Cap Era, tags: [topic:eras] }
+
+items:
+  # Where each era starts (lesson 1)
+  - id: nfl.history.era-founding
+    sportId: nfl
+    track: past
+    kind: era
+    label: Founding Era starts (1920)
+    statement: Our Founding Era starts on September 17, 1920, when a second organizational meeting in Canton, Ohio, named the new league the American Professional Football Association, the league that became the NFL.
+    derivedValues:
+      - { value: '1920', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: The league met in Canton two years before it ever used the name NFL.
+    entityIds: [nfl.era.founding]
+    eraId: nfl.era.founding
+    tags: [topic:eras, era:nfl.era.founding]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hof1920
+        quote: 'An organizational meeting, at which the Akron Pros, Canton Bulldogs, Cleveland Indians, and Dayton Triangles were represented, was held at the Jordan and Hupmobile auto showroom in Canton, Ohio on August 20. … A second organizational meeting was held in Canton on September 17. … The name of the league was changed to the American Professional Football Association.'
+      - <<: *hof1922
+        quote: 'The American Professional Football Association changed its name to the National Football League, June 24.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.era-championship-game
+    sportId: nfl
+    track: past
+    kind: era
+    label: Championship Game Era starts (1933)
+    statement: Our Championship Game Era starts in 1933, when the NFL split into two divisions whose winners would meet in an annual championship game.
+    derivedValues:
+      - { value: '1933', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: Until then, no NFL title game was scheduled before the season; now every season built toward one.
+    entityIds: [nfl.era.championship-game]
+    eraId: nfl.era.championship-game
+    tags: [topic:eras, era:nfl.era.championship-game]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hof1933
+        quote: 'Marshall and Halas pushed through a proposal that divided the NFL into two divisions, with the winners to meet in an annual championship game, July 8.'
+      - <<: *hof1933
+        quote: 'In the first NFL Championship Game scheduled before the season'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.era-afl-rivalry
+    sportId: nfl
+    track: past
+    kind: era
+    label: AFL Rivalry Era starts (1960)
+    statement: Our AFL Rivalry Era starts on September 9, 1960, with the first regular-season game of the rival American Football League (AFL).
+    derivedValues:
+      - { value: '1960', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: The two leagues fought over players until their bidding war peaked in 1966.
+    entityIds: [nfl.era.afl-rivalry]
+    eraId: nfl.era.afl-rivalry
+    tags: [topic:eras, era:nfl.era.afl-rivalry]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hof1960
+        quote: 'The Denver Broncos defeated the Patriots 13-10 before 21,597 at Boston in the first AFL regular-season game on September 9.'
+      - <<: *hof1966
+        quote: 'The AFL-NFL war reached its peak, as the leagues spent a combined $7 million to sign their 1966 draft choices.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.era-merged-league
+    sportId: nfl
+    track: past
+    kind: era
+    label: Merged League Era starts (1970)
+    statement: Our Merged League Era starts in 1970, when the AFL and NFL officially merged into one league with two conferences.
+    whyItMatters: The two conferences you know today, the AFC and NFC, date from this merger.
+    entityIds: [nfl.era.merged-league]
+    eraId: nfl.era.merged-league
+    tags: [topic:eras, era:nfl.era.merged-league]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hof1966
+        quote: 'Official regular-season play would start in 1970 when the two leagues would officially merge to form one league with two conferences.'
+      - <<: *hof1970
+        quote: 'Lamar Hunt was elected president of the AFC and George Halas was elected president of the NFC on March 19.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.era-open-game
+    sportId: nfl
+    track: past
+    kind: era
+    label: Open Game Era starts (1978)
+    statement: Our Open Game Era starts in 1978, when new rules restricted defenders' contact with receivers beyond five yards of the line of scrimmage and the regular-season schedule grew from 14 to 16 weeks.
+    derivedValues:
+      - { value: '1978', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: The Hall of Fame describes these rules as continuing a trend toward opening up the game, which is where our label comes from.
+    entityIds: [nfl.era.open-game]
+    eraId: nfl.era.open-game
+    tags: [topic:eras, era:nfl.era.open-game]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hof1978
+        quote: 'The NFL continued a trend toward opening up the game. Rules changes permitted a defender to maintain contact with a receiver within five yards of the line of scrimmage, but restricted contact beyond that point.'
+      - <<: *hof1978
+        quote: 'Bolstered by the expansion of the regular-season schedule from 14 to 16 weeks'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.era-salary-cap
+    sportId: nfl
+    track: past
+    kind: era
+    label: Salary Cap Era starts (1994)
+    statement: Our Salary Cap Era starts in 1994, the first season of the NFL's salary cap.
+    whyItMatters: Every season since has had a salary cap except one, 2010, which the league lists as "No Cap".
+    entityIds: [nfl.era.salary-cap]
+    eraId: nfl.era.salary-cap
+    tags: [topic:eras, era:nfl.era.salary-cap]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *salaryCap
+        quote: 'Below is the NFL’s salary for each season since it was conceived in 1994.'
+      - <<: *salaryCap
+        quote: '2010 No Cap'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  # From Canton to the first title game (lesson 2)
+  - id: nfl.history.renamed-nfl
+    sportId: nfl
+    track: past
+    kind: moment
+    label: The NFL gets its name
+    statement: The American Professional Football Association changed its name to the National Football League on June 24, 1922.
+    derivedValues:
+      - { value: '1922', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: The league was two years old before it was called the NFL.
+    entityIds: [nfl.era.founding]
+    eraId: nfl.era.founding
+    tags: [topic:eras, era:nfl.era.founding]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hof1922
+        quote: 'The American Professional Football Association changed its name to the National Football League, June 24. The Chicago Staleys became the Chicago Bears.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.canton-powerhouse
+    sportId: nfl
+    track: past
+    kind: moment
+    label: Canton's 1922 powerhouse
+    statement: In 1922, Canton went 10-0-2 and emerged as the league's first true powerhouse.
+    derivedValues:
+      - { value: '1922', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: The city where the league was formed also produced its first dominant team.
+    entityIds: [nfl.era.founding]
+    eraId: nfl.era.founding
+    tags: [topic:eras, era:nfl.era.founding]
+    availableCues: [name, stat]
+    sources:
+      - <<: *hof1922
+        quote: 'Canton, led by player-coach Guy Chamberlin and tackles Link Lyman and Wilbur (Pete) Henry, emerged as the league''s first true powerhouse, going 10-0-2.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.first-title-game
+    sportId: nfl
+    track: past
+    kind: moment
+    label: The first scheduled title game
+    statement: In the first NFL Championship Game scheduled before the season, the Chicago Bears beat the Giants 23-21 at Wrigley Field on December 17, 1933.
+    derivedValues:
+      - { value: '1933', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: It was the first season to end with the championship game the new two-division format promised.
+    entityIds: [nfl.era.championship-game]
+    eraId: nfl.era.championship-game
+    tags: [topic:eras, era:nfl.era.championship-game]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof1933
+        quote: 'In the first NFL Championship Game scheduled before the season, the Western Division champion Bears defeated the Eastern Division champion Giants 23-21 at Wrigley Field on December 17.'
+      - <<: *hof1922
+        quote: 'The Chicago Staleys became the Chicago Bears.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.forward-pass-1933
+    sportId: nfl
+    track: past
+    kind: rule
+    label: The forward pass opens up (1933)
+    statement: In 1933, the NFL legalized the forward pass from anywhere behind the line of scrimmage.
+    derivedValues:
+      - { value: '1933', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: It was one of the first rules the NFL wrote for itself instead of following the college game.
+    eraId: nfl.era.championship-game
+    tags: [topic:eras, era:nfl.era.championship-game]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hof1933
+        quote: 'The NFL, which long had followed the rules of college football, made a number of significant changes from the college game for the first time and began to develop rules serving its needs and the style of play it preferred. … Also the forward pass was legalized from anywhere behind the line of scrimmage on February 25.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  # Merger to the modern game (lesson 3)
+  - id: nfl.history.names-on-jerseys
+    sportId: nfl
+    track: past
+    kind: rule
+    label: Names on jerseys (1970)
+    statement: In 1970, the merged 26-team league adopted rules putting players' names on the backs of their jerseys.
+    derivedValues:
+      - { value: '1970', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: Something every fan now takes for granted arrived with the merged league.
+    eraId: nfl.era.merged-league
+    tags: [topic:eras, era:nfl.era.merged-league]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hof1970
+        quote: 'The merged 26-team league adopted rules changes putting names on the backs of players'' jerseys'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.two-point-conversion
+    sportId: nfl
+    track: past
+    kind: rule
+    label: The two-point conversion arrives (1994)
+    statement: In 1994, NFL clubs adopted the two-point conversion and moved the kickoff back to the 30-yard line, as part of a package of changes meant to increase offensive production.
+    derivedValues:
+      - { value: '1994', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: Since the 1970 merger rules, the try had been worth only one point; this change brought back the choice to go for two.
+    eraId: nfl.era.salary-cap
+    tags: [topic:eras, era:nfl.era.salary-cap, topic:try]
+    availableCues: [name, timeline]
+    sources:
+      - <<: *hof1994
+        quote: 'In a move to increase offensive production, NFL clubs at the league''s annual meeting in Orlando adopted a package of changes, including modifications in line play, chucking rules and the roughing-the-passer rule, plus the adoption of the two-point conversion and moving the spot of the kickoff back to the 30-yard line on March 22.'
+      - <<: *hof1970
+        quote: 'making a point after touchdown worth only one point'
+      - <<: *hof1960
+        quote: 'The AFL adopted the two-point option on points after touchdown on January 28.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.first-salary-cap
+    sportId: nfl
+    track: past
+    kind: stat
+    label: The first salary cap
+    statement: In its first season, 1994, the NFL salary cap was $34.6 million.
+    whyItMatters: Compare it with today's cap to see how much the league's finances have grown.
+    eraId: nfl.era.salary-cap
+    tags: [topic:eras, era:nfl.era.salary-cap]
+    availableCues: [stat, timeline]
+    sources:
+      - <<: *salaryCap
+        quote: 'since it was conceived in 1994. … 1995 $37.1M 1994 $34.6M'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+  - id: nfl.history.seventeen-games
+    sportId: nfl
+    track: past
+    kind: rule
+    label: The 17-game season (2021)
+    statement: In 2021, NFL clubs approved a season with each team playing 17 regular-season games, the league's first scheduling structure change since 1978.
+    derivedValues:
+      - { value: '2021', from: the year of the Hall of Fame chronology entry quoted }
+    whyItMatters: The last change before it was the 1978 move to 16 weeks, the same year our Open Game Era begins.
+    eraId: nfl.era.salary-cap
+    tags: [topic:eras, era:nfl.era.salary-cap, topic:season]
+    availableCues: [name, stat, timeline]
+    sources:
+      - <<: *hof2021
+        quote: 'Commissioner Roger Goodell and the NFL announced an enhanced season structure with each team playing 17 regular-season games on March 30. At a virtual league meeting, NFL clubs approved the league’s first scheduling structure change since 1978.'
+    lastVerifiedAt: 2026-10-04
+    reviewStatus: in_review
+
+exercises:
+  # Lesson 1: Six eras at a glance
+  - id: nfl.ex.eras.timeline
+    type: timeline_order
+    itemIds:
+      - nfl.history.era-founding
+      - nfl.history.era-championship-game
+      - nfl.history.era-afl-rivalry
+      - nfl.history.era-merged-league
+      - nfl.history.era-open-game
+      - nfl.history.era-salary-cap
+    cue: timeline
+    prompt: Put our eras in order, earliest first.
+    events:
+      - { label: Founding Era, itemId: nfl.history.era-founding }
+      - { label: Championship Game Era, itemId: nfl.history.era-championship-game }
+      - { label: AFL Rivalry Era, itemId: nfl.history.era-afl-rivalry }
+      - { label: Merged League Era, itemId: nfl.history.era-merged-league }
+      - { label: Open Game Era, itemId: nfl.history.era-open-game }
+      - { label: Salary Cap Era, itemId: nfl.history.era-salary-cap }
+
+  - id: nfl.ex.eras.match-early
+    type: match
+    itemIds:
+      [nfl.history.era-founding, nfl.history.era-championship-game, nfl.history.era-afl-rivalry]
+    cue: timeline
+    prompt: Match each of our eras to the year it starts.
+    pairs:
+      - { left: Founding Era, right: '1920' }
+      - { left: Championship Game Era, right: '1933' }
+      - { left: AFL Rivalry Era, right: '1960' }
+
+  - id: nfl.ex.eras.match-late
+    type: match
+    itemIds: [nfl.history.era-merged-league, nfl.history.era-open-game, nfl.history.era-salary-cap]
+    cue: timeline
+    prompt: Match each of our eras to the year it starts.
+    pairs:
+      - { left: Merged League Era, right: '1970' }
+      - { left: Open Game Era, right: '1978' }
+      - { left: Salary Cap Era, right: '1994' }
+
+  - id: nfl.ex.eras.founding-place
+    type: multiple_choice
+    itemIds: [nfl.history.era-founding]
+    cue: name
+    prompt: In which city did teams form the league that became the NFL?
+    answer: Canton, Ohio
+    acceptedAnswers: [Canton]
+    distractors: ['Chicago, Illinois', New York City]
+
+  - id: nfl.ex.eras.afl-start
+    type: multiple_choice
+    itemIds: [nfl.history.era-afl-rivalry]
+    cue: name
+    prompt: Which milestone starts our AFL Rivalry Era?
+    answer: The AFL's first regular-season game
+    distractors: [The first Super Bowl, The AFL-NFL merger]
+
+  - id: nfl.ex.eras.open-game-start
+    type: multiple_choice
+    itemIds: [nfl.history.era-open-game]
+    cue: name
+    prompt: Which rule change helps mark the start of our Open Game Era?
+    answer: Restricting defenders' contact with receivers beyond five yards
+    distractors: [Adopting the two-point conversion, Splitting the league into two divisions]
+
+  - id: nfl.ex.eras.salary-cap-year
+    type: fill_blank
+    itemIds: [nfl.history.era-salary-cap]
+    cue: timeline
+    prompt: Our Salary Cap Era starts in ___, the cap's first season.
+    answer: '1994'
+    distractors: ['1978', '2002']
+
+  - id: nfl.ex.eras.merged-vs-afl
+    type: higher_lower
+    itemIds: [nfl.history.era-merged-league, nfl.history.era-afl-rivalry]
+    cue: timeline
+    prompt: Which of our eras starts later?
+    metric: Start year
+    left: { label: Merged League Era }
+    right: { label: AFL Rivalry Era }
+    higher: left
+    explanation: Our Merged League Era starts in 1970; our AFL Rivalry Era starts in 1960.
+
+  - id: nfl.ex.eras.recall-1933
+    type: identify
+    itemIds: [nfl.history.era-championship-game]
+    cue: timeline
+    prompt: Which of our eras starts in 1933?
+    answer: Championship Game Era
+    acceptedAnswers: [the championship game era, championship era]
+    distractors: [Founding Era, AFL Rivalry Era]
+
+  - id: nfl.ex.eras.recall-merged
+    type: identify
+    itemIds: [nfl.history.era-merged-league]
+    cue: timeline
+    prompt: In what year does our Merged League Era start?
+    answer: '1970'
+    distractors: ['1966', '1978']
+
+  - id: nfl.ex.eras.recall-founding
+    type: identify
+    itemIds: [nfl.history.era-founding]
+    cue: timeline
+    prompt: In what year does our Founding Era start?
+    answer: '1920'
+    distractors: ['1922', '1933']
+
+  # Lesson 2: From Canton to the first title game
+  - id: nfl.ex.early.renamed-year
+    type: fill_blank
+    itemIds: [nfl.history.renamed-nfl]
+    cue: timeline
+    prompt: The American Professional Football Association became the National Football League in ___.
+    answer: '1922'
+    distractors: ['1920', '1933']
+
+  - id: nfl.ex.early.powerhouse
+    type: multiple_choice
+    itemIds: [nfl.history.canton-powerhouse]
+    cue: stat
+    prompt: Which team went 10-0-2 in 1922 to become the league's first true powerhouse?
+    answer: Canton
+    acceptedAnswers: [Canton Bulldogs, the Canton Bulldogs]
+    distractors: [Akron, Decatur]
+
+  - id: nfl.ex.early.title-game-winner
+    type: multiple_choice
+    itemIds: [nfl.history.first-title-game]
+    cue: name
+    prompt: Who won the first NFL Championship Game scheduled before the season, in 1933?
+    answer: Chicago Bears
+    acceptedAnswers: [Bears, the Bears, the Chicago Bears]
+    distractors: [The Giants, Green Bay Packers]
+
+  - id: nfl.ex.early.title-game-score
+    type: multiple_choice
+    itemIds: [nfl.history.first-title-game]
+    cue: stat
+    prompt: What was the final score of that first scheduled title game?
+    answer: 23-21
+    distractors: [21-17, 14-0]
+
+  - id: nfl.ex.early.forward-pass
+    type: multiple_choice
+    itemIds: [nfl.history.forward-pass-1933]
+    cue: name
+    prompt: What did the NFL legalize in 1933?
+    answer: Forward passes from anywhere behind the line of scrimmage
+    distractors: [The two-point conversion, Overtime]
+
+  - id: nfl.ex.early.timeline
+    type: timeline_order
+    itemIds:
+      [nfl.history.era-founding, nfl.history.renamed-nfl, nfl.history.first-title-game]
+    cue: timeline
+    prompt: Put these in order, earliest first.
+    events:
+      - { label: The APFA is named at a meeting in Canton, itemId: nfl.history.era-founding }
+      - { label: The APFA becomes the NFL, itemId: nfl.history.renamed-nfl }
+      - { label: The Bears win the first scheduled title game, itemId: nfl.history.first-title-game }
+
+  - id: nfl.ex.early.recall-name
+    type: identify
+    itemIds: [nfl.history.renamed-nfl]
+    cue: name
+    prompt: What did the American Professional Football Association rename itself in 1922?
+    answer: National Football League
+    acceptedAnswers: [NFL, the NFL, the National Football League]
+    distractors: [American Football League, All-America Football Conference]
+
+  - id: nfl.ex.early.recall-title-game
+    type: identify
+    itemIds: [nfl.history.first-title-game]
+    cue: name
+    prompt: Which team won the first NFL Championship Game scheduled before the season?
+    answer: Chicago Bears
+    acceptedAnswers: [Bears, the Bears, the Chicago Bears]
+    distractors: [The Giants, Canton]
+
+  - id: nfl.ex.early.recall-powerhouse
+    type: identify
+    itemIds: [nfl.history.canton-powerhouse]
+    cue: name
+    prompt: Which team became the league's first true powerhouse in 1922?
+    answer: Canton
+    acceptedAnswers: [Canton Bulldogs, the Canton Bulldogs]
+    distractors: [Akron, Decatur]
+
+  # Lesson 3: Merger to the modern game
+  - id: nfl.ex.modern.names-on-jerseys
+    type: multiple_choice
+    itemIds: [nfl.history.names-on-jerseys]
+    cue: name
+    prompt: In 1970, what did the merged league start putting on the backs of jerseys?
+    answer: Players' names
+    acceptedAnswers: [names, the players' names]
+    distractors: [Team logos, Sponsor patches]
+
+  - id: nfl.ex.modern.merged-size
+    type: multiple_choice
+    itemIds: [nfl.history.names-on-jerseys]
+    cue: stat
+    prompt: How many teams did the merged league have in 1970?
+    answer: '26'
+    distractors: ['24', '32']
+
+  - id: nfl.ex.modern.two-point
+    type: multiple_choice
+    itemIds: [nfl.history.two-point-conversion]
+    cue: name
+    prompt: Which scoring option did NFL clubs adopt in 1994?
+    answer: The two-point conversion
+    acceptedAnswers: [two-point conversion, the two point conversion]
+    distractors: [The fair-catch kick, The safety]
+
+  - id: nfl.ex.modern.cap-amount
+    type: multiple_choice
+    itemIds: [nfl.history.first-salary-cap]
+    cue: stat
+    prompt: What was the NFL salary cap in its first season, 1994?
+    answer: $34.6 million
+    acceptedAnswers: [34.6 million]
+    distractors: [$100 million, $18 million]
+
+  - id: nfl.ex.modern.seventeen
+    type: fill_blank
+    itemIds: [nfl.history.seventeen-games]
+    cue: stat
+    prompt: In 2021, NFL clubs approved a season of ___ regular-season games per team.
+    answer: '17'
+    acceptedAnswers: [seventeen]
+    distractors: ['16', '18']
+
+  - id: nfl.ex.modern.since-1978
+    type: multiple_choice
+    itemIds: [nfl.history.seventeen-games]
+    cue: timeline
+    prompt: The 2021 move to 17 games was the league's first scheduling structure change since which year?
+    answer: '1978'
+    distractors: ['1994', '2002']
+
+  - id: nfl.ex.modern.timeline
+    type: timeline_order
+    itemIds:
+      [nfl.history.names-on-jerseys, nfl.history.two-point-conversion, nfl.history.seventeen-games]
+    cue: timeline
+    prompt: Put these changes in order, earliest first.
+    events:
+      - { label: Names go on the backs of jerseys, itemId: nfl.history.names-on-jerseys }
+      - { label: The two-point conversion is adopted, itemId: nfl.history.two-point-conversion }
+      - { label: The 17-game season is approved, itemId: nfl.history.seventeen-games }
+
+  - id: nfl.ex.modern.recall-cap-year
+    type: identify
+    itemIds: [nfl.history.first-salary-cap]
+    cue: timeline
+    prompt: Type the year of the NFL salary cap's first season.
+    answer: '1994'
+    distractors: ['1993', '2002']
+
+  - id: nfl.ex.modern.recall-seventeen
+    type: identify
+    itemIds: [nfl.history.seventeen-games]
+    cue: timeline
+    prompt: In what year did NFL clubs approve the 17-game season?
+    answer: '2021'
+    distractors: ['2020', '2002']
+
+  - id: nfl.ex.modern.recall-two-point
+    type: identify
+    itemIds: [nfl.history.two-point-conversion]
+    cue: name
+    prompt: Which conversion did NFL clubs adopt in 1994?
+    answer: The two-point conversion
+    acceptedAnswers: [two-point conversion, two-point, the two point conversion]
+    distractors: [The fair-catch kick, The onside kick]
+
+tips:
+  - id: nfl.tip.era-chain
+    sportId: nfl
+    technique: chain
+    itemIds:
+      - nfl.history.era-founding
+      - nfl.history.era-championship-game
+      - nfl.history.era-afl-rivalry
+      - nfl.history.era-merged-league
+      - nfl.history.era-open-game
+      - nfl.history.era-salary-cap
+    title: 'A chain of six eras: Canton → Trophy → Rival → Handshake → Open field → Price tag'
+    body: |-
+      Link each era to a picture, and let each picture lead to the next.
+      Canton (1920): teams meet in Canton, Ohio, and name the new league.
+      Trophy (1933): two divisions now play for one championship trophy.
+      Rival (1960): a rival league, the AFL, kicks off.
+      Handshake (1970): the rivals shake hands and become one league.
+      Open field (1978): receivers run free past five yards and the game opens up.
+      Price tag (1994): a salary cap puts a price tag on every roster.
+      The era names are our own labels; the start dates are the documented milestones.
+    reviewStatus: in_review
+
+lessons:
+  - id: nfl.lesson.six-eras
+    unitId: nfl.past.eras
+    order: 0
+    title: Six eras at a glance
+    estimatedMinutes: 5
+    introducesItemIds:
+      - nfl.history.era-founding
+      - nfl.history.era-championship-game
+      - nfl.history.era-afl-rivalry
+      - nfl.history.era-merged-league
+      - nfl.history.era-open-game
+      - nfl.history.era-salary-cap
+    exerciseIds:
+      - nfl.ex.eras.timeline
+      - nfl.ex.eras.match-early
+      - nfl.ex.eras.match-late
+      - nfl.ex.eras.founding-place
+      - nfl.ex.eras.afl-start
+      - nfl.ex.eras.open-game-start
+      - nfl.ex.eras.salary-cap-year
+      - nfl.ex.eras.merged-vs-afl
+    recallCheckExerciseIds:
+      - nfl.ex.eras.recall-1933
+      - nfl.ex.eras.recall-merged
+      - nfl.ex.eras.recall-founding
+    memoryTipIds: [nfl.tip.era-chain]
+    callbackCount: 2
+    callbackHints: [topic:season]
+
+  - id: nfl.lesson.canton-to-title-game
+    unitId: nfl.past.eras
+    order: 1
+    title: From Canton to the first title game
+    estimatedMinutes: 4
+    introducesItemIds:
+      - nfl.history.renamed-nfl
+      - nfl.history.canton-powerhouse
+      - nfl.history.first-title-game
+      - nfl.history.forward-pass-1933
+    exerciseIds:
+      - nfl.ex.early.renamed-year
+      - nfl.ex.early.powerhouse
+      - nfl.ex.early.title-game-winner
+      - nfl.ex.early.title-game-score
+      - nfl.ex.early.forward-pass
+      - nfl.ex.early.timeline
+    recallCheckExerciseIds:
+      - nfl.ex.early.recall-name
+      - nfl.ex.early.recall-title-game
+      - nfl.ex.early.recall-powerhouse
+    callbackCount: 2
+    callbackHints: [era:nfl.era.founding, era:nfl.era.championship-game]
+
+  - id: nfl.lesson.merger-to-modern
+    unitId: nfl.past.eras
+    order: 2
+    title: From the merger to the modern game
+    estimatedMinutes: 4
+    introducesItemIds:
+      - nfl.history.names-on-jerseys
+      - nfl.history.two-point-conversion
+      - nfl.history.first-salary-cap
+      - nfl.history.seventeen-games
+    exerciseIds:
+      - nfl.ex.modern.names-on-jerseys
+      - nfl.ex.modern.merged-size
+      - nfl.ex.modern.two-point
+      - nfl.ex.modern.cap-amount
+      - nfl.ex.modern.seventeen
+      - nfl.ex.modern.since-1978
+      - nfl.ex.modern.timeline
+    recallCheckExerciseIds:
+      - nfl.ex.modern.recall-cap-year
+      - nfl.ex.modern.recall-seventeen
+      - nfl.ex.modern.recall-two-point
+    callbackCount: 2
+    callbackHints: [topic:eras, topic:try, topic:season]

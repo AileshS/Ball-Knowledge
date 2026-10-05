@@ -18,13 +18,14 @@ import {
 import type { AppContent } from '../content/bundle';
 
 /** Where a question sits in a session; maps to the review log's context. */
-export type QuestionPhase = 'callback' | 'learn' | 'recall' | 'review';
+export type QuestionPhase = 'callback' | 'learn' | 'recall' | 'review' | 'placement';
 
 export const PHASE_CONTEXT: Readonly<Record<QuestionPhase, ReviewContext>> = {
   callback: 'callback',
   learn: 'lesson',
   recall: 'recall_check',
   review: 'review',
+  placement: 'placement',
 };
 
 /** How the question is answered on screen. */
@@ -79,7 +80,8 @@ function shuffledAway<T>(items: readonly T[], rng: Rng): T[] {
 /**
  * Decides how to ask an exercise. New and learning items get recognition (pick an
  * option); familiar and mastered items must be typed (PRD §8: active recall over
- * recognition). Recall checks are always typed when the exercise allows it.
+ * recognition). Recall checks and placement questions are always typed when the
+ * exercise allows it, since guessing from options proves little.
  */
 export function questionFor(
   exercise: Exercise,
@@ -127,6 +129,7 @@ export function questionFor(
       const mastery = state ? masteryLevel(state, scheduler.config) : 'new';
       const typed =
         phase === 'recall' ||
+        phase === 'placement' ||
         exerciseFormat(mastery, exercise.type) === 'production' ||
         exercise.distractors.length === 0;
       return typed

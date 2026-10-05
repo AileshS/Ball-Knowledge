@@ -20,7 +20,12 @@ The app works fully offline without this. Do these steps once per Supabase proje
    - row-level security, so each user sees only their own rows
    - `delete_my_account()` for in-app account deletion
 
-Migrations are forward-only. Run each file once, in order, and never edit one that has already run. Future changes come as new files.
+Migrations are forward-only. Run each file once, in order, and never edit one that has already run. Future changes come as new files:
+
+| File | What it does | Needed by |
+|---|---|---|
+| `20261003000000_progress_sync.sql` | Tables, row-level security, account deletion | Phase 7 (accounts and sync) |
+| `20261004000000_placement_context.sql` | Allows placement-quiz answers in the review log | Phase 8. Run it before using the placement quiz while signed in, or syncing those answers will fail. |
 
 ## 3. Turn off email confirmation
 

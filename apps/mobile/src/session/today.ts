@@ -1,8 +1,9 @@
 import type { ItemId, ReviewLogEntry, UserItemState } from '@ball-knowledge/core';
 import { buildReviewQueue, DAY_MS, type Scheduler } from '@ball-knowledge/retention';
 import type { AppContent } from '../content/bundle';
-import { learningPath, TRACK_ORDER } from '../model/path';
+import { learningPath } from '../model/path';
 import { reviewableStates } from './plan';
+import { trackOrder, type ChosenTrack } from './preferences';
 
 export interface TodayInput {
   readonly content: AppContent;
@@ -14,6 +15,8 @@ export interface TodayInput {
   readonly now: Date;
   /** Start of the user's local day, for the "today" counts. */
   readonly dayStart: Date;
+  /** The Past/Present track the user chose; next lessons come from it after Foundations. */
+  readonly chosenTrack?: ChosenTrack | null;
 }
 
 export interface TodaySummary {
@@ -56,7 +59,8 @@ export function todaySummary(input: TodayInput): TodaySummary {
 
   const completedIds = new Set(completedLessons.keys());
   let nextLesson: TodaySummary['nextLesson'] = null;
-  for (const track of TRACK_ORDER) {
+  // Reviews cover every track (one shared queue); new lessons follow the chosen track.
+  for (const track of trackOrder(input.chosenTrack ?? null)) {
     const units = learningPath({
       content,
       sportId,

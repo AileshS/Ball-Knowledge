@@ -25,6 +25,19 @@ interface PlayerProps {
   readonly steps: readonly Step[];
   readonly startStates: ReadonlyMap<ItemId, UserItemState>;
   readonly onFinish: (summary: SessionSummary) => void;
+  /**
+   * Custom scoring (e.g. placement, where only correct answers count). Defaults to
+   * the normal lesson/review scoring.
+   */
+  readonly score?: (
+    step: QuestionStep,
+    exercise: Exercise,
+    correct: boolean,
+    now: Date,
+    states: ReadonlyMap<ItemId, UserItemState>,
+  ) => readonly ReviewResult[];
+  /** Told about every answer, e.g. to work out placement results. */
+  readonly onAnswered?: (step: QuestionStep, correct: boolean) => void;
 }
 
 const PHASE_LABEL: Record<QuestionStep['phase'], string> = {
@@ -32,13 +45,20 @@ const PHASE_LABEL: Record<QuestionStep['phase'], string> = {
   learn: 'Learn',
   recall: 'Recall check',
   review: 'Review',
+  placement: 'Placement',
 };
 
 /**
  * Plays a session (lesson or review) one step at a time. Every answer is scored
  * and saved immediately, so leaving mid-session never loses what was answered.
  */
-export function Player({ steps: initialSteps, startStates, onFinish }: PlayerProps) {
+export function Player({
+  steps: initialSteps,
+  startStates,
+  onFinish,
+  score,
+  onAnswered,
+}: PlayerProps) {
   const { content, scheduler, clock, saveResults } = useAppState();
   const [steps, setSteps] = useState<readonly Step[]>(initialSteps);
   const [index, setIndex] = useState(0);
@@ -63,18 +83,17 @@ export function Player({ steps: initialSteps, startStates, onFinish }: PlayerPro
 
   const answer = (exercise: Exercise, q: QuestionStep, correct: boolean, typo = false) => {
     const now = clock.now();
-    const { results } = scoreAnswer(
-      scheduler,
-      states,
-      q,
-      exercise,
-      {
-        correct,
-        typo,
-        responseMs: Date.now() - shownAt.current,
-      },
-      now,
-    );
+    const results = score
+      ? score(q, exercise, correct, now, states)
+      : scoreAnswer(
+          scheduler,
+          states,
+          q,
+          exercise,
+          { correct, typo, responseMs: Date.now() - shownAt.current },
+          now,
+        ).results;
+    onAnswered?.(q, correct);
     const nextStates = new Map(states);
     results.forEach((r: ReviewResult) => nextStates.set(r.state.itemId, r.state));
     setStates(nextStates);

@@ -1,6 +1,7 @@
 import type { Exercise, ItemId, UserItemState } from '@ball-knowledge/core';
 import type { ReviewResult } from '@ball-knowledge/retention';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import type { AppContent } from '../content/bundle';
 import { View } from 'react-native';
 import {
   checkMatch,
@@ -16,6 +17,7 @@ import { feedbackFor, scoreAnswer, type Feedback } from '../session/scoring';
 import { useAppState } from '../state/AppState';
 import { Badge, Banner, Body, Card, Heading, ProgressBar, Row, Title } from './components';
 import { Button, Field } from './controls';
+import { CueCard } from './CueCard';
 
 export interface SessionSummary {
   readonly answered: number;
@@ -41,6 +43,11 @@ interface PlayerProps {
   ) => readonly ReviewResult[];
   /** Told about every answer, e.g. to work out placement results. */
   readonly onAnswered?: (step: QuestionStep, correct: boolean) => void;
+  /**
+   * Practice mode (the dev exercise gallery): play this content instead of the
+   * bundle, and score and save nothing.
+   */
+  readonly practice?: AppContent;
 }
 
 const PHASE_LABEL: Record<QuestionStep['phase'], string> = {
@@ -61,8 +68,12 @@ export function Player({
   onFinish,
   score,
   onAnswered,
+  practice,
 }: PlayerProps) {
-  const { content, scheduler, clock, saveResults, savedTips, toggleSavedTip } = useAppState();
+  const app = useAppState();
+  const { scheduler, clock, savedTips, toggleSavedTip } = app;
+  const content = practice ?? app.content;
+  const saveResults = practice ? () => Promise.resolve() : app.saveResults;
   const [steps, setSteps] = useState<readonly Step[]>(initialSteps);
   const [index, setIndex] = useState(0);
   const [states, setStates] = useState(startStates);
@@ -86,16 +97,18 @@ export function Player({
 
   const answer = (exercise: Exercise, q: QuestionStep, correct: boolean, typo = false) => {
     const now = clock.now();
-    const results = score
-      ? score(q, exercise, correct, now, states)
-      : scoreAnswer(
-          scheduler,
-          states,
-          q,
-          exercise,
-          { correct, typo, responseMs: Date.now() - shownAt.current },
-          now,
-        ).results;
+    const results = practice
+      ? []
+      : score
+        ? score(q, exercise, correct, now, states)
+        : scoreAnswer(
+            scheduler,
+            states,
+            q,
+            exercise,
+            { correct, typo, responseMs: Date.now() - shownAt.current },
+            now,
+          ).results;
     onAnswered?.(q, correct);
     const nextStates = new Map(states);
     results.forEach((r: ReviewResult) => nextStates.set(r.state.itemId, r.state));
@@ -217,11 +230,8 @@ function Question({ step, exercise, locked, onAnswer }: QuestionProps) {
   const header = (
     <>
       <Badge label={PHASE_LABEL[step.phase]} />
-      <Heading>
-        {exercise.textFallback && exercise.type === 'clip'
-          ? exercise.textFallback
-          : exercise.prompt}
-      </Heading>
+      <CueCard exercise={exercise} />
+      <Heading>{exercise.prompt}</Heading>
     </>
   );
 
@@ -363,9 +373,10 @@ function Question({ step, exercise, locked, onAnswer }: QuestionProps) {
             }}
           />
         ))}
-        <Row>
+        <Body muted>Matches</Body>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
           {step.options.map((right) => (
-            <View key={right} style={{ flex: 1 }}>
+            <View key={right} style={{ flexGrow: 1, flexBasis: 140 }}>
               <Button
                 label={right}
                 tone="secondary"
@@ -378,7 +389,7 @@ function Question({ step, exercise, locked, onAnswer }: QuestionProps) {
               />
             </View>
           ))}
-        </Row>
+        </View>
         <Button
           label="Check"
           disabled={locked || matches.size < exercise.pairs.length}
@@ -415,16 +426,20 @@ export function SessionComplete({
   title,
   summary,
   children,
+  showXp = true,
 }: {
   title: string;
   summary: SessionSummary;
   children?: ReactNode;
+  /** Off for practice, where nothing is scored. */
+  showXp?: boolean;
 }) {
   return (
     <Card>
       <Title>{title}</Title>
       <Body>
-        {summary.correct} of {summary.answered} right · +{summary.xp} XP
+        {summary.correct} of {summary.answered} right
+        {showXp ? ` · +${summary.xp} XP` : ''}
       </Body>
       {children}
     </Card>

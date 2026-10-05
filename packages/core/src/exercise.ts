@@ -26,6 +26,18 @@ const base = {
   prompt: text,
   /** Text-only version of the exercise for when media can't be shown (ADR 0005). */
   textFallback: text.optional(),
+  /**
+   * A drawn cue that needs no licensed media. Only `jersey` (a plain jersey with a
+   * number, no team marks) exists today; required for, and only allowed with, the
+   * jersey cue.
+   */
+  visual: z
+    .object({
+      kind: z.literal('jersey'),
+      // 0, 00, or 1-99 with no leading zero, written the way the jersey shows it.
+      number: z.string().regex(/^(0|00|[1-9]\d?)$/, 'Jersey numbers are 0, 00, or 1-99'),
+    })
+    .optional(),
   /** Fictional test data. Never allowed in a shipping content bundle. */
   fixture: z.boolean().optional(),
 };
@@ -129,6 +141,20 @@ export const ExerciseSchema = z
         code: 'custom',
         path: ['textFallback'],
         message: `A "${ex.cue}" cue requires a textFallback (ADR 0005: text-first)`,
+      });
+    }
+    if (ex.cue === 'jersey' && !ex.visual) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['visual'],
+        message: 'A "jersey" cue needs a visual: { kind: jersey, number }',
+      });
+    }
+    if (ex.visual && ex.cue !== 'jersey') {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['visual'],
+        message: 'A jersey visual only goes with the "jersey" cue',
       });
     }
     if (ex.type === 'clip' && ex.cue !== 'clip') {

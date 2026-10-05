@@ -40,3 +40,9 @@ This record is a product guardrail, not legal advice. Get a proper legal review 
 
 - The varied-cue system (PRD §8) works from day one on text, number, stat, and timeline cues. Photo and clip cues plug in later without schema changes.
 - Content authors must write a text fallback for every media-based exercise, and the content validator enforces it (Phase 4).
+
+## Update (2026-10-05, Phase 10)
+
+- **Jersey cues** are drawn by the app: a plain jersey shape with the number, no team colors, marks, or logos. The number comes from the exercise's `visual`, and the content checker requires it to trace to a sourced fact like any other number.
+- **Photo and clip cues** show their `textFallback` description. No image or embed is loaded until this record is accepted.
+- **Silhouettes** still need original artwork (not traced from photos) before they can be used.

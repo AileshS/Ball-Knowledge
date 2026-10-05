@@ -1,5 +1,6 @@
 import { router } from 'expo-router';
 import { awaitingReview, sportCards } from '../src/model/path';
+import { SHOW_DEV_TOOLS } from '../src/dev/flags';
 import { useAccount } from '../src/state/Account';
 import { useAppState } from '../src/state/AppState';
 import { Badge, Banner, Body, Card, Heading, Row, Screen, Title } from '../src/ui/components';
@@ -34,6 +35,17 @@ export default function SportPicker() {
               label={account.email ? 'Account' : 'Sign in'}
               tone={account.email ? 'muted' : 'primary'}
             />
+          </Row>
+        </Card>
+      )}
+      {SHOW_DEV_TOOLS && (
+        <Card
+          accessibilityLabel="Developer: exercise gallery"
+          onPress={() => router.push('/dev/gallery')}
+        >
+          <Row>
+            <Body>Exercise gallery (dev only)</Body>
+            <Badge label="Dev" />
           </Row>
         </Card>
       )}

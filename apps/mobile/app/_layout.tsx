@@ -25,6 +25,7 @@ function Navigator() {
       <Stack.Screen name="lesson/[id]" options={{ title: 'Lesson' }} />
       <Stack.Screen name="play/[id]" options={{ title: 'Lesson' }} />
       <Stack.Screen name="account" options={{ title: 'Account' }} />
+      <Stack.Screen name="dev/gallery" options={{ title: 'Exercise gallery' }} />
     </Stack>
   );
 }
